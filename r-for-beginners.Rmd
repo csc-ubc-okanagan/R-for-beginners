@@ -1,0 +1,452 @@
+---
+title: "Untitled"
+output: html_document
+date: "2022-10-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Basics
+
+## The Working Environment
+
+## R and RStudio
+
+### R
+
+R is a programming language designed to facilitate statistical analyses and to generate graphs. R is also the program that converts what we right into something your computer can execute.
+
+### RStudio
+
+RStudio is an IDE--Integrated Development Environment. It provides a visual interface to work with R the language and R the program. It consists of several key elements.
+
+1. a scripting pane, where we write stuff
+2. an R console, where R runs and processes what you right
+3. an environment pane, where we can see the data objects, functions etc that we create
+4. an viewing pane that gives us access to our files, plots, and help
+
+## Building Blocks
+
+The big difference with working in something like `R`, over say Excel or another point and click tool for working with data, is that it moves us into the realm of programming, which brings with it a need to understand some core concepts about how data are handled and stored by computers.
+
+While we're not outright programming, we will be writing scripts to do things with our data--and basically, that's what a program is--data, and a series of instructions--functions--to do things with these data.
+
+## Data
+
+When we talk about data, we have data types, data classes, and data structures.
+
+### Data Types
+
+Data types at their simplest is just how we represent--or how we might store--as single piece of data. Generally, we represent--or store--data as numbers (numeric data) or as letters (character data). A third common data type is logical, with the two values true and false. Character data--also known as strings--are always wrapped in quotation marks.
+
+### Data Classes
+
+Data types can be more nuanced than this though, with specific attributes that influences what we can and cannot do with these data. These are referred to as classes--since we can group--or class--data by common attributes.
+
+Consider the following numbers - 20220301 - without context, this is simply a list of numbers. Classify it as a date data type, however, that has a set of rules for how a date is written - yyyymmdd - and a series of conventions for how dates function - a specific calendar type, the length of a year, month, or day etc - and we can start to be able to do some date specific operations with this data, like calculating a persons age. We'll explore other data types in this workshop.
+
+```{r create-intro_date_class, echo = FALSE}
+numbers <- 20220301
+date <- as.Date(as.character(numbers), '%Y%m%d')
+```
+
+```{r call-intro_date_class}
+numbers
+class(numbers)
+date
+class(date)
+(days_since_March_31 <- Sys.Date() - date)
+```
+
+### Data Structures
+
+Data structures can be thought of how these data are stored collectively--the structure that defines how these data relate to each other. `R` has a few basic data structures that you'll frequently encounter. These include vectors, lists, matrices, and data frames. We'll explore each of these in turn, but first a brief overview.
+
+#### Vectors
+
+A vector is a very simple list. It is uni-dimensional--think of it as a single column or row of data--and it can only contain data of exactly the same type. So, if you have a list of numbers or words in `R`, these will likely be contained within a vector.
+
+```{r create-intro_vector, echo = FALSE}
+(intro_vector <- c(1,5,8,9))
+```
+
+#### Data Frames
+
+A data frame essentially functions as a series of connected vectors. In this sense a data frame is also a special kind of list. In a data frame, all vectors need to be of the same length. And while each vector must hold the same data type, not all vectors need to be of the same data type.
+
+```{r create-into_df, echo = FALSE}
+(data.frame(
+  numbers = c(1,5,8,9, 11),
+  words = c('I', 'want', 'to', 'learn', 'R')
+))
+```
+
+#### Lists
+
+A list also essentially functions as a series of connected vectors, but breaks us free of each column needing to be the same length of a data frame.
+
+```{r create-intro_list, echo = FALSE}
+(list(
+  breakfast = c('Eggs', 'Muffins', 'Coffee'),
+  lunch = c('Grilled Cheese Sandwich with Orange Juice'),
+  numbers = c(1,4,6,7)
+))
+```
+
+#### Matrices
+
+A matrix is basically a data frame, but can only hold a single data type or class. In the following, a series of numeric data.
+
+```{r create-intro_matrix, echo = FALSE}
+(matrix(round(rnorm(12, 10, 1), 2), nrow = 3))
+```
+
+Vectors are the building blocks of data frames, lists, and matrices. Matrices are joined vectors of the same length and same data types. Data frames are joined vectors of the same length and different data types. Lists are joined vectors of different lengths and data types. Each is useful in certain situations. And there are other data structures!
+
+## Functions
+
+Functions take in data and do things with that data. We can write our own functions, but generally in R we'll be using functions that have already been written or built. Calling a function requires 2 things: the function itself and any arguments the function allows us to specify--one of these arguments is the data source, but there are usually others.
+
+We'll use a function to create some data. `sample()` is a function that takes 3 basic arguments: a range of values to sample from, the size of the sample, and whether or not values in the sample can be duplicated.
+
+```{r functions-create-sample}
+(sample(1:100, 10, replace = TRUE))
+```
+
+<div class = "note">
+Other functions to create random samples include `runif()` for uniformly distributions and `rnorm()` for normally distributed data.
+</div>
+
+Two other common functions we might use include concatenation, which builds a vector from its inputs and the mean, which performs a calculation on the data provided to it.
+
+```{r functions-mean}
+(c(1,4,8,9,2,5))
+(mean(c(1,4,8,9,2,5)))
+```
+
+## Variables
+
+When we have a function do something with our data, there are several ways in which we might direct the output of that function. So far, we've directed that output to our terminal--or screens. We have other options though. We can direct that output to a file if needed. We can also direct that output to a variable.
+
+Variables are place holders in your computer's memory for data, thus allowing us to store our data for easy access.
+
+```{r variables-storing}
+random_sample <- sample(1:100, 20, replace =TRUE) # generate a random sample of 20 data points and store it in a variable called random_sample
+random_sample # call random_sample which outputs the values to the screen
+random_sample_mean <- mean(random_sample) # calculate the mean of random_sample and store it in a variable called random_sample_mean
+random_sample_mean # all random_sample_mean which outputs the values to the screen
+```
+
+## Bringing it all together
+
+Let's build our own function that calculates a mean to see what's all happening under the hood. First we define the mean as the sum of all data points divided by the number of data points. We'll leverage two existing functions, `sum()` and `length()`, the former of which performs simple addition and the latter of which tells us how many data points are in a vector.
+
+```{r mean-function}
+# define our function. The function takes one input, which is a data source, it then add all the data points together and divides it by the number of data points.
+# the function is stored in a variable called my_mean
+my_mean <- function(data) {
+  total <- sum(data) # add the data
+  n = length(data) # count the data
+  calculation = total/n # do the math
+  calculation # print the output
+}
+
+my_data <- sample(1:100, 20, replace = F) # generate some data
+
+my_mean(my_data) # calculate the mean using my_mean
+```
+
+Most functions--including the built in `mean()` are much more robust than this, but we get the basic idea!
+
+# Getting Help
+
+There are several ways to get help with R.
+
+## Built in Help
+
+In general, packages and their functions and data are pretty well documented.
+
+There are two primary ways to access this documentation from within R. The first is to load the help page of a known function, which will provide a brief overview of the function, the list of arguments it accepts, what defaults for these arguments are set to, related functions, and examples. To access these help pages, pre-pend the function name with a ?
+
+```{r help-demo, eval = FALSE}
+?mean
+```
+
+The second is to see if the package includes a vignette, which is a more in depth walk through and demonstration of the package or aspect of the package. To see a list of available vignettes for your installed packages
+
+```{r vignette-overview, eval = FALSE}
+vignette()
+```
+
+To load a specific vignette from the list
+
+```{r, vignette-load, eval = FALSE}
+vignette('datatable-faq')
+```
+
+## Blogs and Forums
+
+These can be hit and miss, but when they're a hit, they're invaluable.
+
+As a new user to R, they can also be a bit confusing, even if they're a hit. This is partly because there are many ways to solve the same problem when programming, so you'll likely see lots of different approaches, some of which are more familiar to you than others. The other is that R supports multiple syntaxes; that is, multiple ways of expressing or constructing the arguments that one puts together. This is kind of an unusual feature of R and something people struggle with. But as a result, you may see a solution that uses a different syntax than you're used to.
+
+The key here is to spend time reading blogs and forum responses and working your way through problems; the proposed solutions will start to make more sense with time and familiarity, just like learning any other language.
+
+The easiest portal to these resources is Google or a similar search engine.
+
+## Books
+
+There are books that are general all purpose introductions to R, books that address specific aspects of R such as visualizing data or performing statistics, books that address specific packages, and books that teach R using a problem based approach; these latter are referred to as 'cookbooks'. At UBC, one of your best portals to these books is the O'Rielly platform, accessible at [https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&id=2460](https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&id=2460).
+
+# Loading Data
+
+We're going to work with a (hopefully) fun data set today, which we'll download and then import.
+
+First things first, we'll use R to set up a place for us to work. We'll begin by creating a directory on our desktop
+
+```{r create-project-folder, eval = FALSE}
+dir.create("~/Desktop/r-basics")
+```
+
+
+We'll then make sure that our current session is working with the files in this folder.
+
+```{r working-directory, eval = FALSE}
+setwd("~/Desktop/r-basics")
+```
+
+And then we'll download our data
+
+```{r download-sdata, eval = FALSE}
+download.file(url = "https://data.cityofnewyork.us/api/views/vfnx-vebw/rows.csv?accessType=DOWNLOAD", destfile = '2018-CP_Squirrel_Census.csv')
+```
+
+Now that our data is downloaded and we have a local copy, we'll pull it into R
+
+We can simply import the data and display it to our console
+
+```{r import-squirrel-console, eval = FALSE}
+read.csv('2018-CP_Squirrel_Census.csv')
+```
+
+But this isn't terribly useful. We want to store this data in memory, so we'll load it into a variable
+
+```{r import-squirrel-var}
+sq_data <- read.csv('2018-CP_Squirrel_Census.csv')
+```
+
+We can now explore the data, looking at the data types and data structures R is using when importing this csv file
+
+```{r squirrel-var-str}
+str(sq_data)
+```
+
+We can get slightly better access to the data itself with `View()`
+
+```{r squireel-var-view, eval = FALSE}
+View(sq_data)
+```
+
+This output tells us that we're working with a data frame, that there are 3023 rows or observations, and 31 columns or variables. It then lists all of the variables, tells us what data type they were interpreted as on import, and show us the first six values of each variable.
+
+Before digging much deeper into the data set, one of the first things we'll note is that there are a lot of missing values. Missing values need to be properly encoded to be programatically useful. An application - or user - may represent missing values in many ways. Sometimes it's by using an out of range value, so when a variable is binary, and values are represented as 0 or 1, 99 is often used to indicate a missing value. Files exported from SPSS might be encoded with a period - `.`. In Excel, it's extremely easy for a user to accidentally introduce spaces - ` ` - in an otherwise empty cell, or they may choose to write the characters `NA`. A data base export might include either `NA` or `NULL`.
+
+When exported, especially using a format like `csv`, all of these notations for missing values are converted to character strings or numbers. Ideally, when importing into a piece of software, like R, we would have a way to provide a list of possible ways of encoding missing values and standardize how these are presented. In R, `NA` values are a specific way of indicating that a value is missing. And `read.csv()` has a specific argument for converting strings into `NA` encoded values on import.
+
+<div class = 'exercise'>
+Using the help documentation - `?read.csv` - see if you can figure out how to update your data import - `sq_data <- read.csv('2018-CP_Squirrel_Census.csv')` - to convert a list of strings to `NA` values.
+</div>
+
+<div class = 'solution'>
+```{r}
+sq_data <- read.csv('2018-CP_Squirrel_Census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))
+```
+</div>
+
+Rewview the data structure again...
+
+```{r}
+str(sq_data)
+```
+
+We'll see a number of other things that we need to sort out before we can do much with our data. For example, many of our variable of have not been assigned to the appropriate data type. We have logical variables, date variables etc not yet sorted. Let's fix this.
+
+## Indexing
+
+To clean up our data set, we need to be able to target specifc varibales and or specific values. We do this with indexing.
+
+Data frames are comprised of rows and columns, and R accepts arguments in this order, so if we want to see the intersectino of the first row and the first column, we would run
+
+```{r}
+sq_data[1,1] # show the first row and first column of the data frame
+```
+
+If we wanted to see the first 6 rows
+
+```{r}
+sq_data[1:6, 1] # show the first six rows and first column of the data frame
+```
+
+And if we wanted to see all the values of a specific variable, or column
+
+```{r, eval = FALSE}
+sq_data[ ,1]
+```
+
+When working with a data frame, we can also use variable names
+
+```{r, eval = FALSE}
+sq_data[1:6, "Running"]
+```
+
+And when we want every observation associated with a given variable
+
+```{r, eval = FALSE}
+sq_data$Running
+```
+
+## Changing Data Types
+
+Now that we can target a variable, we can assign new properties to that variable. R has a series of `as.` functions to allow us to manipulate data types and classes. To view all `as.` functions available to you
+
+```{r}
+apropos("^as\\.")
+```
+
+We can see in the list, that we have several useful `as.` functions for our current data set, including `as.Date` and `as.logical`. We'll start with the latter.
+
+Convert a single variable
+
+```{r}
+sq_data$Running <- as.logical(sq_data$Running) # re-assign the variable Running from character to logical
+str(sq_data$Running) # view the results
+```
+
+Convert multiple variables
+
+```{r}
+variables_to_convert <- c("Running", "Chasing")
+sq_data[,variables_to_convert] <- lapply(sq_data[,variables_to_convert], as.logical)
+str(sq_data$Chasing)
+```
+
+This is a steep introduction to vectorization in R.  Remember that a vector is just a simple list. Generally, when we do one thing to something in a list it only impacts that one value - in Excel we might double one value in a column, but this doesn't double every value in the column. R is built from the ground up to apply changes to all values in a list - known as vectorization. So, if we have a series of numbers - we created on earlier
+
+```{r}
+random_sample
+```
+
+And we want to convert every value, we apply the conversion to the entire vector
+
+```{r}
+(random_sample_doubled <- random_sample * 2)
+```
+
+The `apply` family of functions does exactly the same thing, but instead, in the case of `lapply`, taking in a single list, like `random_sample`, it takes in a list of lists and applies a function to each list.
+
+Reading out the above chunk of code then
+
+```{r, eval = FALSE}
+variables_to_convert <- c("Running", "Chasing") # create a character vector with the names of our variables
+
+## create a list of variables - sq_data[, "Running"], sq_data[, "Chasing"] - that is fed
+## into the lapply() function and apply the as.logical() function to each item
+sq_data[,variables_to_convert] <- lapply(sq_data[,variables_to_convert], as.logical)
+```
+
+Writing code in this way can be extremely helpful, starting with a plain language write up and then translating each piece to actual code:
+
+1. write a list of variables to a variable
+2. index the data frame with the above variable
+3. apply a function to this index
+
+Writing it like this also allows you to articulate your problem in a language that can be searched if you don't know how to complete a specific step.
+
+<div class = 'exercise'>
+`read.csv` allows us to assign variable types on import.Revisit the help documentation for `read.csv` and see if you can update your import line - `sq_data <- read.csv('2018-CP_Squirrel_Census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` to also convert the columns 'Running', 'Chasing', and "Climbing" to logical on import.
+</div>
+
+<div class = 'solution'>
+```{r}
+sq_data <- read.csv('2018-CP_Squirrel_Census.csv',
+                    na.strings = c("", " ", "NA", "NULL", ".", "+"),
+                    colClasses = c("Chasing" = "logical",
+                                   "Running" = "logical",
+                                   "Climbing" = "logical")
+                    )
+```
+</div>
+
+## Dates and Factors
+
+In addition to logical variables, our data set also has categorical data and date data. Categorical data in R is called factor data. We'll convert a single variable to factor to see how this behaves.
+
+```{r}
+sq_data$Age <- as.factor(sq_data$Age)
+str(sq_data$Age)
+levels(sq_data$Age)
+```
+
+This process highlights that we have one additional string character that should be converted to `NA` on import - ?. Calling `str` tells us that we have a factor with three levels or categories. Calling `levels` lists those categories.
+
+<div class = 'exercise'>
+Using the help page for `as.Date`, convert the Date variable, currently strutured as `int` to a date class variable.
+</div>
+
+<div class = 'solution'>
+`as.Date` requires a character input, so we must first convert our variable to a chacter format
+```{r}
+sq_data$Date <- as.character(sq_data$Date)
+```
+
+Next, we need to specify to `as.Date` how our data is structure, where is the year, month, and date articulated, and is the year 4 digits or 2, and are the months and days abbreviated in any way.
+
+```{r}
+sq_data$Date <- as.Date(sq_data$Date, "%m%d%Y")
+```
+</div>
+
+The value of having a data dictionary in advance will go along ways in facilitating this process. A data dictionary generally describes key attributes about your data - it will list your variables, provide a description of them, and indicate the base type of data it is.
+
+I have a very simple data dictionary for this project. Let's load that in
+
+```{r}
+data_dict <- read.csv("_datadictionary.csv")
+```
+
+We'll now import our data in a slightly more efficient way
+
+```{r}
+na_values <- c("" , " ", ".", "NA", "NULL", "?") # a list of values to use for na.strings
+data_types <- data_dict$data.type # a list of data types to feed to colClass
+data_types_sm <- data_types[1:13]
+s <- read.csv(file = "2018-CP_Squirrel_Census_small.csv",
+         header = TRUE,
+         na.strings = na_values,
+         colClasses = data_types_sm
+           )
+```
+
+# ggplot
+
+## Packages & Libraries
+
+R, like most programming languages, is modular. You might have a series of code that helps clean data, another to visualize data, and yet another to perform statistical calculations on data. You might have some functions specifically for working with spatial data and others for working with dates. You likely won't need all of these functions all the time. So we only load what we need. These modules are referred to as packages when we want to install them on our computer and libraries when we want to load them into our session to use.
+
+Many packages that we need are installed by default when we install R. This group of packages is referred to as base R. And many of these libraries are loaded when we launch R.
+
+We can see a list of loaded packages:
+
+```{r loaded-libraries}
+(.packages())
+```
+
+We can also see all installed packages:
+
+```{r installed-libraries-load, eval = FALSE}
+library()
+```
+
+We can install additional packages with `install.packages()`.
