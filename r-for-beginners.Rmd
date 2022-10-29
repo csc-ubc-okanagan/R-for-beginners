@@ -1,7 +1,17 @@
 ---
-title: "Untitled"
-output: html_document
-date: "2022-10-12"
+title: "R for Beginners"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+date: "2022-11-07"
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = "../docs",
+      output_file = "index.html"
+    )
+  })
 ---
 
 ```{r setup, include=FALSE}
@@ -207,20 +217,21 @@ We're going to work with a (hopefully) fun data set today, which we'll download 
 First things first, we'll use R to set up a place for us to work. We'll begin by creating a directory on our desktop
 
 ```{r create-project-folder, eval = FALSE}
-dir.create("~/Desktop/r-basics")
+dir.create("~/Desktop/r-for-beginners")
 ```
 
 
 We'll then make sure that our current session is working with the files in this folder.
 
 ```{r working-directory, eval = FALSE}
-setwd("~/Desktop/r-basics")
+setwd("~/Desktop/r-for-beginners")
 ```
 
 And then we'll download our data
 
 ```{r download-sdata, eval = FALSE}
-download.file(url = "https://data.cityofnewyork.us/api/views/vfnx-vebw/rows.csv?accessType=DOWNLOAD", destfile = '2018-CP_Squirrel_Census.csv')
+data_src <- "https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/2018-cp_squirrel_census.csv"
+download.file(url = data_src, destfile = '2018-cp_squirrel_census.csv')
 ```
 
 Now that our data is downloaded and we have a local copy, we'll pull it into R
@@ -228,13 +239,13 @@ Now that our data is downloaded and we have a local copy, we'll pull it into R
 We can simply import the data and display it to our console
 
 ```{r import-squirrel-console, eval = FALSE}
-read.csv('2018-CP_Squirrel_Census.csv')
+read.csv('2018-cp_squirrel_census.csv')
 ```
 
 But this isn't terribly useful. We want to store this data in memory, so we'll load it into a variable
 
 ```{r import-squirrel-var}
-sq_data <- read.csv('2018-CP_Squirrel_Census.csv')
+sq_data <- read.csv('2018-cp_squirrel_census.csv')
 ```
 
 We can now explore the data, looking at the data types and data structures R is using when importing this csv file
@@ -256,12 +267,12 @@ Before digging much deeper into the data set, one of the first things we'll note
 When exported, especially using a format like `csv`, all of these notations for missing values are converted to character strings or numbers. Ideally, when importing into a piece of software, like R, we would have a way to provide a list of possible ways of encoding missing values and standardize how these are presented. In R, `NA` values are a specific way of indicating that a value is missing. And `read.csv()` has a specific argument for converting strings into `NA` encoded values on import.
 
 <div class = 'exercise'>
-Using the help documentation - `?read.csv` - see if you can figure out how to update your data import - `sq_data <- read.csv('2018-CP_Squirrel_Census.csv')` - to convert a list of strings to `NA` values.
+Using the help documentation - `?read.csv` - see if you can figure out how to update your data import - `sq_data <- read.csv('2018-cp_squirrel_census.csv')` - to convert a list of strings to `NA` values.
 </div>
 
 <div class = 'solution'>
 ```{r}
-sq_data <- read.csv('2018-CP_Squirrel_Census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))
+sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))
 ```
 </div>
 
@@ -365,12 +376,12 @@ Writing code in this way can be extremely helpful, starting with a plain languag
 Writing it like this also allows you to articulate your problem in a language that can be searched if you don't know how to complete a specific step.
 
 <div class = 'exercise'>
-`read.csv` allows us to assign variable types on import.Revisit the help documentation for `read.csv` and see if you can update your import line - `sq_data <- read.csv('2018-CP_Squirrel_Census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` to also convert the columns 'Running', 'Chasing', and "Climbing" to logical on import.
+`read.csv` allows us to assign variable types on import.Revisit the help documentation for `read.csv` and see if you can update your import line - `sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` to also convert the columns 'Running', 'Chasing', and "Climbing" to logical on import.
 </div>
 
 <div class = 'solution'>
 ```{r}
-sq_data <- read.csv('2018-CP_Squirrel_Census.csv',
+sq_data <- read.csv('2018-cp_squirrel_census.csv',
                     na.strings = c("", " ", "NA", "NULL", ".", "+"),
                     colClasses = c("Chasing" = "logical",
                                    "Running" = "logical",
@@ -413,20 +424,27 @@ The value of having a data dictionary in advance will go along ways in facilitat
 I have a very simple data dictionary for this project. Let's load that in
 
 ```{r}
+dict_src <- "https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv"
+download.file(url = dict_src, destfile = '_datadictionary.csv')
 data_dict <- read.csv("_datadictionary.csv")
 ```
 
 We'll now import our data in a slightly more efficient way
 
 ```{r}
-na_values <- c("" , " ", ".", "NA", "NULL", "?") # a list of values to use for na.strings
-data_types <- data_dict$data.type # a list of data types to feed to colClass
-data_types_sm <- data_types[1:13]
-s <- read.csv(file = "2018-CP_Squirrel_Census_small.csv",
-         header = TRUE,
+na_values <- c("" , " ", ".", "NA", "NULL", "?", "+") # a list of values to use for na.strings
+data_types <- data_dict$data.import.class # a list of data types to feed to colClass
+sq_data <- read.csv(file = "2018-cp_squirrel_census.csv",
          na.strings = na_values,
-         colClasses = data_types_sm
+         colClasses = data_types
            )
+str(sq_data)
+```
+
+At this point, we've got a pretty clean imported data set. It's likely we'll still find some issues with, but for now let's save it as a cleaned, version 0
+
+```{r}
+write.csv(sq_data, "2018-cp_squirrel_census_cleaned_v0.csv", row.names = FALSE)
 ```
 
 # ggplot

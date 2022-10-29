@@ -4,7 +4,7 @@ Y,numeric,numeric,Latitude
 Unique.Squirrel.ID,character,character,"Identification tag for each squirrel sightings. The tag is comprised of ""Hectare ID"" + ""Shift"" + ""Date"" + ""Hectare Squirrel Number."""
 Hectare,character,character,"ID tag, which is derived from the hectare grid used to divide and count the park area. One axis that runs predominantly north-to-south is numerical (1-42), and the axis that runs predominantly east-to-west is roman characters (A-I)."
 Shift,character,character,"Value is either ""AM"" or ""PM,"" to communicate whether or not the sighting session occurred in the morning or late afternoon."
-Date,numeric,integer,Concatenation of the sighting session day and month.
+Date,numeric,character,Concatenation of the sighting session day and month.
 Hectare.Squirrel.Number,numeric,numeric,Number within the chronological sequence of squirrel sightings for a discrete sighting session.
 Age,character,factor,"Value is either ""Adult"" or ""Juvenile."""
 Primary.Fur.Color,character,factor,"Value is either ""Gray,"" ""Cinnamon"" or ""Black."""
