@@ -8,7 +8,7 @@ date: "2022-11-07"
 knit: (function(input, ...) {
     rmarkdown::render(
       input,
-      output_dir = "../docs",
+      output_dir = "docs",
       output_file = "index.html"
     )
   })
@@ -276,7 +276,7 @@ sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA",
 ```
 </div>
 
-Rewview the data structure again...
+Review the data structure again...
 
 ```{r}
 str(sq_data)
@@ -284,7 +284,7 @@ str(sq_data)
 
 We'll see a number of other things that we need to sort out before we can do much with our data. For example, many of our variable of have not been assigned to the appropriate data type. We have logical variables, date variables etc not yet sorted. Let's fix this.
 
-## Indexing
+# Indexing & Data Types
 
 To clean up our data set, we need to be able to target specifc varibales and or specific values. We do this with indexing.
 
@@ -328,14 +328,14 @@ apropos("^as\\.")
 
 We can see in the list, that we have several useful `as.` functions for our current data set, including `as.Date` and `as.logical`. We'll start with the latter.
 
-Convert a single variable
+## Convert a single variable
 
 ```{r}
 sq_data$Running <- as.logical(sq_data$Running) # re-assign the variable Running from character to logical
 str(sq_data$Running) # view the results
 ```
 
-Convert multiple variables
+## Convert multiple variables
 
 ```{r}
 variables_to_convert <- c("Running", "Chasing")
@@ -343,7 +343,11 @@ sq_data[,variables_to_convert] <- lapply(sq_data[,variables_to_convert], as.logi
 str(sq_data$Chasing)
 ```
 
-This is a steep introduction to vectorization in R.  Remember that a vector is just a simple list. Generally, when we do one thing to something in a list it only impacts that one value - in Excel we might double one value in a column, but this doesn't double every value in the column. R is built from the ground up to apply changes to all values in a list - known as vectorization. So, if we have a series of numbers - we created on earlier
+This is a steep introduction to vectorization in R.
+
+Remember that a vector is just a simple list. Generally, when we do one thing to something in a list it only impacts that one value - in Excel we might double one value in a column, but this doesn't double every value in the column.
+
+R is built from the ground up to apply changes to all values in a list - known as vectorization. So, if we have a series of numbers - like we created on earlier with `random_sample`
 
 ```{r}
 random_sample
@@ -355,7 +359,7 @@ And we want to convert every value, we apply the conversion to the entire vector
 (random_sample_doubled <- random_sample * 2)
 ```
 
-The `apply` family of functions does exactly the same thing, but instead, in the case of `lapply`, taking in a single list, like `random_sample`, it takes in a list of lists and applies a function to each list.
+The `apply` family of functions does exactly the same thing, but instead, in the case of `lapply`, taking in a single object, like `random_sample`, it takes in a list of objects - hence the `l` for `list apply` -  and applies a function to each object.
 
 Reading out the above chunk of code then
 
@@ -369,14 +373,33 @@ sq_data[,variables_to_convert] <- lapply(sq_data[,variables_to_convert], as.logi
 
 Writing code in this way can be extremely helpful, starting with a plain language write up and then translating each piece to actual code:
 
-1. write a list of variables to a variable
+1. write a list of variables we want to change to a variable
 2. index the data frame with the above variable
 3. apply a function to this index
 
 Writing it like this also allows you to articulate your problem in a language that can be searched if you don't know how to complete a specific step.
 
+<div class = "note">
+Without vectorization, you would need to specify how to iterate over each value in an object. Sometimes you still need to do this in R, so it might be handy to see how this works. Working with a plain language summary and using our `random_sample`:
+
+1. create an object to hold our output - call it `random_sample_multi`
+2. start an iteration that begins at index point 1 - `random_sample[1]` - and ends at the final index point of the object we're working with - `random_sample[20]`, remembering that writing `random_sample[1]` will output the value held at that index point and that we don't need to know the final index point, as we can calculate this with `length()`.
+3. populate the object we created in step one with the multiple of 2 of each value held in each index point of `random_sample`
+4. print out the result to confirm
+
+```{r}
+random_sample_multi <- vector() # create an empty vector called random_sample_multi
+
+for (i in 1:length(random_sample)) { # iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()
+  random_sample_multi[i] <- random_sample[i] *2 # for each value at index point 1 through to length(random_sample), multiply that value by 2
+}
+
+random_sample_multi # print the result to verify
+```
+</div>
+
 <div class = 'exercise'>
-`read.csv` allows us to assign variable types on import.Revisit the help documentation for `read.csv` and see if you can update your import line - `sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` to also convert the columns 'Running', 'Chasing', and "Climbing" to logical on import.
+`read.csv` allows us to assign variable types on import. Revisit the help documentation for `read.csv` and see if you can update your import line - `sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` to also convert the columns 'Running', 'Chasing', and "Climbing" to logical on import.
 </div>
 
 <div class = 'solution'>
@@ -403,7 +426,7 @@ levels(sq_data$Age)
 This process highlights that we have one additional string character that should be converted to `NA` on import - ?. Calling `str` tells us that we have a factor with three levels or categories. Calling `levels` lists those categories.
 
 <div class = 'exercise'>
-Using the help page for `as.Date`, convert the Date variable, currently strutured as `int` to a date class variable.
+Using the help page for `as.Date`, convert the Date variable, currently structured as `int` to a date class variable.
 </div>
 
 <div class = 'solution'>
@@ -412,14 +435,18 @@ Using the help page for `as.Date`, convert the Date variable, currently struture
 sq_data$Date <- as.character(sq_data$Date)
 ```
 
-Next, we need to specify to `as.Date` how our data is structure, where is the year, month, and date articulated, and is the year 4 digits or 2, and are the months and days abbreviated in any way.
+Next, we need to specify to `as.Date` how our data is structured - where the year, month, and date are articulated, and whether the year is 4 digits or 2, and the months and days are abbreviated.
 
 ```{r}
 sq_data$Date <- as.Date(sq_data$Date, "%m%d%Y")
 ```
 </div>
 
-The value of having a data dictionary in advance will go along ways in facilitating this process. A data dictionary generally describes key attributes about your data - it will list your variables, provide a description of them, and indicate the base type of data it is.
+# Importing with a Data Dictionary
+
+The value of having a data dictionary in advance will go along ways in facilitating this process.
+
+A data dictionary generally describes key attributes about your data - it will list your variables, provide a description of them, and indicate the base type of data it is.
 
 I have a very simple data dictionary for this project. Let's load that in
 
@@ -446,6 +473,14 @@ At this point, we've got a pretty clean imported data set. It's likely we'll sti
 ```{r}
 write.csv(sq_data, "2018-cp_squirrel_census_cleaned_v0.csv", row.names = FALSE)
 ```
+
+# Subsetting & Derived Variables
+
+subset()
+
+# Fixing Value Errors
+
+ifelse()
 
 # ggplot
 

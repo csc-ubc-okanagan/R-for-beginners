@@ -1569,7 +1569,7 @@ age. We’ll explore other data types in this workshop.</p>
 <pre class="r"><code>class(date)</code></pre>
 <pre><code>## [1] &quot;Date&quot;</code></pre>
 <pre class="r"><code>(days_since_March_31 &lt;- Sys.Date() - date)</code></pre>
-<pre><code>## Time difference of 242 days</code></pre>
+<pre><code>## Time difference of 243 days</code></pre>
 </div>
 <div id="data-structures" class="section level3">
 <h3>Data Structures</h3>
@@ -1619,10 +1619,10 @@ data frame.</p>
 <h4>Matrices</h4>
 <p>A matrix is basically a data frame, but can only hold a single data
 type or class. In the following, a series of numeric data.</p>
-<pre><code>##       [,1]  [,2]  [,3]  [,4]
-## [1,]  9.54  9.92  9.95  9.50
-## [2,]  9.47 10.06 11.24 10.04
-## [3,] 11.73 10.00  9.81  9.65</code></pre>
+<pre><code>##      [,1]  [,2] [,3]  [,4]
+## [1,] 9.28 10.25 9.90 10.41
+## [2,] 9.04  9.45 9.59  9.42
+## [3,] 9.05  9.87 9.12  9.50</code></pre>
 <p>Vectors are the building blocks of data frames, lists, and matrices.
 Matrices are joined vectors of the same length and same data types. Data
 frames are joined vectors of the same length and different data types.
@@ -1643,7 +1643,7 @@ function that takes 3 basic arguments: a range of values to sample from,
 the size of the sample, and whether or not values in the sample can be
 duplicated.</p>
 <pre class="r"><code>(sample(1:100, 10, replace = TRUE))</code></pre>
-<pre><code>##  [1] 15  1 41 97 71  4 18 98 22 48</code></pre>
+<pre><code>##  [1] 57  6 56 43 30 65 11  5 24 32</code></pre>
 <div class="note">
 <p>Other functions to create random samples include <code>runif()</code>
 for uniformly distributions and <code>rnorm()</code> for normally
@@ -1668,10 +1668,10 @@ direct that output to a variable.</p>
 allowing us to store our data for easy access.</p>
 <pre class="r"><code>random_sample &lt;- sample(1:100, 20, replace =TRUE) # generate a random sample of 20 data points and store it in a variable called random_sample
 random_sample # call random_sample which outputs the values to the screen</code></pre>
-<pre><code>##  [1] 72 78 94 38 18  6 78 69 48 15 61 36 83 93 49 25 95 13 94 84</code></pre>
+<pre><code>##  [1] 42 62  3 63 85 73 92 50 13 66 76 56 29 46 89 72 70 62 79 45</code></pre>
 <pre class="r"><code>random_sample_mean &lt;- mean(random_sample) # calculate the mean of random_sample and store it in a variable called random_sample_mean
 random_sample_mean # all random_sample_mean which outputs the values to the screen</code></pre>
-<pre><code>## [1] 57.45</code></pre>
+<pre><code>## [1] 58.65</code></pre>
 </div>
 <div id="bringing-it-all-together" class="section level2">
 <h2>Bringing it all together</h2>
@@ -1693,7 +1693,7 @@ my_mean &lt;- function(data) {
 my_data &lt;- sample(1:100, 20, replace = F) # generate some data
 
 my_mean(my_data) # calculate the mean using my_mean</code></pre>
-<pre><code>## [1] 42.5</code></pre>
+<pre><code>## [1] 54.05</code></pre>
 <p>Most functions–including the built in <code>mean()</code> are much
 more robust than this, but we get the basic idea!</p>
 </div>
@@ -1841,7 +1841,7 @@ convert a list of strings to <code>NA</code> values.</p>
 <div class="solution">
 <pre class="r"><code>sq_data &lt;- read.csv(&#39;2018-cp_squirrel_census.csv&#39;, na.strings = c(&quot;&quot;, &quot; &quot;, &quot;NA&quot;, &quot;NULL&quot;, &quot;.&quot;, &quot;+&quot;))</code></pre>
 </div>
-<p>Rewview the data structure again…</p>
+<p>Review the data structure again…</p>
 <pre class="r"><code>str(sq_data)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    3023 obs. of  31 variables:
 ##  $ X                                         : num  -74 -74 -74 -74 -74 ...
@@ -1879,8 +1879,9 @@ convert a list of strings to <code>NA</code> values.</p>
 can do much with our data. For example, many of our variable of have not
 been assigned to the appropriate data type. We have logical variables,
 date variables etc not yet sorted. Let’s fix this.</p>
-<div id="indexing" class="section level2">
-<h2>Indexing</h2>
+</div>
+<div id="indexing-data-types" class="section level1">
+<h1>Indexing &amp; Data Types</h1>
 <p>To clean up our data set, we need to be able to target specifc
 varibales and or specific values. We do this with indexing.</p>
 <p>Data frames are comprised of rows and columns, and R accepts
@@ -1899,7 +1900,6 @@ column</p>
 <p>And when we want every observation associated with a given
 variable</p>
 <pre class="r"><code>sq_data$Running</code></pre>
-</div>
 <div id="changing-data-types" class="section level2">
 <h2>Changing Data Types</h2>
 <p>Now that we can target a variable, we can assign new properties to
@@ -1971,33 +1971,39 @@ functions available to you</p>
 <p>We can see in the list, that we have several useful <code>as.</code>
 functions for our current data set, including <code>as.Date</code> and
 <code>as.logical</code>. We’ll start with the latter.</p>
-<p>Convert a single variable</p>
+</div>
+<div id="convert-a-single-variable" class="section level2">
+<h2>Convert a single variable</h2>
 <pre class="r"><code>sq_data$Running &lt;- as.logical(sq_data$Running) # re-assign the variable Running from character to logical
 str(sq_data$Running) # view the results</code></pre>
 <pre><code>##  logi [1:3023] FALSE FALSE FALSE FALSE FALSE FALSE ...</code></pre>
-<p>Convert multiple variables</p>
+</div>
+<div id="convert-multiple-variables" class="section level2">
+<h2>Convert multiple variables</h2>
 <pre class="r"><code>variables_to_convert &lt;- c(&quot;Running&quot;, &quot;Chasing&quot;)
 sq_data[,variables_to_convert] &lt;- lapply(sq_data[,variables_to_convert], as.logical)
 str(sq_data$Chasing)</code></pre>
 <pre><code>##  logi [1:3023] FALSE FALSE TRUE FALSE FALSE FALSE ...</code></pre>
-<p>This is a steep introduction to vectorization in R. Remember that a
-vector is just a simple list. Generally, when we do one thing to
-something in a list it only impacts that one value - in Excel we might
-double one value in a column, but this doesn’t double every value in the
-column. R is built from the ground up to apply changes to all values in
-a list - known as vectorization. So, if we have a series of numbers - we
-created on earlier</p>
+<p>This is a steep introduction to vectorization in R.</p>
+<p>Remember that a vector is just a simple list. Generally, when we do
+one thing to something in a list it only impacts that one value - in
+Excel we might double one value in a column, but this doesn’t double
+every value in the column.</p>
+<p>R is built from the ground up to apply changes to all values in a
+list - known as vectorization. So, if we have a series of numbers - like
+we created on earlier with <code>random_sample</code></p>
 <pre class="r"><code>random_sample</code></pre>
-<pre><code>##  [1] 72 78 94 38 18  6 78 69 48 15 61 36 83 93 49 25 95 13 94 84</code></pre>
+<pre><code>##  [1] 42 62  3 63 85 73 92 50 13 66 76 56 29 46 89 72 70 62 79 45</code></pre>
 <p>And we want to convert every value, we apply the conversion to the
 entire vector</p>
 <pre class="r"><code>(random_sample_doubled &lt;- random_sample * 2)</code></pre>
-<pre><code>##  [1] 144 156 188  76  36  12 156 138  96  30 122  72 166 186  98  50 190  26 188
-## [20] 168</code></pre>
+<pre><code>##  [1]  84 124   6 126 170 146 184 100  26 132 152 112  58  92 178 144 140 124 158
+## [20]  90</code></pre>
 <p>The <code>apply</code> family of functions does exactly the same
 thing, but instead, in the case of <code>lapply</code>, taking in a
-single list, like <code>random_sample</code>, it takes in a list of
-lists and applies a function to each list.</p>
+single object, like <code>random_sample</code>, it takes in a list of
+objects - hence the <code>l</code> for <code>list apply</code> - and
+applies a function to each object.</p>
 <p>Reading out the above chunk of code then</p>
 <pre class="r"><code>variables_to_convert &lt;- c(&quot;Running&quot;, &quot;Chasing&quot;) # create a character vector with the names of our variables
 
@@ -2008,17 +2014,45 @@ sq_data[,variables_to_convert] &lt;- lapply(sq_data[,variables_to_convert], as.l
 plain language write up and then translating each piece to actual
 code:</p>
 <ol style="list-style-type: decimal">
-<li>write a list of variables to a variable</li>
+<li>write a list of variables we want to change to a variable</li>
 <li>index the data frame with the above variable</li>
 <li>apply a function to this index</li>
 </ol>
 <p>Writing it like this also allows you to articulate your problem in a
 language that can be searched if you don’t know how to complete a
 specific step.</p>
+<div class="note">
+<p>Without vectorization, you would need to specify how to iterate over
+each value in an object. Sometimes you still need to do this in R, so it
+might be handy to see how this works. Working with a plain language
+summary and using our <code>random_sample</code>:</p>
+<ol style="list-style-type: decimal">
+<li>create an object to hold our output - call it
+<code>random_sample_multi</code></li>
+<li>start an iteration that begins at index point 1 -
+<code>random_sample[1]</code> - and ends at the final index point of the
+object we’re working with - <code>random_sample[20]</code>, remembering
+that writing <code>random_sample[1]</code> will output the value held at
+that index point and that we don’t need to know the final index point,
+as we can calculate this with <code>length()</code>.</li>
+<li>populate the object we created in step one with the multiple of 2 of
+each value held in each index point of <code>random_sample</code></li>
+<li>print out the result to confirm</li>
+</ol>
+<pre class="r"><code>random_sample_multi &lt;- vector() # create an empty vector called random_sample_multi
+
+for (i in 1:length(random_sample)) { # iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()
+  random_sample_multi[i] &lt;- random_sample[i] *2 # for each value at index point 1 through to length(random_sample), multiply that value by 2
+}
+
+random_sample_multi # print the result to verify</code></pre>
+<pre><code>##  [1]  84 124   6 126 170 146 184 100  26 132 152 112  58  92 178 144 140 124 158
+## [20]  90</code></pre>
+</div>
 <div class="exercise">
-<p><code>read.csv</code> allows us to assign variable types on
-import.Revisit the help documentation for <code>read.csv</code> and see
-if you can update your import line -
+<p><code>read.csv</code> allows us to assign variable types on import.
+Revisit the help documentation for <code>read.csv</code> and see if you
+can update your import line -
 <code>sq_data &lt;- read.csv(&#39;2018-cp_squirrel_census.csv&#39;, na.strings = c(&quot;&quot;, &quot; &quot;, &quot;NA&quot;, &quot;NULL&quot;, &quot;.&quot;, &quot;+&quot;))</code>
 to also convert the columns ‘Running’, ‘Chasing’, and “Climbing” to
 logical on import.</p>
@@ -2048,7 +2082,7 @@ that should be converted to <code>NA</code> on import - ?. Calling
 categories. Calling <code>levels</code> lists those categories.</p>
 <div class="exercise">
 <p>Using the help page for <code>as.Date</code>, convert the Date
-variable, currently strutured as <code>int</code> to a date class
+variable, currently structured as <code>int</code> to a date class
 variable.</p>
 </div>
 <div class="solution">
@@ -2056,15 +2090,20 @@ variable.</p>
 convert our variable to a chacter format</p>
 <pre class="r"><code>sq_data$Date &lt;- as.character(sq_data$Date)</code></pre>
 <p>Next, we need to specify to <code>as.Date</code> how our data is
-structure, where is the year, month, and date articulated, and is the
-year 4 digits or 2, and are the months and days abbreviated in any
-way.</p>
+structured - where the year, month, and date are articulated, and
+whether the year is 4 digits or 2, and the months and days are
+abbreviated.</p>
 <pre class="r"><code>sq_data$Date &lt;- as.Date(sq_data$Date, &quot;%m%d%Y&quot;)</code></pre>
 </div>
+</div>
+</div>
+<div id="importing-with-a-data-dictionary" class="section level1">
+<h1>Importing with a Data Dictionary</h1>
 <p>The value of having a data dictionary in advance will go along ways
-in facilitating this process. A data dictionary generally describes key
-attributes about your data - it will list your variables, provide a
-description of them, and indicate the base type of data it is.</p>
+in facilitating this process.</p>
+<p>A data dictionary generally describes key attributes about your data
+- it will list your variables, provide a description of them, and
+indicate the base type of data it is.</p>
 <p>I have a very simple data dictionary for this project. Let’s load
 that in</p>
 <pre class="r"><code>dict_src &lt;- &quot;https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv&quot;
@@ -2115,6 +2154,13 @@ likely we’ll still find some issues with, but for now let’s save it as a
 cleaned, version 0</p>
 <pre class="r"><code>write.csv(sq_data, &quot;2018-cp_squirrel_census_cleaned_v0.csv&quot;, row.names = FALSE)</code></pre>
 </div>
+<div id="subsetting-derived-variables" class="section level1">
+<h1>Subsetting &amp; Derived Variables</h1>
+<p>subset()</p>
+</div>
+<div id="fixing-value-errors" class="section level1">
+<h1>Fixing Value Errors</h1>
+<p>ifelse()</p>
 </div>
 <div id="ggplot" class="section level1">
 <h1>ggplot</h1>
