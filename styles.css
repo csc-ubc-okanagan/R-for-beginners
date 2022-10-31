@@ -1,0 +1,116 @@
+/*Menus and links*/
+
+h2, h3 {
+  margin-top: 0px;
+}
+
+#BannerContainer {
+  background-color: #fff;
+}
+
+#CSCBanner {
+  width: 30% !important;
+  min-width: 500px !important;
+  display: block;
+  margin: auto;
+  padding: 30px 0px 20px 0px;
+  box-shadow: none;
+}
+
+a:link, a:visited, a:hover, a:active {
+  color: #8cacd4 !important;
+}
+
+.navbar a:link, .navbar a:visited, .navbar a:active {
+  color: #ffffff !important;
+}
+
+.navbar a:hover {
+  color: #8cacd4 !important;
+}
+
+#header {
+    padding-top: 30px !important;
+}
+
+.dropdown-menu {
+  background-color: #2e4c6d !important;
+}
+
+.active {
+  background-color: #2e4c6d !important;
+}
+
+.active > a, .open > a {
+  background-color: #8cacd4 !important;
+}
+
+.navbar .active a:hover, .navbar .open a:hover {
+  color: #ffffff !important;
+}
+
+.dropdown-menu > li > a:hover {
+  background-color: #8cacd4 !important;
+}
+
+.navbar-default {
+  background-color: #2e4c6d !important;
+}
+
+/*Call out boxes*/
+.note, .exercise, .solution, .summary {
+  padding: 10px;
+  margin: 20px 0px;
+  border-radius: 5px;
+  border-left: 8px;
+  border-left-style: solid;
+}
+
+.note p:first-of-type, .exercise p:first-of-type, .solution p:first-of-type, .summary p:first-of-type {
+  padding-top: 10px;
+}
+
+.note::before, .exercise::before, .solution::before, .summary::before {
+  font-weight: bold;
+  font-size: 120%;  
+}
+
+.note {
+  border-color: #0d4a7b;
+  background-color: #f0f7fd;
+}
+
+.note::before {
+  content: "Note";
+  color: #0d4a7b;
+}
+
+.exercise {
+  border-color: #3f007d;
+  background-color: #fcfbfd;
+}
+
+.exercise::before {
+  content: "Exercise";
+  color: #3f007d;
+}
+
+.solution {
+  border-color: #0d4a7b;
+  background-color: #f0f7fd;
+}
+
+.solution::before {
+  content: "Solution";
+  color: #0d4a7b;
+}
+
+.summary {
+  border-color: #67000d;
+  background-color: #fff5f0;
+}
+
+.summary::before {
+  content: "Summary";
+  color: #67000d;
+}

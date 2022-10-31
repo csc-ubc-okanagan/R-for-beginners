@@ -1,0 +1,41 @@
+---
+title: "Getting Help"
+---
+
+There are several ways to get help with R.
+
+## Built in Help
+
+In general, packages and their functions and data are pretty well documented.
+
+There are two primary ways to access this documentation from within R. The first is to load the help page of a known function, which will provide a brief overview of the function, the list of arguments it accepts, what defaults for these arguments are set to, related functions, and examples. To access these help pages, pre-pend the function name with a ?
+
+```{r help-demo, eval = FALSE}
+?mean
+```
+
+The second is to see if the package includes a vignette, which is a more in depth walk through and demonstration of the package or aspect of the package. To see a list of available vignettes for your installed packages
+
+```{r vignette-overview, eval = FALSE}
+vignette()
+```
+
+To load a specific vignette from the list
+
+```{r, vignette-load, eval = FALSE}
+vignette('datatable-faq')
+```
+
+## Blogs and Forums
+
+These can be hit and miss, but when they're a hit, they're invaluable.
+
+As a new user to R, they can also be a bit confusing, even if they're a hit. This is partly because there are many ways to solve the same problem when programming, so you'll likely see lots of different approaches, some of which are more familiar to you than others. The other is that R supports multiple syntaxes; that is, multiple ways of expressing or constructing the arguments that one puts together. This is kind of an unusual feature of R and something people struggle with. But as a result, you may see a solution that uses a different syntax than you're used to.
+
+The key here is to spend time reading blogs and forum responses and working your way through problems; the proposed solutions will start to make more sense with time and familiarity, just like learning any other language.
+
+The easiest portal to these resources is Google or a similar search engine.
+
+## Books
+
+There are books that are general all purpose introductions to R, books that address specific aspects of R such as visualizing data or performing statistics, books that address specific packages, and books that teach R using a problem based approach; these latter are referred to as 'cookbooks'. At UBC, one of your best portals to these books is the O'Rielly platform, accessible at [https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&id=2460](https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&id=2460).

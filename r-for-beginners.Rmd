@@ -476,6 +476,13 @@ write.csv(sq_data, "2018-cp_squirrel_census_cleaned_v0.csv", row.names = FALSE)
 
 # Subsetting & Derived Variables
 
+We often need to either add variables to a data set or subset a data set to work with fewer variables.
+
+## Adding variables
+
+
+
+Creating a new variable in a data frame is simply a matter of defining and populating a new variable. For example 
 subset()
 
 # Fixing Value Errors

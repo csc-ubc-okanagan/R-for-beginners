@@ -1,0 +1,19 @@
+name: "R for Beginners"
+navbar:
+  title: "R"
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "R & RStudio"
+      href: part_1.html
+    - text: "Data Types"
+      href: part_2.html
+    - text: "Functions & Variables"
+      href: part_3.html
+    - text: "Getting Help"
+      href: part_4.html
+    - text: "Loading Data"
+      href: part_5.html
+output:
+  html_document:
+    css: styles.css
