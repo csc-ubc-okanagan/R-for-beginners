@@ -273,6 +273,9 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
+<li>
+  <a href="part_8.html">Solutions</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -375,9 +378,6 @@ import.</p>
 can figure out how to update your data import -
 <code>sq_data &lt;- read.csv('2018-cp_squirrel_census.csv')</code> - to
 convert a list of strings to <code>NA</code> values.</p>
-</div>
-<div class="solution">
-<pre class="r"><code>sq_data &lt;- read.csv(&#39;2018-cp_squirrel_census.csv&#39;, na.strings = c(&quot;&quot;, &quot; &quot;, &quot;NA&quot;, &quot;NULL&quot;, &quot;.&quot;, &quot;+&quot;))</code></pre>
 </div>
 <p>Review the data structure again…</p>
 <pre class="r"><code>str(sq_data)</code></pre>
@@ -531,12 +531,12 @@ every value in the column.</p>
 list - known as vectorization. So, if we have a series of numbers - like
 we created on earlier with <code>random_sample</code></p>
 <pre class="r"><code>random_sample</code></pre>
-<pre><code>##  [1] 15 56 31 55 50 19 41 72 20 28  1 22 16  2 58 63 74 92 62 84</code></pre>
+<pre><code>##  [1] 34 17 44 50 21 75 44 17 11 50 47 90 18 32 20 33 79 45 14 59</code></pre>
 <p>And we want to convert every value, we apply the conversion to the
 entire vector</p>
 <pre class="r"><code>(random_sample_doubled &lt;- random_sample * 2)</code></pre>
-<pre><code>##  [1]  30 112  62 110 100  38  82 144  40  56   2  44  32   4 116 126 148 184 124
-## [20] 168</code></pre>
+<pre><code>##  [1]  68  34  88 100  42 150  88  34  22 100  94 180  36  64  40  66 158  90  28
+## [20] 118</code></pre>
 <p>The <code>apply</code> family of functions does exactly the same
 thing, but instead, in the case of <code>lapply</code>, taking in a
 single object, like <code>random_sample</code>, it takes in a list of
@@ -559,7 +559,7 @@ code:</p>
 <p>Writing it like this also allows you to articulate your problem in a
 language that can be searched if you don’t know how to complete a
 specific step.</p>
-<div class="note">
+<div class="advanced">
 <p>Without vectorization, you would need to specify how to iterate over
 each value in an object. Sometimes you still need to do this in R, so it
 might be handy to see how this works. Working with a plain language
@@ -584,8 +584,8 @@ for (i in 1:length(random_sample)) { # iterate with a for loop starting with the
 }
 
 random_sample_multi # print the result to verify</code></pre>
-<pre><code>##  [1]  30 112  62 110 100  38  82 144  40  56   2  44  32   4 116 126 148 184 124
-## [20] 168</code></pre>
+<pre><code>##  [1]  68  34  88 100  42 150  88  34  22 100  94 180  36  64  40  66 158  90  28
+## [20] 118</code></pre>
 </div>
 <div class="exercise">
 <p><code>read.csv</code> allows us to assign variable types on import.
@@ -594,14 +594,6 @@ can update your import line -
 <code>sq_data &lt;- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))</code>
 to also convert the columns ‘Running’, ‘Chasing’, and “Climbing” to
 logical on import.</p>
-</div>
-<div class="solution">
-<pre class="r"><code>sq_data &lt;- read.csv(&#39;2018-cp_squirrel_census.csv&#39;,
-                    na.strings = c(&quot;&quot;, &quot; &quot;, &quot;NA&quot;, &quot;NULL&quot;, &quot;.&quot;, &quot;+&quot;),
-                    colClasses = c(&quot;Chasing&quot; = &quot;logical&quot;,
-                                   &quot;Running&quot; = &quot;logical&quot;,
-                                   &quot;Climbing&quot; = &quot;logical&quot;)
-                    )</code></pre>
 </div>
 </div>
 <div id="dates-and-factors" class="section level2">
@@ -622,16 +614,6 @@ categories. Calling <code>levels</code> lists those categories.</p>
 <p>Using the help page for <code>as.Date</code>, convert the Date
 variable, currently structured as <code>int</code> to a date class
 variable.</p>
-</div>
-<div class="solution">
-<p><code>as.Date</code> requires a character input, so we must first
-convert our variable to a chacter format</p>
-<pre class="r"><code>sq_data$Date &lt;- as.character(sq_data$Date)</code></pre>
-<p>Next, we need to specify to <code>as.Date</code> how our data is
-structured - where the year, month, and date are articulated, and
-whether the year is 4 digits or 2, and the months and days are
-abbreviated.</p>
-<pre class="r"><code>sq_data$Date &lt;- as.Date(sq_data$Date, &quot;%m%d%Y&quot;)</code></pre>
 </div>
 </div>
 </div>
@@ -691,6 +673,12 @@ str(sq_data)</code></pre>
 likely we’ll still find some issues with, but for now let’s save it as a
 cleaned, version 0</p>
 <pre class="r"><code>write.csv(sq_data, &quot;2018-cp_squirrel_census_cleaned_v0.csv&quot;, row.names = FALSE)</code></pre>
+<div class="summary">
+<p>On import, we can control many aspects of our data set, including
+setting NA values and assigning datat types and classes. This work is
+facilitated by being organized in advance. Creating a data dictionary
+will help to facilitate this process.</p>
+</div>
 </div>
 
 

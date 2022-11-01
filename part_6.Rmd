@@ -25,29 +25,30 @@ First, we'll create a list of existing variable names for our data set
 <div class = 'exercise'>
 This is a two parter.
 
-First, re-label 'Above.Ground.Sighter.Measurement' to be more concise and indicate its scale; in fact, relable it to "agsm.f". This is a vector, so we'll want to use indexing by number.
+First, re-label 'Above.Ground.Sighter.Measurement' to be more concise and indicate its scale; in fact, re-label it to `agsm.f`. This is a vector, so we'll want to use indexing by number.
 
 Second, using `colnames()`, update the variable names of `sq_data` to match those now in the vector `sq_colnames`.
 
 A plain language approach to this might be:
 
 1. Identify the index position of 'Above.Ground.Sighter.Measurement' in `sq_colnames`.
-2. Re-assign the value associated with this index point to 'agsm.f'
+2. Re-assign the value associated with this index point to `agsm.f`
 3. Re-assign the variables of `sq_data` to `sq_colnames`
-</div>
-
-<div class = "solution">
-```{r}
-sq_colnames # list the columns and their index numbers
-sq_colnames[14] <- "agsm.f" # change the value at index point 14 to 'agsm.f'
-colnames(sq_data) <- sq_colnames # re-assign the values in colnames(sq_data) to match those in sq_colnames
-```
 </div>
 
 We now have any easy variable name to type and adapt!
 
 Creating a new variable in a dataframe is simply a matter of assigning some values to the desired varibale.
 
+```{r, echo = FALSE}
+sq_colnames[14] <- "agsm.f" # change the value at index point 14 to 'agsm.f'
+colnames(sq_data) <- sq_colnames # re-assign the values in colnames(sq_data) to match those in sq_colnames
+```
+
 ```{r}
 sq_data$agsm.m <- sq_data$agsm.f * .3048 # create the variable agsm.m and populate it with the values in agsm.f times .3048
 ```
+
+<div class = 'summary'>
+Occasionally we need to rename variables, but when doing so we should be wary about cascading impacts on our documentation. We can quite easily add variables to an existing data set, when working with derived values, this is a good approach.
+</div>

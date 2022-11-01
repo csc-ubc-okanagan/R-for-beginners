@@ -18,6 +18,8 @@ navbar:
       href: part_6.html
     - text: "Subsetting"
       href: part_7.html
+    - text: "Solutions"
+      href: part_8.html
 output:
   html_document:
     css: styles.css

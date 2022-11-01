@@ -1,0 +1,122 @@
+---
+title: Solutions
+---
+
+## Functions & Variables
+
+<div class = 'exercise'>
+Let's build our own function that calculates a mean to see what's all happening under the hood.
+
+First we define the mean as the sum of all data points divided by the number of data points. We'll leverage two existing functions, `sum()` and `length()`, the former of which performs simple addition and the latter of which tells us how many data points are in a vector.
+</div>
+
+<div class = 'solution'>
+```{r mean-function}
+# define our function. The function takes one input, which is a data source, it then add all the data points together and divides it by the number of data points.
+# the function is stored in a variable called my_mean
+my_mean <- function(data) {
+  total <- sum(data) # add the data
+  n = length(data) # count the data
+  calculation = total/n # do the math
+  calculation # print the output
+}
+
+my_data <- sample(1:100, 20, replace = F) # generate some data
+
+my_mean(my_data) # calculate the mean using my_mean
+```
+
+## Loading Data
+
+<div class = 'exercise'>
+Using the help documentation - `?read.csv` - see if you can figure out how to update your data import - `sq_data <- read.csv('2018-cp_squirrel_census.csv')` - to convert a list of strings to `NA` values.
+</div>
+
+<div class = 'solution'>
+```{r}
+sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))
+```
+</div>
+
+<div class = 'exercise'>
+`read.csv` allows us to assign variable types on import. Revisit the help documentation for `read.csv` and see if you can update your import line - `sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` to also convert the columns 'Running', 'Chasing', and "Climbing" to logical on import.
+</div>
+
+<div class = 'solution'>
+```{r}
+sq_data <- read.csv('2018-cp_squirrel_census.csv',
+                    na.strings = c("", " ", "NA", "NULL", ".", "+"),
+                    colClasses = c("Chasing" = "logical",
+                                   "Running" = "logical",
+                                   "Climbing" = "logical")
+                    )
+```
+</div>
+
+<div class = 'exercise'>
+Using the help page for `as.Date`, convert the Date variable, currently structured as `int` to a date class variable.
+</div>
+
+<div class = 'solution'>
+`as.Date` requires a character input, so we must first convert our variable to a chacter format
+```{r}
+sq_data$Date <- as.character(sq_data$Date)
+```
+
+Next, we need to specify to `as.Date` how our data is structured - where the year, month, and date are articulated, and whether the year is 4 digits or 2, and the months and days are abbreviated.
+
+```{r}
+sq_data$Date <- as.Date(sq_data$Date, "%m%d%Y")
+```
+</div>
+
+## Adding & Naming Variables
+
+<div class = 'exercise'>
+This is a two parter.
+
+First, re-label 'Above.Ground.Sighter.Measurement' to be more concise and indicate its scale; in fact, relable it to "agsm.f". This is a vector, so we'll want to use indexing by number.
+
+Second, using `colnames()`, update the variable names of `sq_data` to match those now in the vector `sq_colnames`.
+
+A plain language approach to this might be:
+
+1. Identify the index position of 'Above.Ground.Sighter.Measurement' in `sq_colnames`.
+2. Re-assign the value associated with this index point to 'agsm.f'
+3. Re-assign the variables of `sq_data` to `sq_colnames`
+</div>
+
+<div class = "solution">
+```{r}
+sq_colnames # list the columns and their index numbers
+sq_colnames[14] <- "agsm.f" # change the value at index point 14 to 'agsm.f'
+colnames(sq_data) <- sq_colnames # re-assign the values in colnames(sq_data) to match those in sq_colnames
+```
+</div>
+
+## Subsetting
+
+<div class = 'exercise'>
+Using the above as a model, take a random sample of ten observations (rows) from `sq_data`.
+</div>
+
+<div class = 'solution'>
+```{r}
+sq_data_random_sample <- sq_data[sample(1:3023, 10),] #or
+sq_data_random_sample <- sq_data[sample(1:length(sq_data), 10),]
+```
+</div>
+
+<div class = 'exercise'>
+All data was collected between October 6 and October 20, 2018.  Create a subset of the data that includes only data collected on or before October 14, and only retains the variables `Date` and `Age`. Verify your date range output with `unique()` and if you get that far, order this output from `unique()` using `sort()` for easier reading.
+
+Remember that we have not yet converted our `Date` variable to a date class. 
+</div>
+
+<div class = 'solution'>
+```{r}
+sq_data$Date <- as.Date(sq_data$Date, "%m%d%Y")
+sq_data_date <- subset(sq_data, sq_data$Date <= "2018-10-14")
+sort(unique(sq_data_date$Date))
+```
+</div>

@@ -8,22 +8,10 @@ There are several ways to get help with R.
 
 In general, packages and their functions and data are pretty well documented.
 
-There are two primary ways to access this documentation from within R. The first is to load the help page of a known function, which will provide a brief overview of the function, the list of arguments it accepts, what defaults for these arguments are set to, related functions, and examples. To access these help pages, pre-pend the function name with a ?
+There are several ways to access this documentation from within R. The one we'll use frequently here is to load the help page of a known function, which will provide a brief overview of the function, the list of arguments it accepts, what defaults for these arguments are set to, related functions, and examples. To access these help pages, pre-pend the function name with a `?`
 
 ```{r help-demo, eval = FALSE}
 ?mean
-```
-
-The second is to see if the package includes a vignette, which is a more in depth walk through and demonstration of the package or aspect of the package. To see a list of available vignettes for your installed packages
-
-```{r vignette-overview, eval = FALSE}
-vignette()
-```
-
-To load a specific vignette from the list
-
-```{r, vignette-load, eval = FALSE}
-vignette('datatable-faq')
 ```
 
 ## Blogs and Forums

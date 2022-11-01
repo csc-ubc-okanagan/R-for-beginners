@@ -44,25 +44,6 @@ Let's build our own function that calculates a mean to see what's all happening 
 First we define the mean as the sum of all data points divided by the number of data points. We'll leverage two existing functions, `sum()` and `length()`, the former of which performs simple addition and the latter of which tells us how many data points are in a vector.
 </div>
 
-<div class = 'solution'>
-```{r mean-function}
-# define our function. The function takes one input, which is a data source, it then add all the data points together and divides it by the number of data points.
-# the function is stored in a variable called my_mean
-my_mean <- function(data) {
-  total <- sum(data) # add the data
-  n = length(data) # count the data
-  calculation = total/n # do the math
-  calculation # print the output
-}
-
-my_data <- sample(1:100, 20, replace = F) # generate some data
-
-my_mean(my_data) # calculate the mean using my_mean
-```
-
-Most functions--including the built in `mean()` are much more robust than this, but we get the basic idea!
-</div>
-
 <div class = 'summary'>
 Functions take in data and do things with that data. Variables allow us to store our data for easy access.
 </div>

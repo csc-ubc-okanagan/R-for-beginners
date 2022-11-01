@@ -273,6 +273,9 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
+<li>
+  <a href="part_8.html">Solutions</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -297,12 +300,72 @@ sq_data_sounds &lt;- sq_data[,22:24] # select multiple columns</code></pre>
 <p>Using the above as a model, take a random sample of ten observations
 (rows) from <code>sq_data</code>.</p>
 </div>
-<div class="solution">
-<pre class="r"><code>sq_data_random_sample &lt;- sq_data[sample(1:3023, 10),] #or
-sq_data_random_sample &lt;- sq_data[sample(1:length(sq_data), 10),]</code></pre>
+<p>Subsetting on conditions can be achieved with <code>subset()</code>.
+We’ll provide <code>subset()</code> with three arguments:</p>
+<ol style="list-style-type: decimal">
+<li>A data set to subset from</li>
+<li>The condition on which to subset</li>
+<li>The variables from the original data set to keep - leave this empty
+to default to all original variables</li>
+</ol>
+<div class="note">
+<p>R allows us to specify several conditions</p>
+<ul>
+<li>less than <code>&gt;</code></li>
+<li>greater than <code>&lt;</code></li>
+<li>less than or equal to <code>&lt;=</code></li>
+<li>greater than or equal <code>&gt;=</code></li>
+<li>equivalent to <code>==</code></li>
+<li>not equivalent to <code>!=</code></li>
+<li>or <code>|</code></li>
+</ul>
+<p>Note that <code>=</code> is equivalent to <code>&lt;-</code>, setting
+a value, while <code>==</code> tests whether or not two things are the
+same.</p>
+<pre class="r"><code>(x = 2)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>(x == 2)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 </div>
-<p>Subsetting on conditions can be achieved with
-<code>subset()</code>.</p>
+<p>Let’s say we only want to see the records for adult squirrels.</p>
+<pre class="r"><code>sq_data_adult &lt;- subset(sq_data, sq_data$Age == &quot;Adult&quot;) # from sq_data, select only rows where Age equals Adult</code></pre>
+<p>Or all records with cinnamon coloured adult squirrels.</p>
+<pre class="r"><code>sq_data_c_adult &lt;- subset(sq_data, sq_data$Age == &quot;Adult&quot; &amp; sq_data$Primary.Fur.Color == &quot;Cinnamon&quot;)</code></pre>
+<p>Or all records where an age has been recorded. This can be done in
+two ways</p>
+<pre class="r"><code>sq_data_age_1 &lt;- subset(sq_data, !is.na(sq_data$Age))
+
+sq_data_age_2 &lt;- subset(sq_data, sq_data$Age == &quot;Adult&quot; | sq_data$Age == &quot;Juvenile&quot;)</code></pre>
+<div class="note">
+<p>Remember, <code>NA</code> values are a special value, indicating that
+a value is missing. This is different from writing the characters NA.
+<code>is.na()</code> tests for <code>NA</code>. It’s for this reason
+that running <code>subset(sq_data, sq_data$Age == 'NA')</code> will give
+you an empty data frame.</p>
+</div>
+<p>Or maybe we want to investigate patterns of only those squirrels for
+which we don’t have age recorded!</p>
+<pre class="r"><code>sq_data_age_na &lt;- subset(sq_data, is.na(sq_data$Age))</code></pre>
+<p>Lastly, before an exercise, we might want only observations that are
+complete, that is, records with no missing values</p>
+<pre class="r"><code>sq_data_complete &lt;- sq_data[complete.cases(sq_data), ] # not terribly useful with this particular data set</code></pre>
+<div class="exercise">
+<p>All data was collected between October 6 and October 20, 2018. Create
+a subset of the data that includes only data collected on or before
+October 14, and only retains the variables <code>Date</code> and
+<code>Age</code>. Verify your date range output with
+<code>unique()</code> and if you get that far, order this output from
+<code>unique()</code> using <code>sort()</code> for easier reading.</p>
+<p>Remember that we have not yet converted our <code>Date</code>
+variable to a date class.</p>
+</div>
+<div class="summary">
+<p>Subsetting can be achieved in many ways. We can use indexing to get
+specific observations (rows) and / or variable (columns), we can use
+other functions like <code>is.na()</code> and
+<code>complete.cases()</code> to work around missing values, and we can
+use <code>subset()</code> to conditionally subset.</p>
+</div>
 
 
 
