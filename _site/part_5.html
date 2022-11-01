@@ -267,6 +267,12 @@ $(document).ready(function () {
 <li>
   <a href="part_5.html">Loading Data</a>
 </li>
+<li>
+  <a href="part_6.html">Adding &amp; Naming Variables</a>
+</li>
+<li>
+  <a href="part_7.html">Subsetting</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -359,10 +365,11 @@ might include either <code>NA</code> or <code>NULL</code>.</p>
 of these notations for missing values are converted to character strings
 or numbers. Ideally, when importing into a piece of software, like R, we
 would have a way to provide a list of possible ways of encoding missing
-values and standardize how these are presented. In R, <code>NA</code>
-values are a specific way of indicating that a value is missing. And
-<code>read.csv()</code> has a specific argument for converting strings
-into <code>NA</code> encoded values on import.</p>
+values and standardize how these are presented.</p>
+<p>In R, <code>NA</code> values are a specific way of indicating that a
+value is missing. And <code>read.csv()</code> has a specific argument
+for converting strings into <code>NA</code> encoded values on
+import.</p>
 <div class="exercise">
 <p>Using the help documentation - <code>?read.csv</code> - see if you
 can figure out how to update your data import -
@@ -524,12 +531,12 @@ every value in the column.</p>
 list - known as vectorization. So, if we have a series of numbers - like
 we created on earlier with <code>random_sample</code></p>
 <pre class="r"><code>random_sample</code></pre>
-<pre><code>##  [1]  4 75 92 14 31  6 56 32 42 15 59 18 62 37 26 87 20 53 22 40</code></pre>
+<pre><code>##  [1] 15 56 31 55 50 19 41 72 20 28  1 22 16  2 58 63 74 92 62 84</code></pre>
 <p>And we want to convert every value, we apply the conversion to the
 entire vector</p>
 <pre class="r"><code>(random_sample_doubled &lt;- random_sample * 2)</code></pre>
-<pre><code>##  [1]   8 150 184  28  62  12 112  64  84  30 118  36 124  74  52 174  40 106  44
-## [20]  80</code></pre>
+<pre><code>##  [1]  30 112  62 110 100  38  82 144  40  56   2  44  32   4 116 126 148 184 124
+## [20] 168</code></pre>
 <p>The <code>apply</code> family of functions does exactly the same
 thing, but instead, in the case of <code>lapply</code>, taking in a
 single object, like <code>random_sample</code>, it takes in a list of
@@ -577,8 +584,8 @@ for (i in 1:length(random_sample)) { # iterate with a for loop starting with the
 }
 
 random_sample_multi # print the result to verify</code></pre>
-<pre><code>##  [1]   8 150 184  28  62  12 112  64  84  30 118  36 124  74  52 174  40 106  44
-## [20]  80</code></pre>
+<pre><code>##  [1]  30 112  62 110 100  38  82 144  40  56   2  44  32   4 116 126 148 184 124
+## [20] 168</code></pre>
 </div>
 <div class="exercise">
 <p><code>read.csv</code> allows us to assign variable types on import.

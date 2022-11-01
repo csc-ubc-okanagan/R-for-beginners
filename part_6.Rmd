@@ -1,0 +1,53 @@
+---
+title: Adding & Naming Variables
+---
+
+Occasionally we need to derive variables form existing information. A good example of this is conversion between scales. With our current data set, the variable "Above.Ground.Sight.Measurement" is ostensibly in feet - the data dictionary could be clearer about this. To bring this to a Canadian context, we might need these measurements in a metric equivalent.
+
+To do this, we could simply multiple the vector by 0.3048
+
+```{r eval = FALSE}
+sq_data$Above.Ground.Sighter.Measurement <- sq_data$Above.Ground.Sighter.Measurement * .3048
+```
+
+It is generally good practice not to overwrite data however. At least not while one is testing things out to makes sure they work!
+
+An alternative approach would be to create a new variable and to populate it with the converted values, this way we have the measurements in their untouched imperial scale as well as their modified metric scale.
+
+This exercise will allow us to explore a couple of issues. The first is that our variable names with this data set are often quite verbose, not ideal for coding. So first we'll make some changes to our variable names, keeping in mind of course that this is something we should have been thinking about from the beginning when we created our data dictionary! In any case, this is good practice.
+
+First, we'll create a list of existing variable names for our data set
+
+```{r}
+(sq_colnames <- colnames(sq_data))
+```
+
+<div class = 'exercise'>
+This is a two parter.
+
+First, re-label 'Above.Ground.Sighter.Measurement' to be more concise and indicate its scale; in fact, relable it to "agsm.f". This is a vector, so we'll want to use indexing by number.
+
+Second, using `colnames()`, update the variable names of `sq_data` to match those now in the vector `sq_colnames`.
+
+A plain language approach to this might be:
+
+1. Identify the index position of 'Above.Ground.Sighter.Measurement' in `sq_colnames`.
+2. Re-assign the value associated with this index point to 'agsm.f'
+3. Re-assign the variables of `sq_data` to `sq_colnames`
+</div>
+
+<div class = "solution">
+```{r}
+sq_colnames # list the columns and their index numbers
+sq_colnames[14] <- "agsm.f" # change the value at index point 14 to 'agsm.f'
+colnames(sq_data) <- sq_colnames # re-assign the values in colnames(sq_data) to match those in sq_colnames
+```
+</div>
+
+We now have any easy variable name to type and adapt!
+
+Creating a new variable in a dataframe is simply a matter of assigning some values to the desired varibale.
+
+```{r}
+sq_data$agsm.m <- sq_data$agsm.f * .3048 # create the variable agsm.m and populate it with the values in agsm.f times .3048
+```

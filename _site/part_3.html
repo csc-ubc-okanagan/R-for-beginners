@@ -267,6 +267,12 @@ $(document).ready(function () {
 <li>
   <a href="part_5.html">Loading Data</a>
 </li>
+<li>
+  <a href="part_6.html">Adding &amp; Naming Variables</a>
+</li>
+<li>
+  <a href="part_7.html">Subsetting</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -294,7 +300,7 @@ function that takes 3 basic arguments: a range of values to sample from,
 the size of the sample, and whether or not values in the sample can be
 duplicated.</p>
 <pre class="r"><code>(sample(1:100, 10, replace = TRUE))</code></pre>
-<pre><code>##  [1]  9 25 93 11 34 94  9 74 10 84</code></pre>
+<pre><code>##  [1] 87 70 64 93 13 62 86 37 68 70</code></pre>
 <div class="note">
 <p>Other functions to create random samples include <code>runif()</code>
 for uniformly distributed data and <code>rnorm()</code> for normally
@@ -319,10 +325,10 @@ direct that output to a variable.</p>
 allowing us to store our data for easy access.</p>
 <pre class="r"><code>random_sample &lt;- sample(1:100, 20, replace =TRUE) # generate a random sample of 20 data points and store it in a variable called random_sample
 random_sample # call random_sample which outputs the values to the screen</code></pre>
-<pre><code>##  [1]  4 75 92 14 31  6 56 32 42 15 59 18 62 37 26 87 20 53 22 40</code></pre>
+<pre><code>##  [1] 15 56 31 55 50 19 41 72 20 28  1 22 16  2 58 63 74 92 62 84</code></pre>
 <pre class="r"><code>random_sample_mean &lt;- mean(random_sample) # calculate the mean of random_sample and store it in a variable called random_sample_mean
 random_sample_mean # call random_sample_mean which outputs the values to the screen</code></pre>
-<pre><code>## [1] 39.55</code></pre>
+<pre><code>## [1] 43.05</code></pre>
 <div class="exercise">
 <p>Let’s build our own function that calculates a mean to see what’s all
 happening under the hood.</p>
@@ -345,7 +351,7 @@ my_mean &lt;- function(data) {
 my_data &lt;- sample(1:100, 20, replace = F) # generate some data
 
 my_mean(my_data) # calculate the mean using my_mean</code></pre>
-<pre><code>## [1] 47.5</code></pre>
+<pre><code>## [1] 57</code></pre>
 <p>Most functions–including the built in <code>mean()</code> are much
 more robust than this, but we get the basic idea!</p>
 </div>

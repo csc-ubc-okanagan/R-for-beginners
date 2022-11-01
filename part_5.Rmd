@@ -56,7 +56,9 @@ This output tells us that we're working with a data frame, that there are 3023 r
 
 Before digging much deeper into the data set, one of the first things we'll note is that there are a lot of missing values. Missing values need to be properly encoded to be programatically useful. An application - or user - may represent missing values in many ways. Sometimes it's by using an out of range value, so when a variable is binary, and values are represented as 0 or 1, 99 is often used to indicate a missing value. Files exported from SPSS might be encoded with a period - `.`. In Excel, it's extremely easy for a user to accidentally introduce spaces - ` ` - in an otherwise empty cell, or they may choose to write the characters `NA`. A data base export might include either `NA` or `NULL`.
 
-When exported, especially using a format like `csv`, all of these notations for missing values are converted to character strings or numbers. Ideally, when importing into a piece of software, like R, we would have a way to provide a list of possible ways of encoding missing values and standardize how these are presented. In R, `NA` values are a specific way of indicating that a value is missing. And `read.csv()` has a specific argument for converting strings into `NA` encoded values on import.
+When exported, especially using a format like `csv`, all of these notations for missing values are converted to character strings or numbers. Ideally, when importing into a piece of software, like R, we would have a way to provide a list of possible ways of encoding missing values and standardize how these are presented.
+
+In R, `NA` values are a specific way of indicating that a value is missing. And `read.csv()` has a specific argument for converting strings into `NA` encoded values on import.
 
 <div class = 'exercise'>
 Using the help documentation - `?read.csv` - see if you can figure out how to update your data import - `sq_data <- read.csv('2018-cp_squirrel_census.csv')` - to convert a list of strings to `NA` values.
