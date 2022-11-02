@@ -11,12 +11,12 @@
 
 
 
-<title>Subsetting</title>
+<title>Adding &amp; Naming Variables</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -30,7 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
@@ -242,7 +242,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">R</a>
+      <a class="navbar-brand" href="index.html">R for Beginners</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -285,86 +285,92 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Subsetting</h1>
+<h1 class="title toc-ignore">Adding &amp; Naming Variables</h1>
 
 </div>
 
 
-<p>Another common activity is subsetting data - isolating a portion of
-the data, usually based on a condition. There are a few different ways
-we can subset in R, one of which we’ve already kind of seen with
-indexing, we just didn’t assign the output to a variable.</p>
-<pre class="r"><code>sq_data_age &lt;- sq_data$Age # select one column
-sq_data_sounds &lt;- sq_data[,22:24] # select multiple columns</code></pre>
+<p>Occasionally we need to derive variables form existing information. A
+good example of this is conversion between scales. With our current data
+set, the variable “Above.Ground.Sight.Measurement” is ostensibly in feet
+- the data dictionary could be clearer about this. To bring this to a
+Canadian context, we might need these measurements in a metric
+equivalent.</p>
+<p>To do this, we could simply multiple the vector by 0.3048</p>
+<pre class="r"><code>sq_data$Above.Ground.Sighter.Measurement &lt;- sq_data$Above.Ground.Sighter.Measurement * .3048</code></pre>
+<p>It is generally good practice not to overwrite data however. At least
+not while one is testing things out to makes sure they work!</p>
+<p>An alternative approach would be to create a new variable and to
+populate it with the converted values, this way we have the measurements
+in their untouched imperial scale as well as their modified metric
+scale.</p>
+<p>This exercise will allow us to explore a couple of issues. The first
+is that our variable names with this data set are often quite verbose,
+not ideal for coding. So first we’ll make some changes to our variable
+names, keeping in mind of course that this is something we should have
+been thinking about from the beginning when we created our data
+dictionary! In any case, this is good practice.</p>
+<p>First, we’ll create a list of existing variable names for our data
+set</p>
+<pre class="r"><code>(sq_colnames &lt;- colnames(sq_data))</code></pre>
+<pre><code>##  [1] &quot;X&quot;                                         
+##  [2] &quot;Y&quot;                                         
+##  [3] &quot;Unique.Squirrel.ID&quot;                        
+##  [4] &quot;Hectare&quot;                                   
+##  [5] &quot;Shift&quot;                                     
+##  [6] &quot;Date&quot;                                      
+##  [7] &quot;Hectare.Squirrel.Number&quot;                   
+##  [8] &quot;Age&quot;                                       
+##  [9] &quot;Primary.Fur.Color&quot;                         
+## [10] &quot;Highlight.Fur.Color&quot;                       
+## [11] &quot;Combination.of.Primary.and.Highlight.Color&quot;
+## [12] &quot;Color.notes&quot;                               
+## [13] &quot;Location&quot;                                  
+## [14] &quot;Above.Ground.Sighter.Measurement&quot;          
+## [15] &quot;Specific.Location&quot;                         
+## [16] &quot;Running&quot;                                   
+## [17] &quot;Chasing&quot;                                   
+## [18] &quot;Climbing&quot;                                  
+## [19] &quot;Eating&quot;                                    
+## [20] &quot;Foraging&quot;                                  
+## [21] &quot;Other.Activities&quot;                          
+## [22] &quot;Kuks&quot;                                      
+## [23] &quot;Quaas&quot;                                     
+## [24] &quot;Moans&quot;                                     
+## [25] &quot;Tail.flags&quot;                                
+## [26] &quot;Tail.twitches&quot;                             
+## [27] &quot;Approaches&quot;                                
+## [28] &quot;Indifferent&quot;                               
+## [29] &quot;Runs.from&quot;                                 
+## [30] &quot;Other.Interactions&quot;                        
+## [31] &quot;Lat.Long&quot;</code></pre>
 <div class="exercise">
-<p>Using the above as a model, take a random sample of ten observations
-(rows) from <code>sq_data</code>.</p>
-</div>
-<p>Subsetting on conditions can be achieved with <code>subset()</code>.
-We’ll provide <code>subset()</code> with three arguments:</p>
+<p>This is a two parter.</p>
+<p>First, re-label ‘Above.Ground.Sighter.Measurement’ to be more concise
+and indicate its scale; in fact, re-label it to <code>agsm.f</code>.
+This is a vector, so we’ll want to use indexing by number.</p>
+<p>Second, using <code>colnames()</code>, update the variable names of
+<code>sq_data</code> to match those now in the vector
+<code>sq_colnames</code>.</p>
+<p>A plain language approach to this might be:</p>
 <ol style="list-style-type: decimal">
-<li>A data set to subset from</li>
-<li>The condition on which to subset</li>
-<li>The variables from the original data set to keep - leave this empty
-to default to all original variables</li>
+<li>Identify the index position of ‘Above.Ground.Sighter.Measurement’ in
+<code>sq_colnames</code>.</li>
+<li>Re-assign the value associated with this index point to
+<code>agsm.f</code></li>
+<li>Re-assign the variables of <code>sq_data</code> to
+<code>sq_colnames</code></li>
 </ol>
-<div class="note">
-<p>R allows us to specify several conditions</p>
-<ul>
-<li>less than <code>&gt;</code></li>
-<li>greater than <code>&lt;</code></li>
-<li>less than or equal to <code>&lt;=</code></li>
-<li>greater than or equal <code>&gt;=</code></li>
-<li>equivalent to <code>==</code></li>
-<li>not equivalent to <code>!=</code></li>
-<li>or <code>|</code></li>
-</ul>
-<p>Note that <code>=</code> is equivalent to <code>&lt;-</code>, setting
-a value, while <code>==</code> tests whether or not two things are the
-same.</p>
-<pre class="r"><code>(x = 2)</code></pre>
-<pre><code>## [1] 2</code></pre>
-<pre class="r"><code>(x == 2)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
 </div>
-<p>Let’s say we only want to see the records for adult squirrels.</p>
-<pre class="r"><code>sq_data_adult &lt;- subset(sq_data, sq_data$Age == &quot;Adult&quot;) # from sq_data, select only rows where Age equals Adult</code></pre>
-<p>Or all records with cinnamon coloured adult squirrels.</p>
-<pre class="r"><code>sq_data_c_adult &lt;- subset(sq_data, sq_data$Age == &quot;Adult&quot; &amp; sq_data$Primary.Fur.Color == &quot;Cinnamon&quot;)</code></pre>
-<p>Or all records where an age has been recorded. This can be done in
-two ways</p>
-<pre class="r"><code>sq_data_age_1 &lt;- subset(sq_data, !is.na(sq_data$Age))
-
-sq_data_age_2 &lt;- subset(sq_data, sq_data$Age == &quot;Adult&quot; | sq_data$Age == &quot;Juvenile&quot;)</code></pre>
-<div class="note">
-<p>Remember, <code>NA</code> values are a special value, indicating that
-a value is missing. This is different from writing the characters NA.
-<code>is.na()</code> tests for <code>NA</code>. It’s for this reason
-that running <code>subset(sq_data, sq_data$Age == 'NA')</code> will give
-you an empty data frame.</p>
-</div>
-<p>Or maybe we want to investigate patterns of only those squirrels for
-which we don’t have age recorded!</p>
-<pre class="r"><code>sq_data_age_na &lt;- subset(sq_data, is.na(sq_data$Age))</code></pre>
-<p>Lastly, before an exercise, we might want only observations that are
-complete, that is, records with no missing values</p>
-<pre class="r"><code>sq_data_complete &lt;- sq_data[complete.cases(sq_data), ] # not terribly useful with this particular data set</code></pre>
-<div class="exercise">
-<p>All data was collected between October 6 and October 20, 2018. Create
-a subset of the data that includes only data collected on or before
-October 14, and only retains the variables <code>Date</code> and
-<code>Age</code>. Verify your date range output with
-<code>unique()</code> and if you get that far, order this output from
-<code>unique()</code> using <code>sort()</code> for easier reading.</p>
-<p>Remember that we have not yet converted our <code>Date</code>
-variable to a date class.</p>
-</div>
+<p>We now have any easy variable name to type and adapt!</p>
+<p>Creating a new variable in a dataframe is simply a matter of
+assigning some values to the desired varibale.</p>
+<pre class="r"><code>sq_data$agsm.m &lt;- sq_data$agsm.f * .3048 # create the variable agsm.m and populate it with the values in agsm.f times .3048</code></pre>
 <div class="summary">
-<p>Subsetting can be achieved in many ways. We can use indexing to get
-specific observations (rows) and / or variable (columns), we can use
-other functions like <code>is.na()</code> and
-<code>complete.cases()</code> to work around missing values, and we can
-use <code>subset()</code> to conditionally subset.</p>
+<p>Occasionally we need to rename variables, but when doing so we should
+be wary about cascading impacts on our documentation. We can quite
+easily add variables to an existing data set, when working with derived
+values, this is a good approach.</p>
 </div>
 
 

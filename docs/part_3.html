@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -30,7 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
@@ -242,7 +242,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">R</a>
+      <a class="navbar-brand" href="index.html">R for Beginners</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -303,7 +303,7 @@ function that takes 3 basic arguments: a range of values to sample from,
 the size of the sample, and whether or not values in the sample can be
 duplicated.</p>
 <pre class="r"><code>(sample(1:100, 10, replace = TRUE))</code></pre>
-<pre><code>##  [1] 35 61 49 17 38 89 86 56 88  5</code></pre>
+<pre><code>##  [1] 41 44 60 18 99 81 69 76 10 22</code></pre>
 <div class="note">
 <p>Other functions to create random samples include <code>runif()</code>
 for uniformly distributed data and <code>rnorm()</code> for normally
@@ -328,10 +328,10 @@ direct that output to a variable.</p>
 allowing us to store our data for easy access.</p>
 <pre class="r"><code>random_sample &lt;- sample(1:100, 20, replace =TRUE) # generate a random sample of 20 data points and store it in a variable called random_sample
 random_sample # call random_sample which outputs the values to the screen</code></pre>
-<pre><code>##  [1] 34 17 44 50 21 75 44 17 11 50 47 90 18 32 20 33 79 45 14 59</code></pre>
+<pre><code>##  [1] 65 43  6  4 12 83 11 84 29 40 16 10 64 69 30 25 24 38 80 84</code></pre>
 <pre class="r"><code>random_sample_mean &lt;- mean(random_sample) # calculate the mean of random_sample and store it in a variable called random_sample_mean
 random_sample_mean # call random_sample_mean which outputs the values to the screen</code></pre>
-<pre><code>## [1] 40</code></pre>
+<pre><code>## [1] 40.85</code></pre>
 <div class="exercise">
 <p>Let’s build our own function that calculates a mean to see what’s all
 happening under the hood.</p>

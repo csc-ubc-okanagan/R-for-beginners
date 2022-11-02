@@ -1,6 +1,9 @@
 name: "R for Beginners"
+date: "2022-11-14"
+output_dir: "docs"
+exclude: ["files", "*.csv"]
 navbar:
-  title: "R"
+  title: "R for Beginners"
   right:
     - text: "Home"
       href: index.html
@@ -22,4 +25,6 @@ navbar:
       href: part_8.html
 output:
   html_document:
+    theme: flatly
+    highlight: textmate
     css: styles.css
