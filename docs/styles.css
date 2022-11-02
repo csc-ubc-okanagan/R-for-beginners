@@ -66,11 +66,11 @@ a:link, a:visited, a:hover, a:active {
   border-left-style: solid;
 }
 
-.note p:first-of-type, .exercise p:first-of-type, .solution p:first-of-type, .summary p:first-of-type, .advanced p:first-of-type {
+.note p:first-of-type, .exercise p:first-of-type, .solution p:first-of-type, .summary p:first-of-type, .advanced p:first-of-type, .functions p:first-of-type {
   padding-top: 10px;
 }
 
-.note::before, .exercise::before, .solution::before, .summary::before, .advanced::before {
+.note::before, .exercise::before, .solution::before, .summary::before, .advanced::before, .functions::before {
   font-weight: bold;
   font-size: 120%;  
 }
@@ -127,4 +127,14 @@ a:link, a:visited, a:hover, a:active {
 .advanced::before {
   content: "Advanced";
   color: #67000d;
+}
+
+.functions {
+  border-color: #000000;
+  background-color: #ffffff;
+}
+
+.functions::before {
+  content: "Functions";
+  color: #000000;
 }

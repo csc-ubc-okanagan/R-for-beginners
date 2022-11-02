@@ -290,29 +290,94 @@ $(document).ready(function () {
 </div>
 
 
-<div id="loading-data" class="section level1">
-<h1>Loading Data</h1>
+<div class="functions">
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">function</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>dir.create</code></td>
+<td align="left">create a directory on your file system.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>setwd</code></td>
+<td align="left">set the working directory. See also <code>getwd</code>
+to get current working directory.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>read.cs</code></td>
+<td align="left">read a csv file into R.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>str</code></td>
+<td align="left">display information about the data including structure,
+types, and a few values.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>View</code></td>
+<td align="left">open the data set in a spreadsheet like viewer.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>apropos</code></td>
+<td align="left">search for functions and variables.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>as.</code></td>
+<td align="left">a family of functions for converting data types and
+structures.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>lapply</code></td>
+<td align="left">apply a function to every item in a list.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>levels</code></td>
+<td align="left">print the categories and codes for categorical
+data.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>write.csv</code></td>
+<td align="left">export data from R to your file system in csv
+format.</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>We’re going to work with a (hopefully) fun data set today, which
 we’ll download and then import.</p>
 <p>First things first, we’ll use R to set up a place for us to work.
 We’ll begin by creating a directory on our desktop</p>
-<pre class="r"><code>dir.create(&quot;~/Desktop/r-for-beginners&quot;)</code></pre>
+<pre class="r"><code>dir.create(&quot;~/Desktop/r-for-beginners&quot;) # create a project directory</code></pre>
+<div class="note">
+<p>Most systems - MacOS, Windows, Linux - will set your home directory
+to your user directory. The tilde <code>~</code> is shorthand for your
+user directory. If your home directory is not your user directory, the
+above will not work.</p>
+</div>
 <p>We’ll then make sure that our current session is working with the
 files in this folder.</p>
-<pre class="r"><code>setwd(&quot;~/Desktop/r-for-beginners&quot;)</code></pre>
+<pre class="r"><code>setwd(&quot;~/Desktop/r-for-beginners&quot;) # set the working directory to the direcotry we just created</code></pre>
 <p>And then we’ll download our data</p>
-<pre class="r"><code>data_src &lt;- &quot;https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/2018-cp_squirrel_census.csv&quot;
-download.file(url = data_src, destfile = &#39;2018-cp_squirrel_census.csv&#39;)</code></pre>
+<pre class="r"><code>data_src &lt;- &quot;https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/2018-cp_squirrel_census.csv&quot; # define the source of our data, in this case, a url
+download.file(url = data_src, destfile = &#39;2018-cp_squirrel_census.csv&#39;) # download the file, and save it with a specified name</code></pre>
 <p>Now that our data is downloaded and we have a local copy, we’ll pull
 it into R</p>
 <p>We can simply import the data and display it to our console</p>
-<pre class="r"><code>read.csv(&#39;2018-cp_squirrel_census.csv&#39;)</code></pre>
+<pre class="r"><code>read.csv(&#39;2018-cp_squirrel_census.csv&#39;) # read the data</code></pre>
 <p>But this isn’t terribly useful. We want to store this data in memory,
 so we’ll load it into a variable</p>
-<pre class="r"><code>sq_data &lt;- read.csv(&#39;2018-cp_squirrel_census.csv&#39;)</code></pre>
+<pre class="r"><code>sq_data &lt;- read.csv(&#39;2018-cp_squirrel_census.csv&#39;) # read the data into a variable called sq_data</code></pre>
 <p>We can now explore the data, looking at the data types and data
 structures R is using when importing this csv file</p>
-<pre class="r"><code>str(sq_data)</code></pre>
+<pre class="r"><code>str(sq_data) # explore the structure of the data set.</code></pre>
 <pre><code>## &#39;data.frame&#39;:    3023 obs. of  31 variables:
 ##  $ X                                         : num  -74 -74 -74 -74 -74 ...
 ##  $ Y                                         : num  40.8 40.8 40.8 40.8 40.8 ...
@@ -347,12 +412,14 @@ structures R is using when importing this csv file</p>
 ##  $ Lat.Long                                  : chr  &quot;POINT (-73.9561344937861 40.7940823884086)&quot; &quot;POINT (-73.9688574691102 40.7837825208444)&quot; &quot;POINT (-73.97428114848522 40.775533619083)&quot; &quot;POINT (-73.9596413903948 40.7903128889029)&quot; ...</code></pre>
 <p>We can get slightly better access to the data itself with
 <code>View()</code></p>
-<pre class="r"><code>View(sq_data)</code></pre>
+<pre class="r"><code>View(sq_data) # look at the data in a &#39;spreadsheet&#39; like format. Note the capital V.</code></pre>
 <p>This output tells us that we’re working with a data frame, that there
 are 3023 rows or observations, and 31 columns or variables. It then
 lists all of the variables, tells us what data type they were
 interpreted as on import, and show us the first six values of each
 variable.</p>
+<div id="missing-values" class="section level2">
+<h2>Missing Values</h2>
 <p>Before digging much deeper into the data set, one of the first things
 we’ll note is that there are a lot of missing values. Missing values
 need to be properly encoded to be programatically useful. An application
@@ -531,12 +598,12 @@ every value in the column.</p>
 list - known as vectorization. So, if we have a series of numbers - like
 we created on earlier with <code>random_sample</code></p>
 <pre class="r"><code>random_sample</code></pre>
-<pre><code>##  [1] 65 43  6  4 12 83 11 84 29 40 16 10 64 69 30 25 24 38 80 84</code></pre>
+<pre><code>##  [1] 32 89 79 71 51 69 38 56 25 82 54 36 30 56 27 34 36 92 77  7</code></pre>
 <p>And we want to convert every value, we apply the conversion to the
 entire vector</p>
 <pre class="r"><code>(random_sample_doubled &lt;- random_sample * 2)</code></pre>
-<pre><code>##  [1] 130  86  12   8  24 166  22 168  58  80  32  20 128 138  60  50  48  76 160
-## [20] 168</code></pre>
+<pre><code>##  [1]  64 178 158 142 102 138  76 112  50 164 108  72  60 112  54  68  72 184 154
+## [20]  14</code></pre>
 <p>The <code>apply</code> family of functions does exactly the same
 thing, but instead, in the case of <code>lapply</code>, taking in a
 single object, like <code>random_sample</code>, it takes in a list of
@@ -584,8 +651,8 @@ for (i in 1:length(random_sample)) { # iterate with a for loop starting with the
 }
 
 random_sample_multi # print the result to verify</code></pre>
-<pre><code>##  [1] 130  86  12   8  24 166  22 168  58  80  32  20 128 138  60  50  48  76 160
-## [20] 168</code></pre>
+<pre><code>##  [1]  64 178 158 142 102 138  76 112  50 164 108  72  60 112  54  68  72 184 154
+## [20]  14</code></pre>
 </div>
 <div class="exercise">
 <p><code>read.csv</code> allows us to assign variable types on import.
@@ -626,9 +693,9 @@ in facilitating this process.</p>
 indicate the base type of data it is.</p>
 <p>I have a very simple data dictionary for this project. Let’s load
 that in</p>
-<pre class="r"><code>dict_src &lt;- &quot;https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv&quot;
-download.file(url = dict_src, destfile = &#39;_datadictionary.csv&#39;)
-data_dict &lt;- read.csv(&quot;_datadictionary.csv&quot;)</code></pre>
+<pre class="r"><code>dict_src &lt;- &quot;https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv&quot; # source of the file
+download.file(url = dict_src, destfile = &#39;_datadictionary.csv&#39;) # download and name the file
+data_dict &lt;- read.csv(&quot;_datadictionary.csv&quot;) # read in the file</code></pre>
 <p>We’ll now import our data in a slightly more efficient way</p>
 <pre class="r"><code>na_values &lt;- c(&quot;&quot; , &quot; &quot;, &quot;.&quot;, &quot;NA&quot;, &quot;NULL&quot;, &quot;?&quot;, &quot;+&quot;) # a list of values to use for na.strings
 data_types &lt;- data_dict$data.import.class # a list of data types to feed to colClass

@@ -2,28 +2,44 @@
 title: "Loading Data"
 ---
 
-# Loading Data
+<div class = 'functions'>
+| function | description |
+| :--- | :--- |
+| `dir.create` | create a directory on your file system. |
+| `setwd` | set the working directory. See also `getwd` to get current working directory. |
+| `read.cs` | read a csv file into R. |
+| `str` | display information about the data including structure, types, and a few values. |
+| `View` | open the data set in a spreadsheet like viewer. |
+| `apropos` | search for functions and variables. |
+| `as.` | a family of functions for converting data types and structures. |
+| `lapply` | apply a function to every item in a list. |
+| `levels` | print the categories and codes for categorical data. |
+| `write.csv` | export data from R to your file system in csv format. |
+</div>
 
 We're going to work with a (hopefully) fun data set today, which we'll download and then import.
 
 First things first, we'll use R to set up a place for us to work. We'll begin by creating a directory on our desktop
 
 ```{r create-project-folder, eval = FALSE}
-dir.create("~/Desktop/r-for-beginners")
+dir.create("~/Desktop/r-for-beginners") # create a project directory
 ```
 
+<div class = "note">
+Most systems - MacOS, Windows, Linux - will set your home directory to your user directory. The tilde `~` is shorthand for your user directory. If your home directory is not your user directory, the above will not work.
+</div>
 
 We'll then make sure that our current session is working with the files in this folder.
 
 ```{r working-directory, eval = FALSE}
-setwd("~/Desktop/r-for-beginners")
+setwd("~/Desktop/r-for-beginners") # set the working directory to the direcotry we just created
 ```
 
 And then we'll download our data
 
 ```{r download-sdata, eval = FALSE}
-data_src <- "https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/2018-cp_squirrel_census.csv"
-download.file(url = data_src, destfile = '2018-cp_squirrel_census.csv')
+data_src <- "https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/2018-cp_squirrel_census.csv" # define the source of our data, in this case, a url
+download.file(url = data_src, destfile = '2018-cp_squirrel_census.csv') # download the file, and save it with a specified name
 ```
 
 Now that our data is downloaded and we have a local copy, we'll pull it into R
@@ -31,28 +47,30 @@ Now that our data is downloaded and we have a local copy, we'll pull it into R
 We can simply import the data and display it to our console
 
 ```{r import-squirrel-console, eval = FALSE}
-read.csv('2018-cp_squirrel_census.csv')
+read.csv('2018-cp_squirrel_census.csv') # read the data
 ```
 
 But this isn't terribly useful. We want to store this data in memory, so we'll load it into a variable
 
 ```{r import-squirrel-var}
-sq_data <- read.csv('2018-cp_squirrel_census.csv')
+sq_data <- read.csv('2018-cp_squirrel_census.csv') # read the data into a variable called sq_data
 ```
 
 We can now explore the data, looking at the data types and data structures R is using when importing this csv file
 
 ```{r squirrel-var-str}
-str(sq_data)
+str(sq_data) # explore the structure of the data set.
 ```
 
 We can get slightly better access to the data itself with `View()`
 
 ```{r squireel-var-view, eval = FALSE}
-View(sq_data)
+View(sq_data) # look at the data in a 'spreadsheet' like format. Note the capital V.
 ```
 
 This output tells us that we're working with a data frame, that there are 3023 rows or observations, and 31 columns or variables. It then lists all of the variables, tells us what data type they were interpreted as on import, and show us the first six values of each variable.
+
+## Missing Values
 
 Before digging much deeper into the data set, one of the first things we'll note is that there are a lot of missing values. Missing values need to be properly encoded to be programatically useful. An application - or user - may represent missing values in many ways. Sometimes it's by using an out of range value, so when a variable is binary, and values are represented as 0 or 1, 99 is often used to indicate a missing value. Files exported from SPSS might be encoded with a period - `.`. In Excel, it's extremely easy for a user to accidentally introduce spaces - ` ` - in an otherwise empty cell, or they may choose to write the characters `NA`. A data base export might include either `NA` or `NULL`.
 
@@ -219,9 +237,9 @@ A data dictionary generally describes key attributes about your data - it will l
 I have a very simple data dictionary for this project. Let's load that in
 
 ```{r}
-dict_src <- "https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv"
-download.file(url = dict_src, destfile = '_datadictionary.csv')
-data_dict <- read.csv("_datadictionary.csv")
+dict_src <- "https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv" # source of the file
+download.file(url = dict_src, destfile = '_datadictionary.csv') # download and name the file
+data_dict <- read.csv("_datadictionary.csv") # read in the file
 ```
 
 We'll now import our data in a slightly more efficient way
