@@ -135,6 +135,6 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .functions::before {
-  content: "Functions Usd in This Section";
+  content: "Functions Used in This Section";
   color: #a29712;
 }

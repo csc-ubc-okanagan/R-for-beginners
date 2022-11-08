@@ -20,12 +20,11 @@ for (i in 1:nrow(info)) {
   if (size[i] < 1000000) {
     info[i, 3] <- round(info[i, 3]/1024, 1)
     output <- as.character(info[i,])
-    cat(paste0("* ", "[", output[1], " (",output[2], ")", " (", output[3], " Kb)", "]", "(", files[i], ")", "\n"))
+    cat(paste0("* ", "[", output[1], " (",output[2], ")", " (", output[3], " Kb)", "]", "(https://github.com/csc-ubc-okanagan/R-for-beginners/raw/main/", files[i], ")", "\n"))
   }
   else {
     info[i, 3] <- round(info[i, 3]/1024/1024, 1)
     output <- as.character(info[i,])
-    cat(paste0("* ", "[", output[1], " (",output[2], ")", " (", output[3], " MB)", "]", "(", files[i], ")", "\n"))
+    cat(paste0("* ", "[", output[1], " (",output[2], ")", " (", output[3], " MB)", "]", "(https://github.com/csc-ubc-okanagan/R-for-beginners/raw/main/", files[i], ")", "\n"))
   }
 }
-

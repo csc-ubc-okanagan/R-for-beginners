@@ -591,12 +591,12 @@ every value in the column.</p>
 list – known as vectorization. So, if we have a series of numbers – like
 we created on earlier with <code>random_sample</code></p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>random_sample</span></code></pre></div>
-<pre><code>##  [1] 48 53 79 29 60 95 56 57 76 19 80 77 11 14 79 98 29  1 15 27</code></pre>
+<pre><code>##  [1] 81 77  8 80 59 11 45 23 28 12 14 88 10 57 90 77 55 93 45 83</code></pre>
 <p>And we want to convert every value, we apply the conversion to the
 entire vector</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(random_sample_doubled <span class="ot">&lt;-</span> random_sample <span class="sc">*</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>##  [1]  96 106 158  58 120 190 112 114 152  38 160 154  22  28 158 196  58   2  30
-## [20]  54</code></pre>
+<pre><code>##  [1] 162 154  16 160 118  22  90  46  56  24  28 176  20 114 180 154 110 186  90
+## [20] 166</code></pre>
 <p>The <code>apply</code> family of functions does exactly the same
 thing, but instead, in the case of <code>lapply</code>, taking in a
 single object, like <code>random_sample</code>, it takes in a list of
@@ -645,8 +645,8 @@ each value held in each index point of <code>random_sample</code></li>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>random_sample_multi <span class="co"># print the result to verify</span></span></code></pre></div>
-<pre><code>##  [1]  96 106 158  58 120 190 112 114 152  38 160 154  22  28 158 196  58   2  30
-## [20]  54</code></pre>
+<pre><code>##  [1] 162 154  16 160 118  22  90  46  56  24  28 176  20 114 180 154 110 186  90
+## [20] 166</code></pre>
 </div>
 <div class="exercise">
 <p><code>read.csv</code> allows us to assign variable types on import.
