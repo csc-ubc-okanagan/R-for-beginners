@@ -30,8 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -42,18 +41,115 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 
@@ -220,6 +316,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -273,15 +372,20 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
-<li>
-  <a href="part_8.html">Solutions</a>
-</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -290,47 +394,68 @@ $(document).ready(function () {
 </div>
 
 
-<p>When we talk about data, we have data types, data classes, and data
-structures.</p>
-<div id="data-types" class="section level2">
-<h2>Data Types</h2>
+<p>When we talk about data, we can talk about data types, data classes,
+and data structures.</p>
+<div id="types" class="section level2">
+<h2>Types</h2>
 <p>Data types are fundamental building blocks for storing information. R
-has five atomic data types - the data types from which other objects are
-created. The three of importance to us here are numeric - for numbers -
-character - for strings of text - and logical - for storing true and
-flase values.</p>
+has five atomic data types – the data types from which other objects are
+created.The three of importance to us here are:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Type</th>
+<th align="left">Representation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Numeric</td>
+<td align="left">Numbers</td>
+</tr>
+<tr class="even">
+<td align="left">Character</td>
+<td align="left">Text</td>
+</tr>
+<tr class="odd">
+<td align="left">Logical</td>
+<td align="left">True and False Values</td>
+</tr>
+</tbody>
+</table>
 <div class="note">
-<p>Character data - also known as strings - are always wrapped in
+<p>Character data, also known as strings, are always wrapped in
 “quotation marks”.</p>
+<p>Numeric data can be stored two ways, as integers or as floating
+point, also called ‘double’.</p>
 </div>
 </div>
-<div id="data-classes" class="section level2">
-<h2>Data Classes</h2>
+<div id="classes" class="section level2">
+<h2>Classes</h2>
 <p>Data types can have specific attributes that influence what we can
-and cannot do with these data. These are referred to as classes - since
-we can group - or class- data by common attributes.</p>
-<p>Consider the following numbers - 20220301. Without context, this is
-simply one big number. Or a list of numbers. Classify it as a date,
-however, that has a set of rules for how a date is written - yyyymmdd -
-and a series of conventions for how dates function - a specific calendar
-type, the length of a year, month, or day etc - and we can start to be
-able to do some date specific operations with this data, like
-calculating a persons age.</p>
-<pre class="r"><code>numbers</code></pre>
+and cannot do with these data. One of these attributes is a class.</p>
+<p>Consider the following numbers – 20220301.</p>
+<p>Without context, this is simply one big number. Or a list of smaller
+numbers. Classify it as a date, however, that has a set of rules for how
+a date is written – yyyymmdd – and a series of conventions for how dates
+function – a specific calendar type, the length of a year, month, or day
+etc – and we can start to be able to do some date specific operations
+with this data, like calculating a person’s age.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>numbers</span></code></pre></div>
 <pre><code>## [1] 20220301</code></pre>
-<pre class="r"><code>class(numbers)</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(numbers)</span></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<pre class="r"><code>date</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>date</span></code></pre></div>
 <pre><code>## [1] &quot;2022-03-01&quot;</code></pre>
-<pre class="r"><code>class(date)</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(date)</span></code></pre></div>
 <pre><code>## [1] &quot;Date&quot;</code></pre>
-<pre class="r"><code>(days_since_March_31 &lt;- Sys.Date() - date)</code></pre>
-<pre><code>## Time difference of 246 days</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(days_since_March_31 <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> date)</span></code></pre></div>
+<pre><code>## Time difference of 252 days</code></pre>
 </div>
-<div id="data-structures" class="section level2">
-<h2>Data Structures</h2>
+<div id="structures" class="section level2">
+<h2>Structures</h2>
 <p>Data structures can be thought of how these data are stored
-collectively - the structure that groups multiple values from a variable
+collectively – the structure that groups multiple values from a variable
 together, or the values from multiple variables together. R has a few
 basic data structures that you’ll frequently encounter. These include
 vectors, lists, matrices, and data frames.</p>
@@ -348,7 +473,7 @@ these will likely be contained within a vector.</p>
 In this sense a data frame is also a special kind of list. In a data
 frame, all vectors need to be of the same length. And while each vector
 must hold the same data type, not all vectors need to be of the same
-data type.</p>
+data type. Data frames also allow us to apply column names.</p>
 <pre><code>##   numbers words
 ## 1       1     I
 ## 2       5  want
@@ -360,7 +485,8 @@ data type.</p>
 <h3>Lists</h3>
 <p>A list also essentially functions as a series of connected vectors,
 but breaks us free of each column needing to be the same length as in a
-data frame.</p>
+data frame. You can also nest a list within a list. This can start to
+get complicated.</p>
 <pre><code>## $breakfast
 ## [1] &quot;Eggs&quot;    &quot;Muffins&quot; &quot;Coffee&quot; 
 ## 
@@ -373,17 +499,18 @@ data frame.</p>
 <div id="matrices" class="section level3">
 <h3>Matrices</h3>
 <p>A matrix is basically a data frame, but can only hold a single data
-type or class. In the following, a series of numeric data.</p>
-<pre><code>##      [,1]  [,2]  [,3] [,4]
-## [1,] 9.65  9.15 10.13 8.41
-## [2,] 9.78 10.05 11.39 8.04
-## [3,] 7.57 10.97  9.73 9.88</code></pre>
+type or class. In the following, a series of numeric data. Instead of
+having column names, we have column and row numbers.</p>
+<pre><code>##       [,1] [,2]  [,3]  [,4]
+## [1,] 10.42 9.49 10.61  9.25
+## [2,] 10.48 9.57 10.73 10.82
+## [3,]  9.68 9.78 10.68 11.33</code></pre>
 <div class="summary">
 <p>Vectors are the building blocks of data frames, lists, and matrices.
 Matrices are joined vectors of the same length and same data types. Data
 frames are joined vectors of the same length and different data types.
 Lists are joined vectors of different lengths and data types. Each is
-useful in certain situations. And there are other data structures!</p>
+useful in certain situations.</p>
 </div>
 </div>
 </div>
@@ -421,6 +548,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

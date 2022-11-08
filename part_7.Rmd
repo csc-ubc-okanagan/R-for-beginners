@@ -2,10 +2,11 @@
 title: Subsetting
 ---
 
-Another common activity is subsetting data - isolating a portion of the data, usually based on a condition. There are a few different ways we can subset in R, one of which we've already kind of seen with indexing, we just didn't assign the output to a variable.
+Another common activity is subsetting data -- isolating a portion of the data, usually based on a condition. There are a few different ways we can subset in R, one of which we've already kind of seen with indexing, we just didn't assign the output to a variable.
 
 ```{r}
 sq_data_age <- sq_data$Age # select one column
+
 sq_data_sounds <- sq_data[,22:24] # select multiple columns
 ```
 
@@ -13,11 +14,22 @@ sq_data_sounds <- sq_data[,22:24] # select multiple columns
 Using the above as a model, take a random sample of ten observations (rows) from `sq_data`.
 </div>
 
+<div class = 'solution'>
+```{r, class.source = 'fold-hide', results = FALSE}
+# if we know the number of rows
+sq_data_random_sample <- sq_data[sample(1:3023, 10),]
+
+# or, better yet, if the number of rows might be variable
+
+sq_data_random_sample <- sq_data[sample(1:length(sq_data), 10),]
+```
+</div>
+
 Subsetting on conditions can be achieved with `subset()`. We'll provide `subset()` with three arguments:
 
 1. A data set to subset from
 2. The condition on which to subset
-3. The variables from the original data set to keep - leave this empty to default to all original variables
+3. The variables from the original data set to keep -- leave this empty to default to all original variables
 
 <div class = "note">
 R allows us to specify several conditions
@@ -80,6 +92,22 @@ All data was collected between October 6 and October 20, 2018.  Create a subset 
 Remember that we have not yet converted our `Date` variable to a date class. 
 </div>
 
+<div class = 'solution'>
+```{r, class.source = 'fold-hide', results = FALSE}
+sq_data$Date <- as.Date(sq_data$Date, "%m%d%Y")
+sq_data_date <- subset(sq_data, sq_data$Date <= "2018-10-14")
+sort(unique(sq_data_date$Date))
+```
+</div>
+
 <div class = 'summary'>
 Subsetting can be achieved in many ways. We can use indexing to get specific observations (rows) and / or variable (columns), we can use other functions like `is.na()` and `complete.cases()` to work around missing values, and we can use `subset()` to conditionally subset.
+</div>
+
+<div class = 'functions'>
+| Function | Description |
+| :--- | :--- |
+| `subset` | conditionally susbet a data frame |
+| `is.na` | conditionally test if values in a vector are `NA`. |
+| `complete.cases` | conditionally test if cases (rows) are complete. |
 </div>

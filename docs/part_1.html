@@ -30,8 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -42,16 +41,6 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
 
 
 
@@ -220,6 +209,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -273,15 +265,20 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
-<li>
-  <a href="part_8.html">Solutions</a>
-</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -294,11 +291,11 @@ $(document).ready(function () {
 <h2>R</h2>
 <p>R is a programming language designed to facilitate statistical
 analyses and to generate graphs. R is also the program that converts
-what we right into something your computer can execute.</p>
+what we write into something your computer can execute.</p>
 </div>
 <div id="rstudio" class="section level2">
 <h2>RStudio</h2>
-<p>RStudio is an IDE–Integrated Development Environment. It provides a
+<p>RStudio is an IDE – Integrated Development Environment. It provides a
 visual interface to work with R the language and R the program. It
 consists of several key elements.</p>
 <ol style="list-style-type: decimal">
@@ -306,20 +303,37 @@ consists of several key elements.</p>
 <li>an R console, where R runs and processes what you right</li>
 <li>an environment pane, where we can see the data objects, functions
 etc that we create</li>
-<li>an viewing pane that gives us access to our files, plots, and
+<li>a viewing pane that gives us access to our files, plots, and
 help</li>
 </ol>
+<div class="note">
+<p>Most people who work with R do it using RStudio. But this is not
+necessary. All you need is a plain text editor and an R console that
+will compile what you write.</p>
+</div>
 </div>
 <div id="building-blocks" class="section level2">
 <h2>Building Blocks</h2>
-<p>The big difference with working in something like <code>R</code>,
-over say Excel or another point and click tool for working with data, is
-that it moves us into the realm of programming, which brings with it a
-need to understand some core concepts about how data are handled and
-stored by computers.</p>
+<p>The big difference with working in something like R, over say Excel
+or another point and click tool for working with data, is that it moves
+us into the realm of programming, which brings with it a need to
+understand some core concepts about how data are handled and stored by
+computers.</p>
 <p>While we’re not outright programming, we will be writing scripts to
-do things with our data–and basically, that’s what a program is–data,
+do things with our data –and basically, that’s what a program is – data,
 and a series of instructions–functions–to do things with these data.</p>
+</div>
+<div id="how-it-works" class="section level2">
+<h2>How it Works</h2>
+<ol style="list-style-type: decimal">
+<li>You write instructions</li>
+<li>You give those instructions some data</li>
+<li>A compiler converts those instructions to something you computer can
+execute</li>
+<li>You computer executes those instructions on your data</li>
+<li>You get the results presented to you, either on your screen, stored
+to a file, sent to a printer etc.</li>
+</ol>
 </div>
 
 
@@ -355,6 +369,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

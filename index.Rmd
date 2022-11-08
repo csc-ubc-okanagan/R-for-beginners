@@ -1,7 +1,39 @@
 ---
-title: "Welcome"
+Title: "R For Beginners"
+pagetitle: "R For Beginners"
+output:
+  html_document:
+    includes:
+      in_header: header.html
 ---
+```{r echo=FALSE}
+knitr::read_chunk("./scripts/workshop_files.R")
+```
 
 ## Description
 
-Some description here.
+This two-part workshop is designed for the absolute beginner to R with no programming experience.
+
+The first part (November 14), will cover core concepts related to writing R scripts, data types and data structures, getting help, and importing, cleaning, and getting your data set up for subsequent analysis.
+
+The second part (November 21), will explore adding new tools so that you can do more with R, and look in depth at one of these, ggplot, for visualizing your data. 
+
+You will need a laptop for this workshop. You will also need to install R and RStudio before coming to the first session. Instructions for getting these set up will be provided after registration.
+
+## Outcomes
+
+This is an introductory workshop intended for individuals with little to no familiarity with R or similar tools that rely on a scripted environment. It is intended as a low barrier entry into the world of using your computer to engage with data outside of graphical tools like Excel or SPSS. We will not cover statistical analyses.
+
+Instead, the hope is that you will walk away with a base set of skills and language to engage in some self directed learning that might involve more workshops on more advanced applications of R, texts available through the library or on-line, and forums where other users are asking questions and sharing their solutions.
+
+## Schedule
+
+| Date | Time | Location | Content |
+| :- | :- | :- |
+| November 14, 2022 | 1:00pm - 2:30pm | LIB 111 | R, RStudio, Getting Help, Importing, Cleaning, and Subsetting. |
+| November 21, 202 | 1:00pm - 2:30pm | LIB 111 | Visualizing Data with ggplot |
+
+### Files
+
+```{r loadfiles, results='asis', echo=FALSE}
+```

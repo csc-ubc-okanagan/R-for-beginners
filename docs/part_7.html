@@ -30,8 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -42,18 +41,115 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 
@@ -220,6 +316,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -273,15 +372,20 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
-<li>
-  <a href="part_8.html">Solutions</a>
-</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -290,22 +394,32 @@ $(document).ready(function () {
 </div>
 
 
-<p>Another common activity is subsetting data - isolating a portion of
+<p>Another common activity is subsetting data – isolating a portion of
 the data, usually based on a condition. There are a few different ways
 we can subset in R, one of which we’ve already kind of seen with
 indexing, we just didn’t assign the output to a variable.</p>
-<pre class="r"><code>sq_data_age &lt;- sq_data$Age # select one column
-sq_data_sounds &lt;- sq_data[,22:24] # select multiple columns</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sq_data_age <span class="ot">&lt;-</span> sq_data<span class="sc">$</span>Age <span class="co"># select one column</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>sq_data_sounds <span class="ot">&lt;-</span> sq_data[,<span class="dv">22</span><span class="sc">:</span><span class="dv">24</span>] <span class="co"># select multiple columns</span></span></code></pre></div>
 <div class="exercise">
 <p>Using the above as a model, take a random sample of ten observations
 (rows) from <code>sq_data</code>.</p>
+</div>
+<div class="solution">
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if we know the number of rows</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sq_data_random_sample <span class="ot">&lt;-</span> sq_data[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3023</span>, <span class="dv">10</span>),]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or, better yet, if the number of rows might be variable</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>sq_data_random_sample <span class="ot">&lt;-</span> sq_data[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sq_data), <span class="dv">10</span>),]</span></code></pre></div>
 </div>
 <p>Subsetting on conditions can be achieved with <code>subset()</code>.
 We’ll provide <code>subset()</code> with three arguments:</p>
 <ol style="list-style-type: decimal">
 <li>A data set to subset from</li>
 <li>The condition on which to subset</li>
-<li>The variables from the original data set to keep - leave this empty
+<li>The variables from the original data set to keep – leave this empty
 to default to all original variables</li>
 </ol>
 <div class="note">
@@ -322,20 +436,20 @@ to default to all original variables</li>
 <p>Note that <code>=</code> is equivalent to <code>&lt;-</code>, setting
 a value, while <code>==</code> tests whether or not two things are the
 same.</p>
-<pre class="r"><code>(x = 2)</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">x =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<pre class="r"><code>(x == 2)</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(x <span class="sc">==</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <p>Let’s say we only want to see the records for adult squirrels.</p>
-<pre class="r"><code>sq_data_adult &lt;- subset(sq_data, sq_data$Age == &quot;Adult&quot;) # from sq_data, select only rows where Age equals Adult</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sq_data_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span>) <span class="co"># from sq_data, select only rows where Age equals Adult</span></span></code></pre></div>
 <p>Or all records with cinnamon coloured adult squirrels.</p>
-<pre class="r"><code>sq_data_c_adult &lt;- subset(sq_data, sq_data$Age == &quot;Adult&quot; &amp; sq_data$Primary.Fur.Color == &quot;Cinnamon&quot;)</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sq_data_c_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">&amp;</span> sq_data<span class="sc">$</span>Primary.Fur.Color <span class="sc">==</span> <span class="st">&quot;Cinnamon&quot;</span>)</span></code></pre></div>
 <p>Or all records where an age has been recorded. This can be done in
 two ways</p>
-<pre class="r"><code>sq_data_age_1 &lt;- subset(sq_data, !is.na(sq_data$Age))
-
-sq_data_age_2 &lt;- subset(sq_data, sq_data$Age == &quot;Adult&quot; | sq_data$Age == &quot;Juvenile&quot;)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="sc">!</span><span class="fu">is.na</span>(sq_data<span class="sc">$</span>Age))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sq_data_age_2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">|</span> sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Juvenile&quot;</span>)</span></code></pre></div>
 <div class="note">
 <p>Remember, <code>NA</code> values are a special value, indicating that
 a value is missing. This is different from writing the characters NA.
@@ -345,10 +459,10 @@ you an empty data frame.</p>
 </div>
 <p>Or maybe we want to investigate patterns of only those squirrels for
 which we don’t have age recorded!</p>
-<pre class="r"><code>sq_data_age_na &lt;- subset(sq_data, is.na(sq_data$Age))</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_na <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="fu">is.na</span>(sq_data<span class="sc">$</span>Age))</span></code></pre></div>
 <p>Lastly, before an exercise, we might want only observations that are
 complete, that is, records with no missing values</p>
-<pre class="r"><code>sq_data_complete &lt;- sq_data[complete.cases(sq_data), ] # not terribly useful with this particular data set</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sq_data_complete <span class="ot">&lt;-</span> sq_data[<span class="fu">complete.cases</span>(sq_data), ] <span class="co"># not terribly useful with this particular data set</span></span></code></pre></div>
 <div class="exercise">
 <p>All data was collected between October 6 and October 20, 2018. Create
 a subset of the data that includes only data collected on or before
@@ -359,12 +473,43 @@ October 14, and only retains the variables <code>Date</code> and
 <p>Remember that we have not yet converted our <code>Date</code>
 variable to a date class.</p>
 </div>
+<div class="solution">
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(sq_data<span class="sc">$</span>Date, <span class="st">&quot;%m%d%Y&quot;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sq_data_date <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, sq_data<span class="sc">$</span>Date <span class="sc">&lt;=</span> <span class="st">&quot;2018-10-14&quot;</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">unique</span>(sq_data_date<span class="sc">$</span>Date))</span></code></pre></div>
+</div>
 <div class="summary">
 <p>Subsetting can be achieved in many ways. We can use indexing to get
 specific observations (rows) and / or variable (columns), we can use
 other functions like <code>is.na()</code> and
 <code>complete.cases()</code> to work around missing values, and we can
 use <code>subset()</code> to conditionally subset.</p>
+</div>
+<div class="functions">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>subset</code></td>
+<td align="left">conditionally susbet a data frame</td>
+</tr>
+<tr class="even">
+<td align="left"><code>is.na</code></td>
+<td align="left">conditionally test if values in a vector are
+<code>NA</code>.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>complete.cases</code></td>
+<td align="left">conditionally test if cases (rows) are complete.</td>
+</tr>
+</tbody>
+</table>
 </div>
 
 
@@ -400,6 +545,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

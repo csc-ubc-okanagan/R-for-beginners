@@ -2,21 +2,31 @@
 title: "Data Types"
 ---
 
-When we talk about data, we have data types, data classes, and data structures.
+When we talk about data, we can talk about data types, data classes, and data structures.
 
-## Data Types
+## Types
 
-Data types are fundamental building blocks for storing information. R has five atomic data types - the data types from which other objects are created. The three of importance to us here are numeric - for numbers - character - for strings of text - and logical - for storing true and flase values.
+Data types are fundamental building blocks for storing information. R has five atomic data types -- the data types from which other objects are created.The three of importance to us here are:
+
+| Type | Representation |
+| :--- | :--- |
+| Numeric | Numbers |
+| Character | Text |
+| Logical | True and False Values|
 
 <div class = "note">
-Character data - also known as strings - are always wrapped in "quotation marks".
+Character data, also known as strings, are always wrapped in "quotation marks".
+
+Numeric data can be stored two ways, as integers or as floating point, also called 'double'.
 </div>
 
-## Data Classes
+## Classes
 
-Data types can have specific attributes that influence what we can and cannot do with these data. These are referred to as classes - since we can group - or class- data by common attributes.
+Data types can have specific attributes that influence what we can and cannot do with these data. One of these attributes is a class.
 
-Consider the following numbers - 20220301. Without context, this is simply one big number. Or a list of numbers. Classify it as a date, however, that has a set of rules for how a date is written - yyyymmdd - and a series of conventions for how dates function - a specific calendar type, the length of a year, month, or day etc - and we can start to be able to do some date specific operations with this data, like calculating a persons age.
+Consider the following numbers -- 20220301.
+
+Without context, this is simply one big number. Or a list of smaller numbers. Classify it as a date, however, that has a set of rules for how a date is written -- yyyymmdd -- and a series of conventions for how dates function -- a specific calendar type, the length of a year, month, or day etc -- and we can start to be able to do some date specific operations with this data, like calculating a person's age.
 
 ```{r create-intro_date_class, echo = FALSE}
 numbers <- 20220301
@@ -31,9 +41,9 @@ class(date)
 (days_since_March_31 <- Sys.Date() - date)
 ```
 
-## Data Structures
+## Structures
 
-Data structures can be thought of how these data are stored collectively - the structure that groups multiple values from a variable together, or the values from multiple variables together. R has a few basic data structures that you'll frequently encounter. These include vectors, lists, matrices, and data frames.
+Data structures can be thought of how these data are stored collectively -- the structure that groups multiple values from a variable together, or the values from multiple variables together. R has a few basic data structures that you'll frequently encounter. These include vectors, lists, matrices, and data frames.
 
 ### Vectors
 
@@ -45,7 +55,7 @@ A vector is a very simple list. It is uni-dimensional - think of it as a single 
 
 ### Data Frames
 
-A data frame essentially functions as a series of connected vectors. In this sense a data frame is also a special kind of list. In a data frame, all vectors need to be of the same length. And while each vector must hold the same data type, not all vectors need to be of the same data type.
+A data frame essentially functions as a series of connected vectors. In this sense a data frame is also a special kind of list. In a data frame, all vectors need to be of the same length. And while each vector must hold the same data type, not all vectors need to be of the same data type. Data frames also allow us to apply column names.
 
 ```{r create-into_df, echo = FALSE}
 (data.frame(
@@ -56,7 +66,7 @@ A data frame essentially functions as a series of connected vectors. In this sen
 
 ### Lists
 
-A list also essentially functions as a series of connected vectors, but breaks us free of each column needing to be the same length as in a data frame.
+A list also essentially functions as a series of connected vectors, but breaks us free of each column needing to be the same length as in a data frame. You can also nest a list within a list. This can start to get complicated.
 
 ```{r create-intro_list, echo = FALSE}
 (list(
@@ -68,12 +78,12 @@ A list also essentially functions as a series of connected vectors, but breaks u
 
 ### Matrices
 
-A matrix is basically a data frame, but can only hold a single data type or class. In the following, a series of numeric data.
+A matrix is basically a data frame, but can only hold a single data type or class. In the following, a series of numeric data. Instead of having column names, we have column and row numbers.
 
 ```{r create-intro_matrix, echo = FALSE}
 (matrix(round(rnorm(12, 10, 1), 2), nrow = 3))
 ```
 
 <div class = "summary">
-Vectors are the building blocks of data frames, lists, and matrices. Matrices are joined vectors of the same length and same data types. Data frames are joined vectors of the same length and different data types. Lists are joined vectors of different lengths and data types. Each is useful in certain situations. And there are other data structures!
+Vectors are the building blocks of data frames, lists, and matrices. Matrices are joined vectors of the same length and same data types. Data frames are joined vectors of the same length and different data types. Lists are joined vectors of different lengths and data types. Each is useful in certain situations.
 </div>

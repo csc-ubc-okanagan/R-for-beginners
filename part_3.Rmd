@@ -6,7 +6,7 @@ title: "Functions & Variables"
 
 Functions take in data and do things with that data. We can write our own functions, but generally in R we'll be using functions that have already been written or built.
 
-Calling a function requires 2 things: the function itself and any arguments the function allows us to specify -- one of these arguments is the data source, but there are usually others.
+Calling a function requires 2 things: the function itself and any arguments the function allows us to specify -- one of these arguments is the data source, but there are usually other paraemters we can specify.
 
 We'll use a function to create some data. `sample()` is a function that takes 3 basic arguments: a range of values to sample from, the size of the sample, and whether or not values in the sample can be duplicated.
 
@@ -18,7 +18,7 @@ We'll use a function to create some data. `sample()` is a function that takes 3 
 Other functions to create random samples include `runif()` for uniformly distributed data and `rnorm()` for normally distributed data.
 </div>
 
-Two other common functions we might use include concatenation, which builds a vector from its inputs and mean, which performs a calculation on the data provided to it.
+Two other common functions we might use include concatenation, `c()`, which builds a vector from its inputs and mean, `mean()`, which performs a calculation on the data provided to it.
 
 ```{r functions-mean}
 (c(1,4,8,9,2,5))
@@ -31,17 +31,52 @@ When we have a function do something with our data, there are several ways in wh
 
 Variables are place holders in your computer's memory for data, thus allowing us to store our data for easy access.
 
+<div class = "note">
+When naming variables in `R`, keep in mind that variable names:
+
+* Should first and foremost be meaningful. This is not a rule, just best practice.
+* **Cannot** start with a number or a dot followed by a number.
+* **Cannot** contain spaces.
+* **Can** contain letters, numbers, dots, and underscores.
+
+Additionally, some words are *reserved* and cannot be used, such as *if* and *for*. More details can be found with `?make.names`
+</div>
+
 ```{r variables-storing}
-random_sample <- sample(1:100, 20, replace =TRUE) # generate a random sample of 20 data points and store it in a variable called random_sample
-random_sample # call random_sample which outputs the values to the screen
-random_sample_mean <- mean(random_sample) # calculate the mean of random_sample and store it in a variable called random_sample_mean
-random_sample_mean # call random_sample_mean which outputs the values to the screen
+ # generate a random sample of 20 data points and store it in a variable called random_sample
+random_sample <- sample(1:100, 20, replace =TRUE)
+
+# call random_sample which outputs the values to the screen
+random_sample
+
+# calculate the mean of random_sample and store it in a variable called random_sample_mean
+random_sample_mean <- mean(random_sample) 
+
+# call random_sample_mean which outputs the values to the screen
+random_sample_mean 
 ```
 
 <div class = 'exercise'>
 Let's build our own function that calculates a mean to see what's all happening under the hood.
 
 First we define the mean as the sum of all data points divided by the number of data points. We'll leverage two existing functions, `sum()` and `length()`, the former of which performs simple addition and the latter of which tells us how many data points are in a vector.
+</div>
+
+<div class = 'solution'>
+```{r mean-function, class.source = 'fold-hide', results = FALSE}
+# define our function. The function takes one input, which is a data source, it then add all the data points together and divides it by the number of data points.
+# the function is stored in a variable called my_mean
+my_mean <- function(data) {
+  total <- sum(data) # add the data
+  n = length(data) # count the data
+  calculation = total/n # do the math
+  calculation # print the output
+}
+
+my_data <- sample(1:100, 20, replace = F) # generate some data
+
+my_mean(my_data) # calculate the mean using my_mean
+```
 </div>
 
 <div class = 'summary'>

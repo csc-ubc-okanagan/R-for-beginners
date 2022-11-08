@@ -11,7 +11,7 @@
 
 
 
-<title>Welcome</title>
+<title>R For Beginners</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -30,8 +30,11 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<div id="BannerContainer">
+<img id="CSCBanner" src="images/UBCO-CSC-Unit%20mark-colour.png" alt="CSC Banner">
+</div>
+
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -42,16 +45,6 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
 
 
 
@@ -220,6 +213,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -273,9 +269,6 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
-<li>
-  <a href="part_8.html">Solutions</a>
-</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -283,16 +276,81 @@ $(document).ready(function () {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">Welcome</h1>
+
 
 </div>
 
 
 <div id="description" class="section level2">
 <h2>Description</h2>
-<p>Some description here.</p>
+<p>This two-part workshop is designed for the absolute beginner to R
+with no programming experience.</p>
+<p>The first part (November 14), will cover core concepts related to
+writing R scripts, data types and data structures, getting help, and
+importing, cleaning, and getting your data set up for subsequent
+analysis.</p>
+<p>The second part (November 21), will explore adding new tools so that
+you can do more with R, and look in depth at one of these, ggplot, for
+visualizing your data.</p>
+<p>You will need a laptop for this workshop. You will also need to
+install R and RStudio before coming to the first session. Instructions
+for getting these set up will be provided after registration.</p>
+</div>
+<div id="outcomes" class="section level2">
+<h2>Outcomes</h2>
+<p>This is an introductory workshop intended for individuals with little
+to no familiarity with R or similar tools that rely on a scripted
+environment. It is intended as a low barrier entry into the world of
+using your computer to engage with data outside of graphical tools like
+Excel or SPSS. We will not cover statistical analyses.</p>
+<p>Instead, the hope is that you will walk away with a base set of
+skills and language to engage in some self directed learning that might
+involve more workshops on more advanced applications of R, texts
+available through the library or on-line, and forums where other users
+are asking questions and sharing their solutions.</p>
+</div>
+<div id="schedule" class="section level2">
+<h2>Schedule</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Date</th>
+<th align="left">Time</th>
+<th align="left">Location</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">November 14, 2022</td>
+<td align="left">1:00pm - 2:30pm</td>
+<td align="left">LIB 111</td>
+</tr>
+<tr class="even">
+<td align="left">November 21, 202</td>
+<td align="left">1:00pm - 2:30pm</td>
+<td align="left">LIB 111</td>
+</tr>
+</tbody>
+</table>
+<div id="files" class="section level3">
+<h3>Files</h3>
+<ul>
+<li><a href="./files/_datadictionary.csv">_datadictionary (csv) (3.5
+Kb)</a></li>
+<li><a
+href="./files/2018-cp_squirrel_census.csv">2018-cp_squirrel_census (csv)
+(695.4 Kb)</a></li>
+</ul>
+</div>
 </div>
 
 
@@ -328,6 +386,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

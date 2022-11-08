@@ -58,7 +58,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 /*Call out boxes*/
-.note, .exercise, .solution, .summary, .advanced {
+.note, .exercise, .solution, .summary, .advanced, .functions {
   padding: 10px;
   margin: 20px 0px;
   border-radius: 5px;
@@ -96,13 +96,13 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .solution {
-  border-color: #0d4a7b;
-  background-color: #f0f7fd;
+  border-color: #0f5d61;
+  background-color: #e2fbfc;
 }
 
 .solution::before {
   content: "Solution";
-  color: #0d4a7b;
+  color: #0f5d61;
 }
 
 .solution pre:first-of-type {
@@ -130,11 +130,11 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .functions {
-  border-color: #000000;
-  background-color: #ffffff;
+  border-color: #a29712;
+  background-color: #f9f8e7;
 }
 
 .functions::before {
-  content: "Functions";
-  color: #000000;
+  content: "Functions Usd in This Section";
+  color: #a29712;
 }
