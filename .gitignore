@@ -3,4 +3,6 @@
 .RData
 .Ruserdata
 .DS_Store
-*.csv
+/2018-CP_Squirrel_Census.csv
+/_datadictionary.csv
+/2018-cp_squirrel_census_cleaned_v0.csv
