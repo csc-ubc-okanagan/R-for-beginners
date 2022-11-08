@@ -1,5 +1,8 @@
 ---
 title: Adding & Naming Variables
+output:
+  html_document:
+    code_folding: show
 ---
 
 Occasionally we need to derive variables form existing information. A good example of this is conversion between scales. With our current data set, the variable "Above.Ground.Sight.Measurement" is ostensibly in feet -- the data dictionary could be clearer about this. To bring this to a Canadian context, we might need these measurements in a metric equivalent.

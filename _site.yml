@@ -26,4 +26,3 @@ output:
     theme: flatly
     highlight: kate
     css: styles.css
-    code_folding: show

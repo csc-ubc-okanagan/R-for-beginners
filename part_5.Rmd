@@ -1,5 +1,8 @@
 ---
 title: "Loading Data"
+output:
+  html_document:
+    code_folding: show
 ---
 
 We're going to work with a (hopefully) fun data set today, which we'll download and then import.

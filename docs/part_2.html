@@ -30,7 +30,6 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -119,15 +118,6 @@ code span.va { color: #0057ae; } /* Variable */
 code span.vs { color: #bf0303; } /* VerbatimString */
 code span.wa { color: #bf0303; } /* Warning */
 
-.sourceCode .row {
-  width: 100%;
-}
-.sourceCode {
-  overflow-x: auto;
-}
-.code-folding-btn {
-  margin-right: -30px;
-}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -316,9 +306,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -378,14 +365,6 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div id="header">
-
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
 
@@ -501,10 +480,10 @@ get complicated.</p>
 <p>A matrix is basically a data frame, but can only hold a single data
 type or class. In the following, a series of numeric data. Instead of
 having column names, we have column and row numbers.</p>
-<pre><code>##       [,1] [,2]  [,3]  [,4]
-## [1,] 11.05 8.64 10.95 10.12
-## [2,]  9.35 8.66  8.16 10.10
-## [3,] 10.75 9.66  8.60 12.77</code></pre>
+<pre><code>##      [,1]  [,2]  [,3]  [,4]
+## [1,] 8.31 10.28  9.36 10.50
+## [2,] 8.62 10.69  9.30  9.82
+## [3,] 9.81 12.25 10.13  7.45</code></pre>
 <div class="summary">
 <p>Vectors are the building blocks of data frames, lists, and matrices.
 Matrices are joined vectors of the same length and same data types. Data
@@ -548,11 +527,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

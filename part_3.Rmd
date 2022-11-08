@@ -1,5 +1,8 @@
 ---
 title: "Functions & Variables"
+output:
+  html_document:
+    code_folding: show
 ---
 
 ## Functions

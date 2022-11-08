@@ -1,5 +1,8 @@
 ---
 title: Subsetting
+output:
+  html_document:
+    code_folding: show
 ---
 
 Another common activity is subsetting data -- isolating a portion of the data, usually based on a condition. There are a few different ways we can subset in R, one of which we've already kind of seen with indexing, we just didn't assign the output to a variable.
