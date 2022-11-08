@@ -30,5 +30,5 @@ While we're not outright programming, we will be writing scripts to do things wi
 1. You write instructions
 2. You give those instructions some data
 3. A compiler converts those instructions to something you computer can execute
-4. You computer executes those instructions on your data
+4. Your computer executes those instructions on your data
 5. You get the results presented to you, either on your screen, stored to a file, sent to a printer etc.
