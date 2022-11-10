@@ -31,7 +31,7 @@ Instead, the hope is that you will walk away with a base set of skills and langu
 | Date | Time | Location | Content |
 | :- | :- | :- |
 | November 14, 2022 | 1:00pm - 2:30pm | LIB 111 | R, RStudio, Getting Help, Importing, Cleaning, and Subsetting. |
-| November 21, 202 | 1:00pm - 2:30pm | LIB 111 | Visualizing Data with ggplot |
+| November 21, 2022 | 1:00pm - 2:30pm | LIB 111 | Visualizing Data with ggplot |
 
 ### Files
 
