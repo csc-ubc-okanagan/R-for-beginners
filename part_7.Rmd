@@ -56,21 +56,21 @@ Note that `=` is equivalent to `<-`, setting a value, while `==` tests whether o
 Let's say we only want to see the records for adult squirrels.
 
 ```{r}
-sq_data_adult <- subset(sq_data, sq_data$Age == "Adult") # from sq_data, select only rows where Age equals Adult
+sq_data_adult <- subset(sq_data, Age == "Adult") # from sq_data, select only rows where Age equals Adult
 ```
 
 Or all records with cinnamon coloured adult squirrels.
 
 ```{r}
-sq_data_c_adult <- subset(sq_data, sq_data$Age == "Adult" & sq_data$Primary.Fur.Color == "Cinnamon")
+sq_data_c_adult <- subset(sq_data, Age == "Adult" & Primary.Fur.Color == "Cinnamon")
 ```
 
 Or all records where an age has been recorded. This can be done in two ways
 
 ```{r}
-sq_data_age_1 <- subset(sq_data, !is.na(sq_data$Age))
+sq_data_age_1 <- subset(sq_data, !is.na(Age))
 
-sq_data_age_2 <- subset(sq_data, sq_data$Age == "Adult" | sq_data$Age == "Juvenile")
+sq_data_age_2 <- subset(sq_data, Age == "Adult" | Age == "Juvenile")
 ```
 
 <div class = "note">
@@ -80,7 +80,7 @@ Remember, `NA` values are a special value, indicating that a value is missing. T
 Or maybe we want to investigate patterns of only those squirrels for which we don't have age recorded!
 
 ```{r}
-sq_data_age_na <- subset(sq_data, is.na(sq_data$Age))
+sq_data_age_na <- subset(sq_data, is.na(Age))
 ```
 
 Lastly, before an exercise, we might want only observations that are complete, that is, records with no missing values
@@ -98,7 +98,7 @@ Remember that we have not yet converted our `Date` variable to a date class.
 <div class = 'solution'>
 ```{r, class.source = 'fold-hide', results = FALSE}
 sq_data$Date <- as.Date(sq_data$Date, "%m%d%Y")
-sq_data_date <- subset(sq_data, sq_data$Date <= "2018-10-14")
+sq_data_date <- subset(sq_data, Date <= "2018-10-14", select = c(Date, Age))
 sort(unique(sq_data_date$Date))
 ```
 </div>

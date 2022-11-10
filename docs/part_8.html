@@ -11,7 +11,7 @@
 
 
 
-<title>Functions &amp; Variables</title>
+<title>Libraries</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -389,105 +389,133 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Functions &amp; Variables</h1>
+<h1 class="title toc-ignore">Libraries</h1>
 
 </div>
 
 
-<div id="functions" class="section level2">
-<h2>Functions</h2>
-<p>Functions take in data and do things with that data. We can write our
-own functions, but generally in R we’ll be using functions that have
-already been written or built.</p>
-<p>Calling a function requires 2 things: the function itself and any
-arguments the function allows us to specify – one of these arguments is
-the data source, but there are usually other paraemters we can
-specify.</p>
-<p>We’ll use a function to create some data. <code>sample()</code> is a
-function that takes 3 basic arguments: a range of values to sample from,
-the size of the sample, and whether or not values in the sample can be
-duplicated.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<pre><code>##  [1] 100  25  25  18  78  80  42  76  34   9</code></pre>
-<div class="note">
-<p>Other functions to create random samples include <code>runif()</code>
-for uniformly distributed data and <code>rnorm()</code> for normally
-distributed data.</p>
-</div>
-<p>Two other common functions we might use include concatenation,
-<code>c()</code>, which builds a vector from its inputs and mean,
-<code>mean()</code>, which performs a calculation on the data provided
-to it.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">5</span>))</span></code></pre></div>
-<pre><code>## [1] 1 4 8 9 2 5</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">2</span>,<span class="dv">5</span>)))</span></code></pre></div>
-<pre><code>## [1] 4.833333</code></pre>
-</div>
-<div id="variables" class="section level2">
-<h2>Variables</h2>
-<p>When we have a function do something with our data, there are several
-ways in which we might direct the output of that function. So far, we’ve
-directed that output to our terminal – or screens. We have other options
-though. We can direct that output to a file if needed. We can also
-direct that output to a variable.</p>
-<p>Variables are place holders in your computer’s memory for data, thus
-allowing us to store our data for easy access.</p>
-<div class="note">
-<p>When naming variables in <code>R</code>, keep in mind that variable
-names:</p>
-<ul>
-<li>Should first and foremost be meaningful. This is not a rule, just
-best practice.</li>
-<li><strong>Cannot</strong> start with a number or a dot followed by a
-number.</li>
-<li><strong>Cannot</strong> contain spaces.</li>
-<li><strong>Can</strong> contain letters, numbers, dots, and
-underscores.</li>
-</ul>
-<p>Additionally, some words are <em>reserved</em> and cannot be used,
-such as <em>if</em> and <em>for</em>. More details can be found with
-<code>?make.names</code></p>
-</div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># generate a random sample of 20 data points and store it in a variable called random_sample</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>random_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="at">replace =</span><span class="cn">TRUE</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># call random_sample which outputs the values to the screen</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>random_sample</span></code></pre></div>
-<pre><code>##  [1]  11  70  68  36  19  17  87  24  17   1  89 100  40  57  74   7  49  21  25
-## [20]  48</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the mean of random_sample and store it in a variable called random_sample_mean</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>random_sample_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(random_sample) </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># call random_sample_mean which outputs the values to the screen</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>random_sample_mean </span></code></pre></div>
-<pre><code>## [1] 43</code></pre>
+<p>So far, we’ve only been working with functions built in to a basic
+install of R. People write a lot of additional code and build or gather
+a lot of data sets that they package up ready for others to use in R.
+These bundles of code and data are called packages. Packages add
+additional functionality to what we can do with R. The central
+repository for R packages is CRAN – <a
+href="https://cran.r-project.org/">The Comprehensive R Archive
+Network</a>.</p>
+<p>Packages are installed in libraries on your system. Because of this,
+in R we install packages, but we load libraries to make them available
+for use. Libraries need to be loaded each time we launch R.</p>
+<p>You can see what packages are currently installed on you system
+with</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">installed.packages</span>()</span></code></pre></div>
+<pre><code>##             Package      
+## abind       &quot;abind&quot;      
+## antiword    &quot;antiword&quot;   
+## AsioHeaders &quot;AsioHeaders&quot;
+## askpass     &quot;askpass&quot;    
+## assertthat  &quot;assertthat&quot; 
+## backports   &quot;backports&quot;  
+##             LibPath                                                               
+## abind       &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## antiword    &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## AsioHeaders &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## askpass     &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## assertthat  &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## backports   &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+##             Version    Priority Depends        Imports          LinkingTo
+## abind       &quot;1.4-5&quot;    NA       &quot;R (&gt;= 1.5.0)&quot; &quot;methods, utils&quot; NA       
+## antiword    &quot;1.3.1&quot;    NA       NA             &quot;sys (&gt;= 2.0)&quot;   NA       
+## AsioHeaders &quot;1.22.1-1&quot; NA       NA             NA               NA       
+## askpass     &quot;1.1&quot;      NA       NA             &quot;sys (&gt;= 2.1)&quot;   NA       
+## assertthat  &quot;0.2.1&quot;    NA       NA             &quot;tools&quot;          NA       
+## backports   &quot;1.4.1&quot;    NA       &quot;R (&gt;= 3.0.0)&quot; NA               NA       
+##             Suggests         Enhances License              License_is_FOSS
+## abind       NA               NA       &quot;LGPL (&gt;= 2)&quot;        NA             
+## antiword    NA               NA       &quot;GPL-2&quot;              NA             
+## AsioHeaders NA               NA       &quot;BSL-1.0&quot;            NA             
+## askpass     &quot;testthat&quot;       NA       &quot;MIT + file LICENSE&quot; NA             
+## assertthat  &quot;testthat, covr&quot; NA       &quot;GPL-3&quot;              NA             
+## backports   NA               NA       &quot;GPL-2 | GPL-3&quot;      NA             
+##             License_restricts_use OS_type MD5sum NeedsCompilation Built  
+## abind       NA                    NA      NA     &quot;no&quot;             &quot;4.2.0&quot;
+## antiword    NA                    NA      NA     &quot;yes&quot;            &quot;4.2.0&quot;
+## AsioHeaders NA                    NA      NA     &quot;no&quot;             &quot;4.2.0&quot;
+## askpass     NA                    NA      NA     &quot;yes&quot;            &quot;4.2.0&quot;
+## assertthat  NA                    NA      NA     &quot;no&quot;             &quot;4.2.0&quot;
+## backports   NA                    NA      NA     &quot;yes&quot;            &quot;4.2.0&quot;</code></pre>
 <div class="exercise">
-<p>Let’s build our own function that calculates a mean to see what’s all
-happening under the hood.</p>
-<p>First we define the mean as the sum of all data points divided by the
-number of data points. We’ll leverage two existing functions,
-<code>sum()</code> and <code>length()</code>, the former of which
-performs simple addition and the latter of which tells us how many data
-points are in a vector.</p>
+<p>Calculate how many packages are installed on your system.</p>
 </div>
 <div class="solution">
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define our function. The function takes one input, which is a data source, it then add all the data points together and divides it by the number of data points.</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the function is stored in a variable called my_mean</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>my_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="fu">sum</span>(data) <span class="co"># add the data</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">=</span> <span class="fu">length</span>(data) <span class="co"># count the data</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  calculation <span class="ot">=</span> total<span class="sc">/</span>n <span class="co"># do the math</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  calculation <span class="co"># print the output</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="at">replace =</span> F) <span class="co"># generate some data</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">my_mean</span>(my_data) <span class="co"># calculate the mean using my_mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>installed_packages <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>() <span class="co"># load the contents into a variable</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(installed_packages) <span class="co"># pring the number of rows</span></span></code></pre></div>
 </div>
+<div id="installing-packages" class="section level2">
+<h2>Installing packages</h2>
+<p>New packages can be installed with</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;package-name&quot;</span>)</span></code></pre></div>
+<p>We need to install ggplot2</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
+</div>
+<div id="loading-packages" class="section level2">
+<h2>Loading packages</h2>
+<p>Packages can be loaded with</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(package<span class="sc">-</span>name)</span></code></pre></div>
+<p>So, to load ggplot</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div class="note">
+<p>You will sometimes see people use <code>require()</code> instead of
+<code>library()</code> to load a package. Generally, either may be
+used.</p>
+<p>You’ll also note that when you install a package, the name is wrapped
+in quotation marks, <code>" "</code>, but when you load a package, it is
+not.</p>
+</div>
+</div>
+<div id="updating-packages" class="section level2">
+<h2>Updating packages</h2>
+<p>You can get a list of any packages with updates available with</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">old.packages</span>()</span></code></pre></div>
+<p>And packages can be updated with</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>()</span></code></pre></div>
 <div class="summary">
-<p>Functions take in data and do things with that data. Variables allow
-us to store our data for easy access.</p>
+<p>Packages provide additional functionality. You can install packages
+with <code>install.packages()</code> and load them with
+<code>library()</code>.</p>
+</div>
+<div class="functions">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>installed.packages</code></td>
+<td align="left">print a matrix of installed packages</td>
+</tr>
+<tr class="even">
+<td align="left"><code>install.packages</code></td>
+<td align="left">Install a new package.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>library</code></td>
+<td align="left">Load an installed package.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>old.packages</code></td>
+<td align="left">List packages with updates.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>update.packages</code></td>
+<td align="left">Update packages to the latest release.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 

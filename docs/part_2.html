@@ -429,7 +429,7 @@ with this data, like calculating a person’s age.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(date)</span></code></pre></div>
 <pre><code>## [1] &quot;Date&quot;</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(days_since_March_31 <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> date)</span></code></pre></div>
-<pre><code>## Time difference of 252 days</code></pre>
+<pre><code>## Time difference of 254 days</code></pre>
 </div>
 <div id="structures" class="section level2">
 <h2>Structures</h2>
@@ -480,10 +480,10 @@ get complicated.</p>
 <p>A matrix is basically a data frame, but can only hold a single data
 type or class. In the following, a series of numeric data. Instead of
 having column names, we have column and row numbers.</p>
-<pre><code>##       [,1] [,2]  [,3]  [,4]
-## [1,]  9.86 8.16 11.80 11.02
-## [2,]  9.99 9.00 10.94  9.06
-## [3,] 12.43 8.56 10.02  9.99</code></pre>
+<pre><code>##       [,1]  [,2]  [,3]  [,4]
+## [1,] 10.86 11.77 10.70  9.18
+## [2,] 11.62 11.90 10.65 10.41
+## [3,]  9.56  9.54  9.07 11.38</code></pre>
 <div class="summary">
 <p>Vectors are the building blocks of data frames, lists, and matrices.
 Matrices are joined vectors of the same length and same data types. Data

@@ -442,14 +442,14 @@ same.</p>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <p>Let’s say we only want to see the records for adult squirrels.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sq_data_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span>) <span class="co"># from sq_data, select only rows where Age equals Adult</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sq_data_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span>) <span class="co"># from sq_data, select only rows where Age equals Adult</span></span></code></pre></div>
 <p>Or all records with cinnamon coloured adult squirrels.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sq_data_c_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">&amp;</span> sq_data<span class="sc">$</span>Primary.Fur.Color <span class="sc">==</span> <span class="st">&quot;Cinnamon&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sq_data_c_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">&amp;</span> Primary.Fur.Color <span class="sc">==</span> <span class="st">&quot;Cinnamon&quot;</span>)</span></code></pre></div>
 <p>Or all records where an age has been recorded. This can be done in
 two ways</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="sc">!</span><span class="fu">is.na</span>(sq_data<span class="sc">$</span>Age))</span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="sc">!</span><span class="fu">is.na</span>(Age))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sq_data_age_2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">|</span> sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Juvenile&quot;</span>)</span></code></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sq_data_age_2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">|</span> Age <span class="sc">==</span> <span class="st">&quot;Juvenile&quot;</span>)</span></code></pre></div>
 <div class="note">
 <p>Remember, <code>NA</code> values are a special value, indicating that
 a value is missing. This is different from writing the characters NA.
@@ -459,7 +459,7 @@ you an empty data frame.</p>
 </div>
 <p>Or maybe we want to investigate patterns of only those squirrels for
 which we don’t have age recorded!</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_na <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="fu">is.na</span>(sq_data<span class="sc">$</span>Age))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_na <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="fu">is.na</span>(Age))</span></code></pre></div>
 <p>Lastly, before an exercise, we might want only observations that are
 complete, that is, records with no missing values</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sq_data_complete <span class="ot">&lt;-</span> sq_data[<span class="fu">complete.cases</span>(sq_data), ] <span class="co"># not terribly useful with this particular data set</span></span></code></pre></div>
@@ -476,7 +476,7 @@ variable to a date class.</p>
 <div class="solution">
 <div class="sourceCode" id="cb12"><pre
 class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(sq_data<span class="sc">$</span>Date, <span class="st">&quot;%m%d%Y&quot;</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sq_data_date <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, sq_data<span class="sc">$</span>Date <span class="sc">&lt;=</span> <span class="st">&quot;2018-10-14&quot;</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sq_data_date <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Date <span class="sc">&lt;=</span> <span class="st">&quot;2018-10-14&quot;</span>, <span class="at">select =</span> <span class="fu">c</span>(Date, Age))</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">unique</span>(sq_data_date<span class="sc">$</span>Date))</span></code></pre></div>
 </div>
 <div class="summary">

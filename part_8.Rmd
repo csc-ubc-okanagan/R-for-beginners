@@ -1,0 +1,94 @@
+---
+title: Libraries
+output:
+  html_document:
+    code_folding: show
+---
+
+So far, we've only been working with functions built in to a basic install of R. People write a lot of additional code and build or gather a lot of data sets that they package up ready for others to use in R. These bundles of code and data are called packages. Packages add additional functionality to what we can do with R. The central repository for R packages is CRAN -- [The Comprehensive R Archive Network](https://cran.r-project.org/).
+
+Packages are installed in libraries on your system. Because of this, in R we install packages, but we load libraries to make them available for use. Libraries need to be loaded each time we launch R.
+
+You can see what packages are currently installed on you system with
+
+```{r, eval = FALSE}
+installed.packages()
+```
+
+```{r, echo = FALSE}
+head(installed.packages())
+```
+
+<div class = "exercise">
+Calculate how many packages are installed on your system.
+</div>
+
+<div class = "solution">
+```{r, class.source = 'fold-hide', results = FALSE}
+installed_packages <- installed.packages() # load the contents into a variable
+
+nrow(installed_packages) # pring the number of rows
+```
+</div>
+
+## Installing packages
+
+New packages can be installed with 
+
+```{r, eval = FALSE}
+install.packages("package-name")
+```
+
+We need to install ggplot2
+
+```{r, eval = FALSE}
+install.packages("ggplot2")
+```
+
+## Loading packages
+
+Packages can be loaded with
+
+```{r, eval = FALSE}
+library(package-name)
+```
+
+So, to load ggplot
+
+```{r, eval = FALSE}
+library(ggplot2)
+```
+
+<div class = "note">
+You will sometimes see people use `require()` instead of `library()` to load a package. Generally, either may be used.
+
+You'll also note that when you install a package, the name is wrapped in quotation marks, `" "`, but when you load a package, it is not.
+</div>
+
+## Updating packages
+
+You can get a list of any packages with updates available with
+
+```{r, eval = FALSE}
+old.packages()
+```
+
+And packages can be updated with
+
+```{r, eval = FALSE}
+update.packages()
+```
+
+<div class = "summary">
+Packages provide additional functionality. You can install packages with `install.packages()` and load them with `library()`.
+</div>
+
+<div class = "functions">
+| Function | Description |
+| :--- | :--- |
+| `installed.packages` | print a matrix of installed packages |
+| `install.packages` | Install a new package. |
+| `library` | Load an installed package. |
+| `old.packages` | List packages with updates. |
+| `update.packages` | Update packages to the latest release. |
+</div>
