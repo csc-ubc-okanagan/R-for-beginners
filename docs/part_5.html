@@ -372,6 +372,12 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
+<li>
+  <a href="part_8.html">Libraries</a>
+</li>
+<li>
+  <a href="part_9.html">ggplot</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -598,8 +604,8 @@ functions.</p>
 <p>The <code>apply</code> family of functions is very useful for
 iterating over data structures, such as data frames. In
 <code>lapply()</code>, the l stands for list, suggesting it takes in
-lists to iterate or loop over. In this case, the funtion takes a list,
-<code>variables_to_convert</code> and passes that list off, one vector
+lists to iterate or loop over. In this case, the function takes a list,
+<code>variables_to_convert</code>, and passes that list off, one vector
 at a time to <code>as.logical()</code>.</p>
 <div class="advanced">
 <p>We’re about to take a somewhat steep introduction to two key concepts
@@ -608,57 +614,37 @@ in R related to iterating operations over your data in R.</p>
 most common is a for loop, in which we state, for each element in a
 list, do this to it. This would look something like this, using our
 earlier <code>random_sample</code> we created:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>random_sample_empty <span class="ot">&lt;-</span> <span class="fu">vector</span>() <span class="co"># create an empty vector called random_sample_multi</span></span>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>random_sample_doubled <span class="ot">&lt;-</span> <span class="fu">vector</span>() <span class="co"># create an empty vector called random_sample_multi</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(random_sample)) { <span class="co"># iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  random_sample_empty[i] <span class="ot">&lt;-</span> random_sample[i] <span class="sc">*</span><span class="dv">2</span> <span class="co"># for each value at index point 1 through to length(random_sample), multiply that value by 2</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  random_sample_doubled[i] <span class="ot">&lt;-</span> random_sample[i] <span class="sc">*</span><span class="dv">2</span> <span class="co"># for each value at index point 1 through to length(random_sample), multiply that value by 2</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>random_sample_empty <span class="co"># print the result to verify</span></span></code></pre></div>
-<pre><code>##  [1] 112 126  64  40  68 114 182 150 186  30 166 194   8   8  14  92 148 164 168
-## [20]  92</code></pre>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>random_sample_doubled <span class="co"># print the result to verify</span></span></code></pre></div>
+<pre><code>##  [1]  74 128  28  88 104  38 124   4 144 124  30 114  50  32   6  56 174  62 114
+## [20]  90</code></pre>
 <p>R is a high level language, meaning it’s interpreted at run time
 rather than pre-compiled. This generally makes for loops slow, since R
-takes time to process each individual step; apply a function to the
-first element, then to the second element etc. There are ways to make
-for loops faster in R. One way, using the above example, is to
-pre-populate the list with a set of values, so R knows in advance how
-much room to set aside in memory.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>random_sample_known_length <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="fu">length</span>(random_sample)) <span class="co"># create an empty vector called random_sample_multi</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(random_sample)) { <span class="co"># iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  random_sample_known_length[i] <span class="ot">&lt;-</span> random_sample[i] <span class="sc">*</span><span class="dv">2</span> <span class="co"># for each value at index point 1 through to length(random_sample), multiply that value by 2</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>random_sample_known_length <span class="co"># print the result to verify</span></span></code></pre></div>
-<pre><code>##  [1] 112 126  64  40  68 114 182 150 186  30 166 194   8   8  14  92 148 164 168
-## [20]  92</code></pre>
-<div id="iterating-over-multiple-vectors" class="section level3">
-<h3>Iterating over multiple vectors</h3>
-<p>When speeding things up for a single vector, the user can write these
-things out. However, when you want to iterate not just over the values
-of a single vector, but multiple vectors, like the columns of a data
-frame, this becomes onerous. The apply family of functions takes care of
-all the heavy lifting for us. We don’t need to write code that
-explicitly loops. Instead, we call an apply function that is designed to
-efficiently hanld the task for us.</p>
-</div>
-<div id="iterating-over-a-single-vector" class="section level3">
-<h3>Iterating over a single vector</h3>
+takes time to process each individual step; do something to the first
+element, then to the second element etc. There are ways to make for
+loops faster in R; one way is simply to let the apply family of
+functions take care of the details for us. We don’t need to write code
+that explicitly loops. Instead, we call an apply function that is
+designed to efficiently handle the task for us.</p>
 <p>The second key concept here is to leverage when possible the fact
 that R is vectorized. We see this with examples like this where we don’t
 need to loop over every value, its the default behaviour.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>random_sample_2 <span class="ot">&lt;-</span> random_sample <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>random_sample_2 <span class="ot">&lt;-</span> random_sample <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div>
 <p>What this means ‘under the hood’ though, is that instead of R locally
 processing your data, slowly iterating over it, R looks at the first
 element of your vector, determines its data type, and then passes the
 operation off to a function written in a pre-compiled language.
 Pre-compiled languages are much faster. If you dive into R more deeply,
 you’ll hear people say that you should vectorize your code. What this
-really suggests is, don’t write iterative loops, like for loops, if
-there is a pre-compiled option available that you can pass your data off
-to.</p>
-</div>
+really suggests is, if you find yourself writing a lot of iterative
+loops, like for loops, consider that there might be a more efficient
+path that involves passing vectors to already pre-compiled
+functions.</p>
 </div>
 <div class="exercise">
 <p><code>read.csv</code> allows us to assign variable types on import.
@@ -669,13 +655,13 @@ can update your import line –
 logical on import.</p>
 </div>
 <div class="solution">
-<div class="sourceCode" id="cb33"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>,</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>),</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">&quot;Chasing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Running&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Climbing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                    )</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>),</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">&quot;Chasing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Running&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Climbing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                    )</span></code></pre></div>
 </div>
 </div>
 <div id="dates-factors" class="section level2">
@@ -683,11 +669,11 @@ class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb33-1"><a h
 <p>In addition to logical variables, our data set also has categorical
 data and date data. Categorical data in R is called factor data. We’ll
 convert a single variable to factor to see how this behaves.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(sq_data<span class="sc">$</span>Age)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(sq_data<span class="sc">$</span>Age)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
 <pre><code>##  Factor w/ 3 levels &quot;?&quot;,&quot;Adult&quot;,&quot;Juvenile&quot;: NA NA NA 2 2 2 2 2 2 2 ...</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
 <pre><code>## [1] &quot;?&quot;        &quot;Adult&quot;    &quot;Juvenile&quot;</code></pre>
 <p>This process highlights that we have one additional string character
 that should be converted to <code>NA</code> on import, <code>?</code>.
@@ -696,11 +682,11 @@ levels or categories. Calling <code>levels</code> lists those
 categories.</p>
 <p>Sometime the levels are not in the order we want them for ordinal
 categorical data. We can re-assign these.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="fu">factor</span>(sq_data<span class="sc">$</span>Age, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Juvenile&quot;</span>, <span class="st">&quot;Adult&quot;</span>, <span class="st">&quot;?&quot;</span>))</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="fu">factor</span>(sq_data<span class="sc">$</span>Age, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Juvenile&quot;</span>, <span class="st">&quot;Adult&quot;</span>, <span class="st">&quot;?&quot;</span>))</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
 <pre><code>## [1] &quot;Juvenile&quot; &quot;Adult&quot;    &quot;?&quot;</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
 <pre><code>##  Factor w/ 3 levels &quot;Juvenile&quot;,&quot;Adult&quot;,..: NA NA NA 2 2 2 2 2 2 2 ...</code></pre>
 <div class="exercise">
 <p>Using the help page for <code>as.Date</code>, convert the Date
@@ -710,14 +696,14 @@ variable.</p>
 <div class="solution">
 <p><code>as.Date</code> requires a character input, so we must first
 convert our variable to a character format</p>
-<div class="sourceCode" id="cb42"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.character</span>(sq_data<span class="sc">$</span>Date)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.character</span>(sq_data<span class="sc">$</span>Date)</span></code></pre></div>
 <p>Next, we need to specify to <code>as.Date</code> how our data is
 structured - where the year, month, and date are articulated, and
 whether the year is 4 digits or 2, and the months and days are
 abbreviated.</p>
-<div class="sourceCode" id="cb43"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(sq_data<span class="sc">$</span>Date, <span class="st">&quot;%m%d%Y&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(sq_data<span class="sc">$</span>Date, <span class="st">&quot;%m%d%Y&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -730,22 +716,22 @@ in facilitating this process.</p>
 indicate the base type of data it is.</p>
 <p>I have a very simple data dictionary for this project. Let’s load
 that in</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>dict_src <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv&quot;</span> <span class="co"># source of the file</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> dict_src, <span class="at">destfile =</span> <span class="st">&#39;_datadictionary.csv&#39;</span>) <span class="co"># download and name the file</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>data_dict <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;_datadictionary.csv&quot;</span>) <span class="co"># read in the file</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>dict_src <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv&quot;</span> <span class="co"># source of the file</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> dict_src, <span class="at">destfile =</span> <span class="st">&#39;_datadictionary.csv&#39;</span>) <span class="co"># download and name the file</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>data_dict <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;_datadictionary.csv&quot;</span>) <span class="co"># read in the file</span></span></code></pre></div>
 <p>We’ll now import our data in a slightly more efficient way</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>na_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span> , <span class="st">&quot; &quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;?&quot;</span>, <span class="st">&quot;+&quot;</span>) <span class="co"># a list of values to use for na.strings</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>data_types <span class="ot">&lt;-</span> data_dict<span class="sc">$</span>data.import.class <span class="co"># a list of data types to feed to colClass</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;2018-cp_squirrel_census.csv&quot;</span>,</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">na.strings =</span> na_values,</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">colClasses =</span> data_types</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>na_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span> , <span class="st">&quot; &quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;?&quot;</span>, <span class="st">&quot;+&quot;</span>) <span class="co"># a list of values to use for na.strings</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>data_types <span class="ot">&lt;-</span> data_dict<span class="sc">$</span>data.import.class <span class="co"># a list of data types to feed to colClass</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;2018-cp_squirrel_census.csv&quot;</span>,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">na.strings =</span> na_values,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">colClasses =</span> data_types</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    3023 obs. of  31 variables:
 ##  $ X                                         : num  -74 -74 -74 -74 -74 ...
 ##  $ Y                                         : num  40.8 40.8 40.8 40.8 40.8 ...
@@ -781,7 +767,7 @@ that in</p>
 <p>At this point, we’ve got a pretty clean imported data set. It’s
 likely we’ll still find some issues with, but for now let’s save it as a
 cleaned, version 0</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(sq_data, <span class="st">&quot;2018-cp_squirrel_census_cleaned_v0.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(sq_data, <span class="st">&quot;2018-cp_squirrel_census_cleaned_v0.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="summary">
 <p>On import, we can control many aspects of our data set, including
 setting NA values and assigning datat types and classes. This work is
