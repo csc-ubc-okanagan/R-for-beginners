@@ -576,77 +576,89 @@ functions for our current data set, including <code>as.Date</code> and
 </div>
 <div id="convert-multiple-variables" class="section level2">
 <h2>Convert multiple variables</h2>
+<p>We might be inclined to simply do the following:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>variables_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Running&quot;</span>, <span class="st">&quot;Chasing&quot;</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sq_data[,variables_to_convert] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sq_data[,variables_to_convert], as.logical)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Chasing)</span></code></pre></div>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sq_data[,variables_to_convert] <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(sq_data[,variables_to_convert])</span></code></pre></div>
+<pre><code>## Error in eval(expr, envir, enclos): &#39;list&#39; object cannot be coerced to type &#39;logical&#39;</code></pre>
+<p>Which will give us an error. Errors in R are not always super helpful
+and working through them is a learning curve unto itself. This one is
+somewhat helpful. It tells us that as.logical doesn’t know how to handle
+a list as an input. A plain language interpretation of this is that
+<code>as.logical()</code> will only take in a single vector of values,
+not more than one vector.</p>
+<p>The solution is to use the <code>apply()</code> family of
+functions.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>variables_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Running&quot;</span>, <span class="st">&quot;Chasing&quot;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>sq_data[,variables_to_convert] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sq_data[,variables_to_convert], as.logical)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Chasing)</span></code></pre></div>
 <pre><code>##  logi [1:3023] FALSE FALSE TRUE FALSE FALSE FALSE ...</code></pre>
-<p>This is a steep introduction to vectorization in R.</p>
-<p>Remember that a vector is just a simple list. Generally, when we do
-one thing to something in a list it only impacts that one value – in
-Excel we might double one value in a column, but this doesn’t double
-every value in the column.</p>
-<p>R is built from the ground up to apply changes to all values in a
-list – known as vectorization. So, if we have a series of numbers – like
-we created on earlier with <code>random_sample</code></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>random_sample</span></code></pre></div>
-<pre><code>##  [1] 36 17 26 45 37  9 30 23 30 17 41  4 33 35 23 37 92 67 51 31</code></pre>
-<p>And we want to convert every value, we apply the conversion to the
-entire vector</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(random_sample_doubled <span class="ot">&lt;-</span> random_sample <span class="sc">*</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>##  [1]  72  34  52  90  74  18  60  46  60  34  82   8  66  70  46  74 184 134 102
-## [20]  62</code></pre>
-<p>The <code>apply</code> family of functions does exactly the same
-thing, but instead, in the case of <code>lapply</code>, taking in a
-single object, like <code>random_sample</code>, it takes in a list of
-objects – hence the <code>l</code> for <code>list apply</code> – and
-applies a function to each object.</p>
-<p>Reading out the above chunk of code then</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a character vector with the names of our variables</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>variables_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Running&quot;</span>, <span class="st">&quot;Chasing&quot;</span>) </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="do">## create a list of variables - sq_data[, &quot;Running&quot;], sq_data[, &quot;Chasing&quot;] - that is fed</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="do">## into the lapply() function and apply the as.logical() function to each item</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>sq_data[,variables_to_convert] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sq_data[,variables_to_convert], as.logical)</span></code></pre></div>
-<p>Writing code in this way can be extremely helpful, starting with a
-plain language write up and then translating each piece to actual
-code:</p>
-<ol style="list-style-type: decimal">
-<li>write a list of variables we want to change to a variable</li>
-<li>index the data frame with the above variable</li>
-<li>apply a function to this index</li>
-</ol>
-<p>Writing it like this also allows you to articulate your problem in a
-language that can be searched if you don’t know how to complete a
-specific step.</p>
+<p>The <code>apply</code> family of functions is very useful for
+iterating over data structures, such as data frames. In
+<code>lapply()</code>, the l stands for list, suggesting it takes in
+lists to iterate or loop over. In this case, the funtion takes a list,
+<code>variables_to_convert</code> and passes that list off, one vector
+at a time to <code>as.logical()</code>.</p>
 <div class="advanced">
-<p>Without vectorization, you would need to specify how to iterate over
-each value in an object. Sometimes you still need to do this in R, so it
-might be handy to see how this works. Working with a plain language
-summary and using our <code>random_sample</code>:</p>
-<ol style="list-style-type: decimal">
-<li>create an object to hold our output - call it
-<code>random_sample_multi</code></li>
-<li>start an iteration that begins at index point 1 -
-<code>random_sample[1]</code> - and ends at the final index point of the
-object we’re working with - <code>random_sample[20]</code>, remembering
-that writing <code>random_sample[1]</code> will output the value held at
-that index point and that we don’t need to know the final index point,
-as we can calculate this with <code>length()</code>.</li>
-<li>populate the object we created in step one with the multiple of 2 of
-each value held in each index point of <code>random_sample</code></li>
-<li>print out the result to confirm</li>
-</ol>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>random_sample_multi <span class="ot">&lt;-</span> <span class="fu">vector</span>() <span class="co"># create an empty vector called random_sample_multi</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(random_sample)) { <span class="co"># iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  random_sample_multi[i] <span class="ot">&lt;-</span> random_sample[i] <span class="sc">*</span><span class="dv">2</span> <span class="co"># for each value at index point 1 through to length(random_sample), multiply that value by 2</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>random_sample_multi <span class="co"># print the result to verify</span></span></code></pre></div>
-<pre><code>##  [1]  72  34  52  90  74  18  60  46  60  34  82   8  66  70  46  74 184 134 102
-## [20]  62</code></pre>
+<p>We’re about to take a somewhat steep introduction to two key concepts
+in R related to iterating operations over your data in R.</p>
+<p>There are several ways that one might iterate operations. One of the
+most common is a for loop, in which we state, for each element in a
+list, do this to it. This would look something like this, using our
+earlier <code>random_sample</code> we created:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>random_sample_empty <span class="ot">&lt;-</span> <span class="fu">vector</span>() <span class="co"># create an empty vector called random_sample_multi</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(random_sample)) { <span class="co"># iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  random_sample_empty[i] <span class="ot">&lt;-</span> random_sample[i] <span class="sc">*</span><span class="dv">2</span> <span class="co"># for each value at index point 1 through to length(random_sample), multiply that value by 2</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>random_sample_empty <span class="co"># print the result to verify</span></span></code></pre></div>
+<pre><code>##  [1] 112 126  64  40  68 114 182 150 186  30 166 194   8   8  14  92 148 164 168
+## [20]  92</code></pre>
+<p>R is a high level language, meaning it’s interpreted at run time
+rather than pre-compiled. This generally makes for loops slow, since R
+takes time to process each individual step; apply a function to the
+first element, then to the second element etc. There are ways to make
+for loops faster in R. One way, using the above example, is to
+pre-populate the list with a set of values, so R knows in advance how
+much room to set aside in memory.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>random_sample_known_length <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;numeric&quot;</span>, <span class="fu">length</span>(random_sample)) <span class="co"># create an empty vector called random_sample_multi</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(random_sample)) { <span class="co"># iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  random_sample_known_length[i] <span class="ot">&lt;-</span> random_sample[i] <span class="sc">*</span><span class="dv">2</span> <span class="co"># for each value at index point 1 through to length(random_sample), multiply that value by 2</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>random_sample_known_length <span class="co"># print the result to verify</span></span></code></pre></div>
+<pre><code>##  [1] 112 126  64  40  68 114 182 150 186  30 166 194   8   8  14  92 148 164 168
+## [20]  92</code></pre>
+<div id="iterating-over-multiple-vectors" class="section level3">
+<h3>Iterating over multiple vectors</h3>
+<p>When speeding things up for a single vector, the user can write these
+things out. However, when you want to iterate not just over the values
+of a single vector, but multiple vectors, like the columns of a data
+frame, this becomes onerous. The apply family of functions takes care of
+all the heavy lifting for us. We don’t need to write code that
+explicitly loops. Instead, we call an apply function that is designed to
+efficiently hanld the task for us.</p>
+</div>
+<div id="iterating-over-a-single-vector" class="section level3">
+<h3>Iterating over a single vector</h3>
+<p>The second key concept here is to leverage when possible the fact
+that R is vectorized. We see this with examples like this where we don’t
+need to loop over every value, its the default behaviour.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>random_sample_2 <span class="ot">&lt;-</span> random_sample <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div>
+<p>What this means ‘under the hood’ though, is that instead of R locally
+processing your data, slowly iterating over it, R looks at the first
+element of your vector, determines its data type, and then passes the
+operation off to a function written in a pre-compiled language.
+Pre-compiled languages are much faster. If you dive into R more deeply,
+you’ll hear people say that you should vectorize your code. What this
+really suggests is, don’t write iterative loops, like for loops, if
+there is a pre-compiled option available that you can pass your data off
+to.</p>
+</div>
 </div>
 <div class="exercise">
 <p><code>read.csv</code> allows us to assign variable types on import.

@@ -148,6 +148,18 @@ str(sq_data$Running) # view the results
 
 ## Convert multiple variables
 
+We might be inclined to simply do the following:
+
+```{r, error = TRUE}
+variables_to_convert <- c("Running", "Chasing")
+
+sq_data[,variables_to_convert] <- as.logical(sq_data[,variables_to_convert])
+```
+
+Which will give us an error. Errors in R are not always super helpful and working through them is a learning curve unto itself. This one is somewhat helpful. It tells us that as.logical doesn't know how to handle a list as an input. A plain language interpretation of this is that `as.logical()` will only take in a single vector of values, not more than one vector.
+
+The solution is to use the `apply()` family of functions.
+
 ```{r}
 variables_to_convert <- c("Running", "Chasing")
 
@@ -156,60 +168,48 @@ sq_data[,variables_to_convert] <- lapply(sq_data[,variables_to_convert], as.logi
 str(sq_data$Chasing)
 ```
 
-This is a steep introduction to vectorization in R.
-
-Remember that a vector is just a simple list. Generally, when we do one thing to something in a list it only impacts that one value -- in Excel we might double one value in a column, but this doesn't double every value in the column.
-
-R is built from the ground up to apply changes to all values in a list -- known as vectorization. So, if we have a series of numbers -- like we created on earlier with `random_sample`
-
-```{r}
-random_sample
-```
-
-And we want to convert every value, we apply the conversion to the entire vector
-
-```{r}
-(random_sample_doubled <- random_sample * 2)
-```
-
-The `apply` family of functions does exactly the same thing, but instead, in the case of `lapply`, taking in a single object, like `random_sample`, it takes in a list of objects -- hence the `l` for `list apply` --  and applies a function to each object.
-
-Reading out the above chunk of code then
-
-```{r, eval = FALSE}
-# create a character vector with the names of our variables
-variables_to_convert <- c("Running", "Chasing") 
-
-## create a list of variables - sq_data[, "Running"], sq_data[, "Chasing"] - that is fed
-## into the lapply() function and apply the as.logical() function to each item
-sq_data[,variables_to_convert] <- lapply(sq_data[,variables_to_convert], as.logical)
-```
-
-Writing code in this way can be extremely helpful, starting with a plain language write up and then translating each piece to actual code:
-
-1. write a list of variables we want to change to a variable
-2. index the data frame with the above variable
-3. apply a function to this index
-
-Writing it like this also allows you to articulate your problem in a language that can be searched if you don't know how to complete a specific step.
+The `apply` family of functions is very useful for iterating over data structures, such as data frames. In `lapply()`, the l stands for list, suggesting it takes in lists to iterate or loop over. In this case, the funtion takes a list, `variables_to_convert` and passes that list off, one vector at a time to `as.logical()`.
 
 <div class = "advanced">
-Without vectorization, you would need to specify how to iterate over each value in an object. Sometimes you still need to do this in R, so it might be handy to see how this works. Working with a plain language summary and using our `random_sample`:
+We're about to take a somewhat steep introduction to two key concepts in R related to iterating operations over your data in R.
 
-1. create an object to hold our output - call it `random_sample_multi`
-2. start an iteration that begins at index point 1 - `random_sample[1]` - and ends at the final index point of the object we're working with - `random_sample[20]`, remembering that writing `random_sample[1]` will output the value held at that index point and that we don't need to know the final index point, as we can calculate this with `length()`.
-3. populate the object we created in step one with the multiple of 2 of each value held in each index point of `random_sample`
-4. print out the result to confirm
+There are several ways that one might iterate operations. One of the most common is a for loop, in which we state, for each element in a list, do this to it. This would look something like this, using our earlier `random_sample` we created:
 
 ```{r}
-random_sample_multi <- vector() # create an empty vector called random_sample_multi
+random_sample_empty <- vector() # create an empty vector called random_sample_multi
 
 for (i in 1:length(random_sample)) { # iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()
-  random_sample_multi[i] <- random_sample[i] *2 # for each value at index point 1 through to length(random_sample), multiply that value by 2
+  random_sample_empty[i] <- random_sample[i] *2 # for each value at index point 1 through to length(random_sample), multiply that value by 2
 }
 
-random_sample_multi # print the result to verify
+random_sample_empty # print the result to verify
 ```
+
+R is a high level language, meaning it's interpreted at run time rather than pre-compiled. This generally makes for loops slow, since R takes time to process each individual step; apply a function to the first element, then to the second element etc. There are ways to make for loops faster in R. One way, using the above example, is to pre-populate the list with a set of values, so R knows in advance how much room to set aside in memory.
+
+```{r}
+random_sample_known_length <- vector("numeric", length(random_sample)) # create an empty vector called random_sample_multi
+
+for (i in 1:length(random_sample)) { # iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()
+  random_sample_known_length[i] <- random_sample[i] *2 # for each value at index point 1 through to length(random_sample), multiply that value by 2
+}
+
+random_sample_known_length # print the result to verify
+```
+
+### Iterating over multiple vectors
+
+When speeding things up for a single vector, the user can write these things out. However, when you want to iterate not just over the values of a single vector, but multiple vectors, like the columns of a data frame, this becomes onerous. The apply family of functions takes care of all the heavy lifting for us. We don't need to write code that explicitly loops. Instead, we call an apply function that is designed to efficiently hanld the task for us.
+
+### Iterating over a single vector
+
+The second key concept here is to leverage when possible the fact that R is vectorized. We see this with examples like this where we don't need to loop over every value, its the default behaviour.
+
+```{r}
+random_sample_2 <- random_sample * 2
+```
+
+What this means 'under the hood' though, is that instead of R locally processing your data, slowly iterating over it, R looks at the first element of your vector, determines its data type, and then passes the operation off to a function written in a pre-compiled language. Pre-compiled languages are much faster. If you dive into R more deeply, you'll hear people say that you should vectorize your code. What this really suggests is, don't write iterative loops, like for loops, if there is a pre-compiled option available that you can pass your data off to.
 </div>
 
 <div class = 'exercise'>
