@@ -372,12 +372,6 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
-<li>
-  <a href="part_8.html">Libraries</a>
-</li>
-<li>
-  <a href="part_9.html">ggplot</a>
-</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -414,7 +408,7 @@ function that takes 3 basic arguments: a range of values to sample from,
 the size of the sample, and whether or not values in the sample can be
 duplicated.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<pre><code>##  [1]  42  35  90 100  39  75  14   2  40  84</code></pre>
+<pre><code>##  [1] 25 11 32 40 72 80 23 12 26 48</code></pre>
 <div class="note">
 <p>Other functions to create random samples include <code>runif()</code>
 for uniformly distributed data and <code>rnorm()</code> for normally
@@ -459,13 +453,13 @@ such as <em>if</em> and <em>for</em>. More details can be found with
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># call random_sample which outputs the values to the screen</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>random_sample</span></code></pre></div>
-<pre><code>##  [1] 37 64 14 44 52 19 62  2 72 62 15 57 25 16  3 28 87 31 57 45</code></pre>
+<pre><code>##  [1]  7 15 44 44 64  7 45 70  3 41 75 10 65 23 36 87 82 64 79 79</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the mean of random_sample and store it in a variable called random_sample_mean</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>random_sample_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(random_sample) </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># call random_sample_mean which outputs the values to the screen</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>random_sample_mean </span></code></pre></div>
-<pre><code>## [1] 39.6</code></pre>
+<pre><code>## [1] 47</code></pre>
 <div class="exercise">
 <p>Let’s build our own function that calculates a mean to see what’s all
 happening under the hood.</p>
