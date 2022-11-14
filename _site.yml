@@ -21,10 +21,7 @@ navbar:
       href: part_6.html
     - text: "Subsetting"
       href: part_7.html
-    - text: "Libraries"
-      href: part_8.html
-    - text: "ggplot"
-      href: part_9.html
+
 output:
   html_document:
     theme: flatly

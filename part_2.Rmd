@@ -78,7 +78,7 @@ A list also essentially functions as a series of connected vectors, but breaks u
 
 ### Matrices
 
-A matrix is basically a data frame, but can only hold a single data type or class. In the following, a series of numeric data. Instead of having column names, we have column and row numbers.
+A matrix resembles a data frame, but can only hold a single data type or class. In the following, a series of numeric data. Instead of having column names, we have column and row numbers.
 
 ```{r create-intro_matrix, echo = FALSE}
 (matrix(round(rnorm(12, 10, 1), 2), nrow = 3))
