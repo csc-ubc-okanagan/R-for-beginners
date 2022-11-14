@@ -11,7 +11,7 @@ R is a programming language designed to facilitate statistical analyses and to g
 RStudio is an IDE -- Integrated Development Environment. It provides a visual interface to work with R the language and R the program. It consists of several key elements.
 
 1. a scripting pane, where we write stuff
-2. an R console, where R runs and processes what you right
+2. an R console, where R runs and processes what you write
 3. an environment pane, where we can see the data objects, functions etc that we create
 4. a viewing pane that gives us access to our files, plots, and help
 
