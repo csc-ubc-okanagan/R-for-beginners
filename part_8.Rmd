@@ -27,7 +27,7 @@ Calculate how many packages are installed on your system.
 ```{r, class.source = 'fold-hide', results = FALSE}
 installed_packages <- installed.packages() # load the contents into a variable
 
-nrow(installed_packages) # pring the number of rows
+nrow(installed_packages) # print the number of rows
 ```
 </div>
 

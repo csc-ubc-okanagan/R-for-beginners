@@ -108,8 +108,8 @@ There are several `geoms_` that we can choose from. These include:
 
 * geom_bar() and geom_col() for bar charts
 * geom_boxplot() for box and whisker plots
-* geom_density() and geom_violin() for density plots
-* geom_freqpoly(), geom_histogram(), and geom_dotplot for distributions
+* geom_density() for density plots
+* geom_freqpoly(), geom_histogram(), geom_violin(), and geom_dotplot for distributions
 * geom_line() for connecting observations
 * geom_point() and geom_jitter() for scatter plots
 * geom_map() and geom_sf() for GIS data

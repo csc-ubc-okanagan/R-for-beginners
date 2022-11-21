@@ -359,6 +359,12 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
+<li>
+  <a href="part_8.html">Libraries</a>
+</li>
+<li>
+  <a href="part_9.html">ggplot</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -429,7 +435,7 @@ with this data, like calculating a person’s age.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(date)</span></code></pre></div>
 <pre><code>## [1] &quot;Date&quot;</code></pre>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(days_since_March_31 <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> date)</span></code></pre></div>
-<pre><code>## Time difference of 258 days</code></pre>
+<pre><code>## Time difference of 265 days</code></pre>
 </div>
 <div id="structures" class="section level2">
 <h2>Structures</h2>
@@ -481,9 +487,9 @@ get complicated.</p>
 or class. In the following, a series of numeric data. Instead of having
 column names, we have column and row numbers.</p>
 <pre><code>##       [,1]  [,2]  [,3]  [,4]
-## [1,]  9.53  9.13 10.81 10.24
-## [2,]  9.71  9.86 11.79 10.82
-## [3,] 11.83 10.52  9.55 10.29</code></pre>
+## [1,]  9.52 10.07  9.70 10.34
+## [2,] 10.51 11.50  9.78 11.51
+## [3,]  9.71 11.31 10.70 10.85</code></pre>
 <div class="summary">
 <p>Vectors are the building blocks of data frames, lists, and matrices.
 Matrices are joined vectors of the same length and same data types. Data

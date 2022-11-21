@@ -26,7 +26,7 @@ setwd("~/Desktop/r-for-beginners") # set the working directory to the direcotry 
 And then we'll download our data
 
 ```{r download-sdata, eval = FALSE}
-data_src <- "https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/2018-cp_squirrel_census.csv" # define the source of our data, in this case, a url
+data_src <- "https://tinyurl.com/mu8y9n29" # define the source of our data, in this case, a url
 
 download.file(url = data_src, destfile = '2018-cp_squirrel_census.csv') # download the file, and save it with a specified name
 ```
@@ -261,7 +261,7 @@ A data dictionary generally describes key attributes about your data - it will l
 I have a very simple data dictionary for this project. Let's load that in
 
 ```{r}
-dict_src <- "https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv" # source of the file
+dict_src <- "https://tinyurl.com/4kxt9n8e" # source of the file
 
 download.file(url = dict_src, destfile = '_datadictionary.csv') # download and name the file
 

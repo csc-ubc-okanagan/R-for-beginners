@@ -372,6 +372,12 @@ $(document).ready(function () {
 <li>
   <a href="part_7.html">Subsetting</a>
 </li>
+<li>
+  <a href="part_8.html">Libraries</a>
+</li>
+<li>
+  <a href="part_9.html">ggplot</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -409,7 +415,7 @@ above will not work.</p>
 files in this folder.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Desktop/r-for-beginners&quot;</span>) <span class="co"># set the working directory to the direcotry we just created</span></span></code></pre></div>
 <p>And then we’ll download our data</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data_src <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/2018-cp_squirrel_census.csv&quot;</span> <span class="co"># define the source of our data, in this case, a url</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data_src <span class="ot">&lt;-</span> <span class="st">&quot;https://tinyurl.com/mu8y9n29&quot;</span> <span class="co"># define the source of our data, in this case, a url</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> data_src, <span class="at">destfile =</span> <span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>) <span class="co"># download the file, and save it with a specified name</span></span></code></pre></div>
 <p>Now that our data is downloaded and we have a local copy, we’ll pull
@@ -615,8 +621,8 @@ earlier <code>random_sample</code> we created:</p>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>random_sample_doubled <span class="co"># print the result to verify</span></span></code></pre></div>
-<pre><code>##  [1]  14  30  88  88 128  14  90 140   6  82 150  20 130  46  72 174 164 128 158
-## [20] 158</code></pre>
+<pre><code>##  [1] 102  92  20  38 182  50  40 126  74 166 178 130 192  26 164 164 154 180  52
+## [20]  16</code></pre>
 <p>R is a high level language, meaning it’s interpreted at run time
 rather than pre-compiled. This generally makes for loops slow, since R
 takes time to process each individual step; do something to the first
@@ -710,7 +716,7 @@ in facilitating this process.</p>
 indicate the base type of data it is.</p>
 <p>I have a very simple data dictionary for this project. Let’s load
 that in</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>dict_src <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/csc-ubc-okanagan/R-for-beginners/main/files/_datadictionary.csv&quot;</span> <span class="co"># source of the file</span></span>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>dict_src <span class="ot">&lt;-</span> <span class="st">&quot;https://tinyurl.com/4kxt9n8e&quot;</span> <span class="co"># source of the file</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> dict_src, <span class="at">destfile =</span> <span class="st">&#39;_datadictionary.csv&#39;</span>) <span class="co"># download and name the file</span></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
