@@ -1,309 +1,37 @@
 ---
-title: "Loading Data"
+title: "Getting Help"
 output:
   html_document:
     code_folding: show
 ---
 
-We're going to work with a (hopefully) fun data set today, which we'll download and then import.
-
-First things first, we'll use R to set up a place for us to work. We'll begin by creating a directory on our desktop
-
-```{r create-project-folder, eval = FALSE}
-dir.create("~/Desktop/r-for-beginners") # create a project directory
+```{r echo=FALSE}
+knitr::opts_chunk$set(warning = FALSE,
+                      comment = NA)
 ```
 
-<div class = "note">
-Most systems - MacOS, Windows, Linux - will set your home directory to your user directory. The tilde `~` is shorthand for your user directory. If your home directory is not your user directory, the above will not work.
-</div>
+There are several ways to get help with R.
 
-We'll then make sure that our current session is working with the files in this folder.
+## Built in Help
 
-```{r working-directory, eval = FALSE}
-setwd("~/Desktop/r-for-beginners") # set the working directory to the direcotry we just created
-```
+In general, packages and their functions and data are pretty well documented.
 
-And then we'll download our data
-
-```{r download-sdata, eval = FALSE}
-data_src <- "https://tinyurl.com/mu8y9n29" # define the source of our data, in this case, a url
-
-download.file(url = data_src, destfile = '2018-cp_squirrel_census.csv') # download the file, and save it with a specified name
-```
-
-Now that our data is downloaded and we have a local copy, we'll pull it into R
-
-We can simply import the data and display it to our console
-
-```{r import-squirrel-console, eval = FALSE}
-read.csv('2018-cp_squirrel_census.csv') # read the data
-```
-
-But this isn't terribly useful. We want to store this data in memory, so we'll load it into a variable
-
-```{r import-squirrel-var}
-sq_data <- read.csv('2018-cp_squirrel_census.csv') # read the data into a variable called sq_data
-```
-
-We can now explore the data, looking at the data types and data structures R is defaulting to when importing this csv file
-
-```{r squirrel-var-str}
-str(sq_data) # explore the structure of the data set.
-```
-
-We can get slightly better access to the data itself with `View()`
-
-```{r squireel-var-view, eval = FALSE}
-View(sq_data) # look at the data in a 'spreadsheet' like format. Note the capital V.
-```
-
-This output tells us that we're working with a data frame, that there are 3023 rows or observations, and 31 columns or variables. It then lists all of the variables, tells us what data type they were interpreted as on import, and show us the first six values of each variable.
-
-## Missing Values
-
-Before digging much deeper into the data set, one of the first things we'll note is that there are a lot of missing values. Missing values need to be properly encoded to be programatically useful. An application -- or user -- may represent missing values in many ways. Sometimes it's by using an out of range value, so when a variable is binary, and values are represented as 0 or 1, 99 may be used to indicate a missing value. Files exported from SPSS might be encoded with a period, `.`. In Excel, it's extremely easy for a user to accidentally introduce spaces, ` `, in an otherwise empty cell, or they may choose to write the characters `NA`. A data base export might include either `NA` or `NULL`.
-
-When exported, especially using a format like `csv`, all of these notations for missing values are converted to character strings or numbers. Ideally, when importing into a piece of software, like R, we would have a way to provide a list of possible ways of encoding missing values and standardize how these are presented.
-
-In R, `NA` values are a specific way of indicating that a value is missing. And `read.csv()` has a specific argument for converting strings into `NA` encoded values on import.
-
-<div class = 'exercise'>
-Using the help documentation -- `?read.csv` -- see if you can figure out how to update your data import -- `sq_data <- read.csv('2018-cp_squirrel_census.csv')` -- to convert a list of strings to `NA` values.
-</div>
-
-<div class = 'solution'>
-```{r, class.source = 'fold-hide', results = FALSE}
-sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))
-```
-</div>
-
-```{r, echo = FALSE}
-sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))
-```
-
-Review the data structure again...
-
-```{r}
-str(sq_data)
-```
-
-We'll see a number of other things that we need to sort out before we can do much with our data. For example, many of our variable of have not been assigned to the appropriate data type. We have logical variables, date variables etc not yet sorted. Let's fix this.
-
-# Indexing & Data Types
-
-To clean up our data set, we need to be able to target specifc varibales and or specific values. We do this with indexing.
-
-Data frames are comprised of rows and columns, and R accepts arguments in this order, so if we want to see the intersection of the first row and the first column, we would run
-
-```{r}
-sq_data[1,1] # show the first row and first column of the data frame
-```
-
-If we wanted to see the first 6 rows
-
-```{r}
-sq_data[1:6, 1] # show the first six rows and first column of the data frame
-```
-
-And if we wanted to see all the values of a specific variable, or column
+There are several ways to access this documentation from within R. The one we’ll use frequently here is to load the help page of a known function, which will provide a brief overview of the function, the list of arguments it accepts, what defaults for these arguments are set to, related functions, and examples. To access these help pages, pre-pend the function name with a ?
 
 ```{r, eval = FALSE}
-sq_data[ ,1]
+?mean
 ```
 
-When working with a data frame, we can also use variable names
+## Blogs, Tutorials & Forums
 
-```{r, eval = FALSE}
-sq_data[1:6, "Running"]
-```
+These can be hit and miss, but when they’re a hit, they’re invaluable.
 
-And when we want every observation associated with a given variable
+As a new user to R, they can also be a bit confusing, even if they’re a hit. This is partly because there are many ways to solve the same problem when programming, so you’ll likely see lots of different approaches, some of which are more familiar to you than others. The other is that R supports multiple syntaxes; that is, multiple ways of expressing or constructing the arguments that one puts together. This is kind of an unusual feature of R and something people struggle with. But as a result, you may see a solution that uses a different syntax than you’re used to.
 
-```{r, eval = FALSE}
-sq_data$Running
-```
+The key here is to spend time reading blogs and forum responses and working your way through problems; the proposed solutions will start to make more sense with time and familiarity, just like learning any other language.
 
-## Changing Data Types
+The easiest portal to these resources is Google or a similar search engine.
 
-Now that we can target a variable, we can assign new properties to that variable. R has a series of `as.` functions to allow us to manipulate data types and classes. To view all `as.` functions available to you
+## Books
 
-```{r, eval = FALSE}
-apropos("^as\\.")
-```
-
-```{r, echo = FALSE}
-head(apropos("^as\\."))
-cat("...")
-```
-
-We can see in the list, that we have several useful `as.` functions for our current data set, including `as.Date` and `as.logical`. We'll start with the latter.
-
-## Convert a single variable
-
-```{r}
-sq_data$Running <- as.logical(sq_data$Running) # re-assign the variable Running from character to logical
-
-str(sq_data$Running) # view the results
-```
-
-## Convert multiple variables
-
-We might be inclined to simply do the following:
-
-```{r, error = TRUE}
-variables_to_convert <- c("Running", "Chasing")
-
-sq_data[,variables_to_convert] <- as.logical(sq_data[,variables_to_convert])
-```
-
-Which will give us an error. Errors in R are not always super helpful and working through them is a learning curve unto itself. This one is somewhat helpful. It tells us that as.logical doesn't know how to handle a list as an input. A plain language interpretation of this is that `as.logical()` will only take in a single vector of values, not more than one vector.
-
-The solution is to use the `apply()` family of functions.
-
-```{r}
-variables_to_convert <- c("Running", "Chasing")
-
-sq_data[,variables_to_convert] <- lapply(sq_data[,variables_to_convert], as.logical)
-
-str(sq_data$Chasing)
-```
-
-The `apply` family of functions is very useful for iterating over data structures, such as data frames. In `lapply()`, the l stands for list, suggesting it takes in lists to iterate or loop over. In this case, the function takes a list, `variables_to_convert`, and passes that list off, one vector at a time to `as.logical()`.
-
-<div class = "advanced">
-We're about to take a somewhat steep introduction to two key concepts in R related to iterating operations over your data in R.
-
-There are several ways that one might iterate operations. One of the most common is a for loop, in which we state, for each element in a list, do this to it. This would look something like this, using our earlier `random_sample` we created:
-
-```{r}
-random_sample_doubled <- vector() # create an empty vector called random_sample_multi
-
-for (i in 1:length(random_sample)) { # iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()
-  random_sample_doubled[i] <- random_sample[i] *2 # for each value at index point 1 through to length(random_sample), multiply that value by 2
-}
-
-random_sample_doubled # print the result to verify
-```
-
-R is a high level language, meaning it's interpreted at run time rather than pre-compiled. This generally makes for loops slow, since R takes time to process each individual step; do something to the first element, then to the second element etc. There are ways to make for loops faster in R; one way is simply to let the apply family of functions take care of the details for us. We don't need to write code that explicitly loops. Instead, we call an apply function that is designed to efficiently handle the task for us.
-
-The second key concept here is to leverage when possible the fact that R is vectorized. We see this with examples like this where we don't need to loop over every value, its the default behaviour.
-
-```{r}
-random_sample_2 <- random_sample * 2
-```
-
-What this means 'under the hood' though, is that instead of R locally processing your data, slowly iterating over it, R looks at the first element of your vector, determines its data type, and then passes the operation off to a function written in a pre-compiled language. Pre-compiled languages are much faster. If you dive into R more deeply, you'll hear people say that you should vectorize your code. What this really suggests is, if you find yourself writing a lot of iterative loops, like for loops, consider that there might be a more efficient path that involves passing vectors to already pre-compiled functions.
-</div>
-
-<div class = 'exercise'>
-`read.csv` allows us to assign variable types on import. Revisit the help documentation for `read.csv` and see if you can update your import line -- `sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` -- to also convert the columns 'Running', 'Chasing', and 'Climbing' to logical on import.
-</div>
-
-<div class = 'solution'>
-```{r, class.source = 'fold-hide', results = FALSE}
-sq_data <- read.csv('2018-cp_squirrel_census.csv',
-                    na.strings = c("", " ", "NA", "NULL", ".", "+"),
-                    colClasses = c("Chasing" = "logical",
-                                   "Running" = "logical",
-                                   "Climbing" = "logical")
-                    )
-```
-</div>
-
-## Dates & Factors
-
-In addition to logical variables, our data set also has categorical data and date data. Categorical data in R is called factor data. We'll convert a single variable to factor to see how this behaves.
-
-```{r}
-sq_data$Age <- as.factor(sq_data$Age)
-
-str(sq_data$Age)
-
-levels(sq_data$Age)
-```
-
-This process highlights that we have one additional string character that should be converted to `NA` on import, `?`. Calling `str` tells us that we have a factor with three levels or categories. Calling `levels` lists those categories.
-
-Sometime the levels are not in the order we want them for ordinal categorical data. We can re-assign these.
-
-```{r}
-sq_data$Age <- factor(sq_data$Age, levels = c("Juvenile", "Adult", "?"))
-
-levels(sq_data$Age)
-
-str(sq_data$Age)
-```
-
-<div class = 'exercise'>
-Using the help page for `as.Date`, convert the Date variable, currently structured as `int` to a date class variable.
-</div>
-
-<div class = 'solution'>
-`as.Date` requires a character input, so we must first convert our variable to a character format
-```{r, class.source = 'fold-hide', results = FALSE}
-sq_data$Date <- as.character(sq_data$Date)
-```
-
-Next, we need to specify to `as.Date` how our data is structured - where the year, month, and date are articulated, and whether the year is 4 digits or 2, and the months and days are abbreviated.
-
-```{r, class.source = 'fold-hide', results = FALSE}
-sq_data$Date <- as.Date(sq_data$Date, "%m%d%Y")
-```
-</div>
-
-# Importing with a Data Dictionary
-
-The value of having a data dictionary in advance will go a long ways in facilitating this process.
-
-A data dictionary generally describes key attributes about your data - it will list your variables, provide a description of them, and indicate the base type of data it is.
-
-I have a very simple data dictionary for this project. Let's load that in
-
-```{r}
-dict_src <- "https://tinyurl.com/4kxt9n8e" # source of the file
-
-download.file(url = dict_src, destfile = '_datadictionary.csv') # download and name the file
-
-data_dict <- read.csv("_datadictionary.csv") # read in the file
-```
-
-We'll now import our data in a slightly more efficient way
-
-```{r}
-na_values <- c("" , " ", ".", "NA", "NULL", "?", "+") # a list of values to use for na.strings
-
-data_types <- data_dict$data.import.class # a list of data types to feed to colClass
-
-sq_data <- read.csv(file = "2018-cp_squirrel_census.csv",
-         na.strings = na_values,
-         colClasses = data_types
-           )
-
-str(sq_data)
-```
-
-At this point, we've got a pretty clean imported data set. It's likely we'll still find some issues with, but for now let's save it as a cleaned, version 0
-
-```{r}
-write.csv(sq_data, "2018-cp_squirrel_census_cleaned_v0.csv", row.names = FALSE)
-```
-
-<div class = "summary">
-On import, we can control many aspects of our data set, including setting NA values and assigning datat types and classes. This work is facilitated by being organized in advance. Creating a data dictionary will help to facilitate this process.
-</div>
-
-<div class = 'functions'>
-| Function | Description |
-| :--- | :--- |
-| `dir.create` | create a directory on your file system. |
-| `setwd` | set the working directory. See also `getwd` to get current working directory. |
-| `read.cs` | read a csv file into R. |
-| `str` | display information about the data including structure, types, and a few values. |
-| `View` | open the data set in a spreadsheet like viewer. |
-| `apropos` | search for functions and variables. |
-| `as.` | a family of functions for converting data types and structures. |
-| `lapply` | apply a function to every item in a list. |
-| `levels` | print the categories and codes for categorical data. |
-| `write.csv` | export data from R to your file system in csv format. |
-</div>
+There are books that are general all purpose introductions to R, books that address specific aspects of R such as visualizing data or performing statistics, books that address specific packages, and books that teach R using a problem based approach; these latter are referred to as ‘cookbooks’. At UBC, one of your best portals to these books is the O’Rielly platform, accessible at https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&id=2460.

@@ -11,7 +11,7 @@
 
 
 
-<title>R &amp; RStudio</title>
+<title>extra.knit</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -30,7 +30,6 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -119,15 +118,6 @@ code span.va { color: #0057ae; } /* Variable */
 code span.vs { color: #bf0303; } /* VerbatimString */
 code span.wa { color: #bf0303; } /* Warning */
 
-.sourceCode .row {
-  width: 100%;
-}
-.sourceCode {
-  overflow-x: auto;
-}
-.code-folding-btn {
-  margin-right: -30px;
-}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -320,9 +310,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -380,82 +367,52 @@ $(document).ready(function () {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">R &amp; RStudio</h1>
 
 </div>
 
 
-<div id="what-is-r" class="section level2">
-<h2>What is R</h2>
-<p>R is a programming language designed to facilitate statistical
-analyses and to generate graphs. R is also the program that converts
-what we write or input into something your computer can execute.</p>
-<p><strong>Writing (R language) and Executing (R
-interpreter)</strong></p>
-<p>Thinking about the language, in typing <code>sqrt()</code> we are
-writing an R function that takes a piece of data - your input. Thinking
-about the R program – or interpreter, since it interprets your code – it
-takes this data and executes it according to the function, namely
-computing the square root of the input.</p>
-<p>Even just using the console to write simple math your coding in R. If
-you want to be more traditional, we can write our first ‘hello world’
-program.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span></code></pre></div>
-<pre><code>[1] &quot;Hello World!&quot;</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># generate a random sample of 20 data points and store it in a variable called random_sample</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>random_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="at">replace =</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># call random_sample which outputs the values to the screen</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>random_sample</span></code></pre></div>
+<pre><code>##  [1]  35  39  41  95  57  75   2  91 100  57  54  46  25  22   2  59  44  52  87
+## [20]  49</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the mean of random_sample and store it in a variable called random_sample_mean</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>random_sample_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(random_sample) </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># call random_sample_mean which outputs the values to the screen</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>random_sample_mean </span></code></pre></div>
+<pre><code>## [1] 51.6</code></pre>
+<div class="exercise">
+<p>Let’s build our own function that calculates a mean to see what’s all
+happening under the hood.</p>
+<p>First we define the mean as the sum of all data points divided by the
+number of data points. We’ll leverage two existing functions,
+<code>sum()</code> and <code>length()</code>, the former of which
+performs simple addition and the latter of which tells us how many data
+points are in a vector.</p>
 </div>
-<div id="rstudio" class="section level2">
-<h2>RStudio</h2>
-<p>RStudio is an IDE – Integrated Development Environment. It’s a fancy
-name for a program designed to help you write and execute code. In one
-interface, it brings together several key elements related to writing
-code.</p>
-<ol style="list-style-type: decimal">
-<li>a scripting pane, where we write stuff</li>
-<li>an R console, where R runs and processes what you write. You can
-also write directly here, but it’s ephemeral.</li>
-<li>an environment pane, where we can see the data objects, functions
-etc that we create</li>
-<li>a viewing pane that gives us access to our files, plots, and
-help</li>
-</ol>
-<div class="note">
-<p>Most people who work with R do it using RStudio. But this is not
-necessary. All you really need is a plain text editor and the R
-interpreter to execute what you write.</p>
+<div class="solution">
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define our function. The function takes one input, which is a data source, it then add all the data points together and divides it by the number of data points.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the function is stored in a variable called my_mean</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>my_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="fu">sum</span>(data) <span class="co"># add the data</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">=</span> <span class="fu">length</span>(data) <span class="co"># count the data</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  calculation <span class="ot">=</span> total<span class="sc">/</span>n <span class="co"># do the math</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  calculation <span class="co"># print the output</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="at">replace =</span> F) <span class="co"># generate some data</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">my_mean</span>(my_data) <span class="co"># calculate the mean using my_mean</span></span></code></pre></div>
 </div>
-</div>
-<div id="building-blocks" class="section level2">
-<h2>Building Blocks</h2>
-<p>The big difference with working in something like R, over say Excel
-or another point and click tool for working with data, is that it moves
-us into the realm of programming, which brings with it a need to
-understand some core concepts about how data are handled and stored by
-computers.</p>
-<p>While we’re not outright programming, we will be writing scripts to
-do things with our data –and basically, that’s what a program is – data,
-and a series of instructions–functions–to do things with these data.</p>
-</div>
-<div id="how-it-works" class="section level2">
-<h2>How it Works</h2>
-<ol style="list-style-type: decimal">
-<li>You write instructions</li>
-<li>You give those instructions some data</li>
-<li>A compiler converts those instructions to something you computer can
-execute</li>
-<li>Your computer executes those instructions on your data</li>
-<li>You get the results presented to you, either on your screen, stored
-to a file, sent to a printer etc.</li>
-</ol>
+<div class="summary">
+<p>Functions take in data and do things with that data. Variables allow
+us to store our data for easy access.</p>
 </div>
 
 
@@ -491,11 +448,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

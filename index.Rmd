@@ -7,6 +7,8 @@ output:
       in_header: header.html
 ---
 ```{r echo=FALSE}
+knitr::opts_chunk$set(warning = FALSE,
+                      comment = NA)
 knitr::read_chunk("./scripts/workshop_files.R")
 ```
 

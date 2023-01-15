@@ -1,29 +1,68 @@
 ---
-title: "Getting Help"
+title: "Variables"
+output:
+  html_document:
+    code_folding: show
 ---
 
-There are several ways to get help with R.
-
-## Built in Help
-
-In general, packages and their functions and data are pretty well documented.
-
-There are several ways to access this documentation from within R. The one we'll use frequently here is to load the help page of a known function, which will provide a brief overview of the function, the list of arguments it accepts, what defaults for these arguments are set to, related functions, and examples. To access these help pages, pre-pend the function name with a `?`
-
-```{r help-demo, eval = FALSE}
-?mean
+```{r echo=FALSE}
+knitr::opts_chunk$set(warning = FALSE,
+                      comment = NA)
 ```
 
-## Blogs, Tutorials & Forums
+When we have a function do something with our data, there are several ways in which we might direct the output of that function. So far, we've directed that output to our terminal -- or screens. We have other options though. We can direct that output to a file if needed. We can also store the value within what R calls our global environment, which for all intents and purposes means writing the output to memory. We do this by directing that output to, or storing that output in, a variable.
 
-These can be hit and miss, but when they're a hit, they're invaluable.
+:::note
 
-As a new user to R, they can also be a bit confusing, even if they're a hit. This is partly because there are many ways to solve the same problem when programming, so you'll likely see lots of different approaches, some of which are more familiar to you than others. The other is that R supports multiple syntaxes; that is, multiple ways of expressing or constructing the arguments that one puts together. This is kind of an unusual feature of R and something people struggle with. But as a result, you may see a solution that uses a different syntax than you're used to.
+When we collect data, we assign these to a variable, like 'ht' to record height. When we need to store values in memory on our computer, we assign them a variable, or name, by which to update or recall them. In this way, we can store, for example, the output of a calculation, such as the output of `mean(rivers)` with reference to a name.
 
-The key here is to spend time reading blogs and forum responses and working your way through problems; the proposed solutions will start to make more sense with time and familiarity, just like learning any other language.
+Sometimes when we say 'variable' we'll mean the category of data you've collected and sometimes we'll mean a place holder for a stored value on your computer.
 
-The easiest portal to these resources is Google or a similar search engine.
+:::
 
-## Books
+In R, things are assigned to variables with the lesser than symbol `<` and a hyphen `-`, like `<-`, as in, put what's on the right of this into the variable on the left.
 
-There are books that are general all purpose introductions to R, books that address specific aspects of R such as visualizing data or performing statistics, books that address specific packages, and books that teach R using a problem based approach; these latter are referred to as 'cookbooks'. At UBC, one of your best portals to these books is the O'Rielly platform, accessible at [https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&id=2460](https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&id=2460).
+To store the mean of rivers in a variable called `rivers_mean`,
+
+```{r}
+rivers_mean <- mean(rivers) # store the value of mean(rivers) in the variable rivers_mean
+```
+
+And to recall that value,
+
+```{r}
+rivers_mean # print the value stored in the variable rivers_mean
+```
+
+or run a computation with that value
+
+```{r}
+rivers_mean ^ 2 # square the mean
+```
+
+:::note
+
+When naming variables in `R`, keep in mind that variable names:
+
+* Should first and foremost be meaningful. This is not a rule, just best practice.
+* **Cannot** start with a number or a dot followed by a number.
+* **Cannot** contain spaces or hyphens.
+* **Can** contain letters, numbers, dots, and underscores.
+
+Additionally, some words are *reserved* and cannot be used, such as *if* and *for*. More details can be found with `?make.names`
+
+:::   
+
+:::exercise
+
+Save the output of a random sample of 10 digits between 1 and 100 to a variable called `random_sample`.
+
+:::
+
+:::solution
+
+```{r, class.source = 'fold-hide'}
+(random_sample <- sample(1:100, 10))
+```
+
+:::

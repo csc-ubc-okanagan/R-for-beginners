@@ -11,9 +11,9 @@
 
 
 
-<title>Adding &amp; Naming Variables</title>
+<title>Data Types</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -30,7 +30,6 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -119,15 +118,6 @@ code span.va { color: #0057ae; } /* Variable */
 code span.vs { color: #bf0303; } /* VerbatimString */
 code span.wa { color: #bf0303; } /* Warning */
 
-.sourceCode .row {
-  width: 100%;
-}
-.sourceCode {
-  overflow-x: auto;
-}
-.code-folding-btn {
-  margin-right: -30px;
-}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -136,13 +126,20 @@ code span.wa { color: #bf0303; } /* Warning */
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -238,11 +235,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -271,8 +272,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,16 +281,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -316,9 +310,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -352,31 +343,22 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="part_1.html">R &amp; RStudio</a>
+  <a href="part_1.html">Getting Started</a>
 </li>
 <li>
-  <a href="part_2.html">Data Types</a>
+  <a href="part_2.html">R &amp; RStudio</a>
 </li>
 <li>
-  <a href="part_3.html">Functions &amp; Variables</a>
+  <a href="part_3.html">Functions</a>
 </li>
 <li>
-  <a href="part_4.html">Getting Help</a>
+  <a href="part_4.html">Variables</a>
 </li>
 <li>
-  <a href="part_5.html">Loading Data</a>
+  <a href="part_5.html">Getting Help</a>
 </li>
 <li>
-  <a href="part_6.html">Adding &amp; Naming Variables</a>
-</li>
-<li>
-  <a href="part_7.html">Subsetting</a>
-</li>
-<li>
-  <a href="part_8.html">Libraries</a>
-</li>
-<li>
-  <a href="part_9.html">ggplot</a>
+  <a href="part_6.html">Data Types</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -385,125 +367,163 @@ $(document).ready(function () {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">Adding &amp; Naming Variables</h1>
+<h1 class="title toc-ignore">Data Types</h1>
 
 </div>
 
 
-<p>Occasionally we need to derive variables form existing information. A
-good example of this is conversion between scales. With our current data
-set, the variable “Above.Ground.Sight.Measurement” is ostensibly in feet
-– the data dictionary could be clearer about this. To bring this to a
-Canadian context, we might need these measurements in a metric
-equivalent.</p>
-<p>To do this, we could simply multiple the vector by 0.3048</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Above.Ground.Sighter.Measurement <span class="ot">&lt;-</span> sq_data<span class="sc">$</span>Above.Ground.Sighter.Measurement <span class="sc">*</span> .<span class="dv">3048</span></span></code></pre></div>
-<p>An alternative approach would be to create a new variable and to
-populate it with the converted values, this way we have the measurements
-in their untouched imperial scale as well as their modified metric
-scale.</p>
-<p>This exercise will allow us to explore a couple of issues. The first
-is that our variable names with this data set are often quite verbose,
-not ideal for coding. So first we’ll make some changes to our variable
-names, keeping in mind of course that this is something we should have
-been thinking about from the beginning when we created our data
-dictionary!</p>
-<p>First, we’ll create a list of existing variable names for our data
-set</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(sq_colnames <span class="ot">&lt;-</span> <span class="fu">colnames</span>(sq_data))</span></code></pre></div>
-<pre><code>##  [1] &quot;X&quot;                                         
-##  [2] &quot;Y&quot;                                         
-##  [3] &quot;Unique.Squirrel.ID&quot;                        
-##  [4] &quot;Hectare&quot;                                   
-##  [5] &quot;Shift&quot;                                     
-##  [6] &quot;Date&quot;                                      
-##  [7] &quot;Hectare.Squirrel.Number&quot;                   
-##  [8] &quot;Age&quot;                                       
-##  [9] &quot;Primary.Fur.Color&quot;                         
-## [10] &quot;Highlight.Fur.Color&quot;                       
-## [11] &quot;Combination.of.Primary.and.Highlight.Color&quot;
-## [12] &quot;Color.notes&quot;                               
-## [13] &quot;Location&quot;                                  
-## [14] &quot;Above.Ground.Sighter.Measurement&quot;          
-## [15] &quot;Specific.Location&quot;                         
-## [16] &quot;Running&quot;                                   
-## [17] &quot;Chasing&quot;                                   
-## [18] &quot;Climbing&quot;                                  
-## [19] &quot;Eating&quot;                                    
-## [20] &quot;Foraging&quot;                                  
-## [21] &quot;Other.Activities&quot;                          
-## [22] &quot;Kuks&quot;                                      
-## [23] &quot;Quaas&quot;                                     
-## [24] &quot;Moans&quot;                                     
-## [25] &quot;Tail.flags&quot;                                
-## [26] &quot;Tail.twitches&quot;                             
-## [27] &quot;Approaches&quot;                                
-## [28] &quot;Indifferent&quot;                               
-## [29] &quot;Runs.from&quot;                                 
-## [30] &quot;Other.Interactions&quot;                        
-## [31] &quot;Lat.Long&quot;</code></pre>
-<div class="exercise">
-<p>This is a two parter.</p>
-<p>First, in <code>sq_colnames</code>, re-name
-‘Above.Ground.Sighter.Measurement’ to be more concise and indicate its
-scale; in fact, re-name it to <code>agsm.f</code>.
-<code>sq_colnames</code> is a vector, so we’ll want to use indexing by
-number.</p>
-<p>Second, using <code>colnames()</code>, update the variable names of
-<code>sq_data</code> to match those now in the vector
-<code>sq_colnames</code>.</p>
-<p>A plain language approach to this might be:</p>
-<ol style="list-style-type: decimal">
-<li>Identify the index position of ‘Above.Ground.Sighter.Measurement’ in
-<code>sq_colnames</code>.</li>
-<li>Re-assign the value associated with this index point to
-<code>agsm.f</code></li>
-<li>Re-assign the column names of <code>sq_data</code> to
-<code>sq_colnames</code></li>
-</ol>
-</div>
-<div class="solution">
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sq_colnames <span class="co"># list the columns and their index numbers</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sq_colnames[<span class="dv">14</span>] <span class="ot">&lt;-</span> <span class="st">&quot;agsm.f&quot;</span> <span class="co"># change the value at index point 14 to &#39;agsm.f&#39;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sq_data) <span class="ot">&lt;-</span> sq_colnames <span class="co"># re-assign the values in colnames(sq_data) to match those in sq_colnames</span></span></code></pre></div>
-</div>
-<p>We now have any easy variable name to type and adapt!</p>
-<p>Creating a new variable in a dataframe is simply a matter of
-assigning some values to the desired variable.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>agsm.m <span class="ot">&lt;-</span> sq_data<span class="sc">$</span>agsm.f <span class="sc">*</span> .<span class="dv">3048</span> <span class="co"># create the variable agsm.m and populate it with the values in agsm.f times .3048</span></span></code></pre></div>
-<div class="summary">
-<p>Occasionally we need to rename variables, but when doing so we should
-be wary about cascading impacts on our documentation. We can easily add
-variables to an existing data frame.</p>
-</div>
-<div class="functions">
+<p>When we talk about data, we can talk about data types, data classes,
+and data structures.</p>
+<div id="types" class="section level2">
+<h2>Types</h2>
+<p>Data types are fundamental building blocks for storing information. R
+has five atomic data types – the data types from which other objects are
+created. The three of importance to us here are:</p>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Function</th>
-<th align="left">Description</th>
+<th align="left">Type</th>
+<th align="left">Representation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><code>colnames</code></td>
-<td align="left">access the column names of a data frame.</td>
+<td align="left">Numeric</td>
+<td align="left">Numbers</td>
+</tr>
+<tr class="even">
+<td align="left">Character</td>
+<td align="left">Text</td>
+</tr>
+<tr class="odd">
+<td align="left">Logical</td>
+<td align="left">True and False Values</td>
 </tr>
 </tbody>
 </table>
+<div class="note">
+<p>Character data, also known as strings, are always wrapped in
+“quotation marks”.</p>
+<p>Numeric data can be stored two ways, as integers or as floating
+point, also called ‘double’.</p>
+</div>
+</div>
+<div id="classes" class="section level2">
+<h2>Classes</h2>
+<p>Data types can have specific attributes that influence what we can
+and cannot do with these data. One of these attributes is a class.</p>
+<p>Consider the following numbers – 20220301.</p>
+<p>Without context, this is simply one big number. Or a list of smaller
+numbers. Classify it as a date, however, that has a set of rules for how
+a date is written – yyyymmdd – and a series of conventions for how dates
+function – a specific calendar type, the length of a year, month, or day
+etc – and we can start to be able to do some date specific operations
+with this data, like calculating a person’s age.</p>
+<p>We’ll assign some numbers that could be a date to a variable</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(numbers <span class="ot">&lt;-</span> <span class="dv">20220301</span>) <span class="co"># create variable numbers as atomic type numeric</span></span></code></pre></div>
+<pre><code>[1] 20220301</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert numbers to class date and assign to a new variable</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>(numbers_as_date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="fu">as.character</span>(numbers), <span class="st">&#39;%Y%m%d&#39;</span>)) </span></code></pre></div>
+<pre><code>[1] &quot;2022-03-01&quot;</code></pre>
+<p>After which we can inquire about their class</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(numbers) <span class="co"># inquire about the class</span></span></code></pre></div>
+<pre><code>[1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(numbers_as_date)</span></code></pre></div>
+<pre><code>[1] &quot;Date&quot;</code></pre>
+<p>And see the utility of adding the date class</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.Date</span>() <span class="co"># retrieve today&#39;s data</span></span></code></pre></div>
+<pre><code>[1] &quot;2023-01-15&quot;</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the number of days that have passed since numbers</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>(days_since_March_31 <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> numbers) <span class="co"># doesn&#39;t make sense</span></span></code></pre></div>
+<pre><code>[1] &quot;-53339-09-26&quot;</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(days_since_March_31 <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> numbers_as_date) <span class="co"># works</span></span></code></pre></div>
+<pre><code>Time difference of 320 days</code></pre>
+</div>
+<div id="structures" class="section level2">
+<h2>Structures</h2>
+<p>Data structures can be thought of how these data are stored
+collectively – the structure that groups multiple values from a variable
+together, or the values from multiple variables together. R has a few
+basic data structures that you’ll frequently encounter. These include
+vectors, lists, matrices, and data frames.</p>
+<div id="vectors" class="section level3">
+<h3>Vectors</h3>
+<p>A vector is a very simple list. It is uni-dimensional - think of it
+as a single column or row of data - and it can only contain data of
+exactly the same type. So, if you have a list of numbers or words in R,
+these will likely be contained within a vector. In fact, the data set
+rivers is a vector,</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rivers</span></code></pre></div>
+<pre><code>  [1]  735  320  325  392  524  450 1459  135  465  600  330  336  280  315  870
+ [16]  906  202  329  290 1000  600  505 1450  840 1243  890  350  407  286  280
+ [31]  525  720  390  250  327  230  265  850  210  630  260  230  360  730  600
+ [46]  306  390  420  291  710  340  217  281  352  259  250  470  680  570  350
+ [61]  300  560  900  625  332 2348 1171 3710 2315 2533  780  280  410  460  260
+ [76]  255  431  350  760  618  338  981 1306  500  696  605  250  411 1054  735
+ [91]  233  435  490  310  460  383  375 1270  545  445 1885  380  300  380  377
+[106]  425  276  210  800  420  350  360  538 1100 1205  314  237  610  360  540
+[121] 1038  424  310  300  444  301  268  620  215  652  900  525  246  360  529
+[136]  500  720  270  430  671 1770</code></pre>
+<p>To test if something is a vector, we have a couple of options. We can
+use <code>is.vector()</code>, but it’s more appropriate to use
+<code>is.atomic()</code>,</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.vector</span>(rivers)</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.atomic</span>(rivers)</span></code></pre></div>
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div id="data-frames" class="section level3">
+<h3>Data Frames</h3>
+<p>A data frame essentially functions as a series of connected vectors,
+where each vector is a column. In this sense a data frame is also a
+special kind of list.</p>
+<p>In a data frame, all vectors need to be of the same length. And while
+each vector must hold the same data type, not all vectors need to be of
+the same data type. Data frames also allow us to apply column names.</p>
+<pre><code>  numbers words
+1       1     I
+2       5  want
+3       8    to
+4       9 learn
+5      11     R</code></pre>
+</div>
+<div id="lists" class="section level3">
+<h3>Lists</h3>
+<p>A list also essentially functions as a series of connected vectors,
+but breaks us free of each column needing to be the same length as in a
+data frame. You can also nest a list within a list. This can start to
+get complicated.</p>
+<pre><code>$breakfast
+[1] &quot;Eggs&quot;    &quot;Muffins&quot; &quot;Coffee&quot; 
+
+$lunch
+[1] &quot;Grilled Cheese Sandwich with Orange Juice&quot;
+
+$numbers
+[1] 1 4 6 7</code></pre>
+</div>
+<div id="matrices" class="section level3">
+<h3>Matrices</h3>
+<p>A matrix resembles a data frame when displayed on screen, but is more
+accurately a vector with attributes that define the number of columns to
+divide the vector into. As a result, a matrix can only hold a single
+data type or class.</p>
+<p>In the following, a series of numeric data. Instead of having column
+names, we have column and row numbers.</p>
+<pre><code>      [,1]  [,2]  [,3]  [,4]
+[1,]  9.93  8.52 11.46 11.56
+[2,] 10.18 10.27  9.60  9.60
+[3,] 10.92 10.85  9.05  6.48</code></pre>
+<div class="summary">
+<p>Vectors are the building blocks of data frames, lists, and matrices.
+Matrices are vectors broken into columns of the same length and same
+data types. Data frames are joined vectors of the same length and
+different data types. Lists are joined vectors of different lengths and
+data types. Each is useful in certain situations.</p>
+</div>
+</div>
 </div>
 
 
@@ -539,11 +559,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

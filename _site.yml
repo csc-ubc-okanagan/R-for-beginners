@@ -7,24 +7,18 @@ navbar:
   right:
     - text: "Home"
       href: index.html
-    - text: "R & RStudio"
+    - text: "Getting Started"
       href: part_1.html
-    - text: "Data Types"
+    - text: "R & RStudio"
       href: part_2.html
-    - text: "Functions & Variables"
+    - text: "Functions"
       href: part_3.html
-    - text: "Getting Help"
+    - text: "Variables"
       href: part_4.html
-    - text: "Loading Data"
+    - text: "Getting Help"
       href: part_5.html
-    - text: "Adding & Naming Variables"
+    - text: "Data Types"
       href: part_6.html
-    - text: "Subsetting"
-      href: part_7.html
-    - text: "Libraries"
-      href: part_8.html
-    - text: "ggplot"
-      href: part_9.html
 output:
   html_document:
     theme: flatly

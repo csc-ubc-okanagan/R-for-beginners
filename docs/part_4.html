@@ -11,9 +11,9 @@
 
 
 
-<title>Getting Help</title>
+<title>Variables</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -30,6 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -118,6 +119,15 @@ code span.va { color: #0057ae; } /* Variable */
 code span.vs { color: #bf0303; } /* VerbatimString */
 code span.wa { color: #bf0303; } /* Warning */
 
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -126,13 +136,20 @@ code span.wa { color: #bf0303; } /* Warning */
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -228,11 +245,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -261,8 +282,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -270,16 +291,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -306,6 +320,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -339,31 +356,22 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="part_1.html">R &amp; RStudio</a>
+  <a href="part_1.html">Getting Started</a>
 </li>
 <li>
-  <a href="part_2.html">Data Types</a>
+  <a href="part_2.html">R &amp; RStudio</a>
 </li>
 <li>
-  <a href="part_3.html">Functions &amp; Variables</a>
+  <a href="part_3.html">Functions</a>
 </li>
 <li>
-  <a href="part_4.html">Getting Help</a>
+  <a href="part_4.html">Variables</a>
 </li>
 <li>
-  <a href="part_5.html">Loading Data</a>
+  <a href="part_5.html">Getting Help</a>
 </li>
 <li>
-  <a href="part_6.html">Adding &amp; Naming Variables</a>
-</li>
-<li>
-  <a href="part_7.html">Subsetting</a>
-</li>
-<li>
-  <a href="part_8.html">Libraries</a>
-</li>
-<li>
-  <a href="part_9.html">ggplot</a>
+  <a href="part_6.html">Data Types</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -372,55 +380,76 @@ $(document).ready(function () {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">Getting Help</h1>
+
+<h1 class="title toc-ignore">Variables</h1>
 
 </div>
 
 
-<p>There are several ways to get help with R.</p>
-<div id="built-in-help" class="section level2">
-<h2>Built in Help</h2>
-<p>In general, packages and their functions and data are pretty well
-documented.</p>
-<p>There are several ways to access this documentation from within R.
-The one we’ll use frequently here is to load the help page of a known
-function, which will provide a brief overview of the function, the list
-of arguments it accepts, what defaults for these arguments are set to,
-related functions, and examples. To access these help pages, pre-pend
-the function name with a <code>?</code></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>?mean</span></code></pre></div>
+<p>When we have a function do something with our data, there are several
+ways in which we might direct the output of that function. So far, we’ve
+directed that output to our terminal – or screens. We have other options
+though. We can direct that output to a file if needed. We can also store
+the value within what R calls our global environment, which for all
+intents and purposes means writing the output to memory. We do this by
+directing that output to, or storing that output in, a variable.</p>
+<div class="note">
+<p>When we collect data, we assign these to a variable, like ‘ht’ to
+record height. When we need to store values in memory on our computer,
+we assign them a variable, or name, by which to update or recall them.
+In this way, we can store, for example, the output of a calculation,
+such as the output of <code>mean(rivers)</code> with reference to a
+name.</p>
+<p>Sometimes when we say ‘variable’ we’ll mean the category of data
+you’ve collected and sometimes we’ll mean a place holder for a stored
+value on your computer.</p>
 </div>
-<div id="blogs-tutorials-forums" class="section level2">
-<h2>Blogs, Tutorials &amp; Forums</h2>
-<p>These can be hit and miss, but when they’re a hit, they’re
-invaluable.</p>
-<p>As a new user to R, they can also be a bit confusing, even if they’re
-a hit. This is partly because there are many ways to solve the same
-problem when programming, so you’ll likely see lots of different
-approaches, some of which are more familiar to you than others. The
-other is that R supports multiple syntaxes; that is, multiple ways of
-expressing or constructing the arguments that one puts together. This is
-kind of an unusual feature of R and something people struggle with. But
-as a result, you may see a solution that uses a different syntax than
-you’re used to.</p>
-<p>The key here is to spend time reading blogs and forum responses and
-working your way through problems; the proposed solutions will start to
-make more sense with time and familiarity, just like learning any other
-language.</p>
-<p>The easiest portal to these resources is Google or a similar search
-engine.</p>
+<p>In R, things are assigned to variables with the lesser than symbol
+<code>&lt;</code> and a hyphen <code>-</code>, like <code>&lt;-</code>,
+as in, put what’s on the right of this into the variable on the
+left.</p>
+<p>To store the mean of rivers in a variable called
+<code>rivers_mean</code>,</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rivers_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(rivers) <span class="co"># store the value of mean(rivers) in the variable rivers_mean</span></span></code></pre></div>
+<p>And to recall that value,</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rivers_mean <span class="co"># print the value stored in the variable rivers_mean</span></span></code></pre></div>
+<pre><code>[1] 591.1844</code></pre>
+<p>or run a computation with that value</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rivers_mean <span class="sc">^</span> <span class="dv">2</span> <span class="co"># square the mean</span></span></code></pre></div>
+<pre><code>[1] 349499</code></pre>
+<div class="note">
+<p>When naming variables in <code>R</code>, keep in mind that variable
+names:</p>
+<ul>
+<li>Should first and foremost be meaningful. This is not a rule, just
+best practice.</li>
+<li><strong>Cannot</strong> start with a number or a dot followed by a
+number.</li>
+<li><strong>Cannot</strong> contain spaces or hyphens.</li>
+<li><strong>Can</strong> contain letters, numbers, dots, and
+underscores.</li>
+</ul>
+<p>Additionally, some words are <em>reserved</em> and cannot be used,
+such as <em>if</em> and <em>for</em>. More details can be found with
+<code>?make.names</code></p>
 </div>
-<div id="books" class="section level2">
-<h2>Books</h2>
-<p>There are books that are general all purpose introductions to R,
-books that address specific aspects of R such as visualizing data or
-performing statistics, books that address specific packages, and books
-that teach R using a problem based approach; these latter are referred
-to as ‘cookbooks’. At UBC, one of your best portals to these books is
-the O’Rielly platform, accessible at <a
-href="https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&amp;id=2460">https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&amp;id=2460</a>.</p>
+<div class="exercise">
+<p>Save the output of a random sample of 10 digits between 1 and 100 to
+a variable called <code>random_sample</code>.</p>
+</div>
+<div class="solution">
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(random_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">10</span>))</span></code></pre></div>
+<pre><code> [1]  34  10   1  41  72  40  42 100  19  28</code></pre>
 </div>
 
 
@@ -456,6 +485,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
