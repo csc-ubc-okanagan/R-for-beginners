@@ -13,7 +13,7 @@
 
 <title>R For Beginners</title>
 
-<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -134,15 +134,11 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark the anchor link active (and if it's in a dropdown, also mark that active)
-  var dropdown = menuAnchor.closest('li.dropdown');
-  if (window.bootstrap) { // Bootstrap 4+
-    menuAnchor.addClass('active');
-    dropdown.find('> .dropdown-toggle').addClass('active');
-  } else { // Bootstrap 3
-    menuAnchor.parent().addClass('active');
-    dropdown.addClass('active');
-  }
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -171,8 +167,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -180,9 +176,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -326,17 +329,30 @@ $(document).ready(function () {
 </div>
 
 
+<p>This workshop is offered through UBC Okanagan’s <a
+href="https://csc.ok.ubc.ca">Centre for Scholarly Communications</a>.
+Questions can be directed to <a
+href="mailto:csc.ok@ubc.ca">csc.ok@ubc.ca</a>.</p>
 <div id="description" class="section level2">
 <h2>Description</h2>
-<p>This two-part workshop is designed for the absolute beginner to R
-with no programming experience.</p>
-<p>The first part (November 14), will cover core concepts related to
-writing R scripts, data types and data structures, getting help, and
-importing, cleaning, and getting your data set up for subsequent
-analysis.</p>
-<p>The second part (November 21), will explore adding new tools so that
-you can do more with R, and look in depth at one of these, ggplot, for
-visualizing your data.</p>
+<p>This four-part workshop is designed for the absolute beginner to R
+with no programming experience in R or other languages.</p>
+<p><strong>Session 1</strong> will cover what R is and introduce users
+to a common application for programming in R, RStudio. We’ll cover basic
+concepts related to conducting academic work with a programming
+language, write a simple script, and explore options for getting
+help.</p>
+<p><strong>Session 2</strong> will get a little deeper into how R works,
+beginning with an introduction to R’s built in data types and
+structures. From there we’ll start importing data and review best
+practices for handling data imports.</p>
+<p><strong>Session 3</strong> will then dive into getting a data set
+ready for subsequent analysis. This will involve creating new variables
+from existing variables, working with categorical data, an overview of
+dates, and basic sub-setting to isolate observations and variables.</p>
+<p><strong>Session 4</strong> will cover adding increased functionality
+to your programming environment with additional packages and building
+plots using the popular package ggplot2.</p>
 <p>You will need a laptop for this workshop. You will also need to
 install R and RStudio before coming to the first session. Instructions
 for getting these set up will be provided after registration.</p>
@@ -366,13 +382,23 @@ are asking questions and sharing their solutions.</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">November 14, 2022</td>
-<td align="left">1:00pm - 2:30pm</td>
+<td align="left">January 25, 2023</td>
+<td align="left">2:00pm - 3:00pm</td>
 <td align="left">LIB 111</td>
 </tr>
 <tr class="even">
-<td align="left">November 21, 2022</td>
-<td align="left">1:00pm - 2:30pm</td>
+<td align="left">February 1, 2023</td>
+<td align="left">2:00pm - 3:00pm</td>
+<td align="left">LIB 111</td>
+</tr>
+<tr class="odd">
+<td align="left">February 8, 2023</td>
+<td align="left">2:00pm - 3:00pm</td>
+<td align="left">LIB 111</td>
+</tr>
+<tr class="even">
+<td align="left">February 15, 2023</td>
+<td align="left">2:00pm - 3:00pm</td>
 <td align="left">LIB 111</td>
 </tr>
 </tbody>

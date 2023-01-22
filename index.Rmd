@@ -7,18 +7,23 @@ output:
       in_header: header.html
 ---
 ```{r echo=FALSE}
-knitr::opts_chunk$set(warning = FALSE,
-                      comment = NA)
+knitr::opts_chunk$set(comment = NA)
 knitr::read_chunk("./scripts/workshop_files.R")
 ```
 
+This workshop is offered through UBC Okanagan's [Centre for Scholarly Communications](https://csc.ok.ubc.ca). Questions can be directed to [csc.ok@ubc.ca](mailto:csc.ok@ubc.ca).
+
 ## Description
 
-This two-part workshop is designed for the absolute beginner to R with no programming experience.
+This four-part workshop is designed for the absolute beginner to R with no programming experience in R or other languages.
 
-The first part (November 14), will cover core concepts related to writing R scripts, data types and data structures, getting help, and importing, cleaning, and getting your data set up for subsequent analysis.
+**Session 1** will cover what R is and introduce users to a common application for programming in R, RStudio. We'll cover basic concepts related to conducting academic work with a programming language, write a simple script, and explore options for getting help.
 
-The second part (November 21), will explore adding new tools so that you can do more with R, and look in depth at one of these, ggplot, for visualizing your data. 
+**Session 2** will get a little deeper into how R works, beginning with an introduction to R's built in data types and structures. From there we'll start importing data and review best practices for handling data imports.
+
+**Session 3** will then dive into getting a data set ready for subsequent analysis. This will involve creating new variables from existing variables, working with categorical data, an overview of dates, and basic sub-setting to isolate observations and variables.
+
+**Session 4** will cover adding increased functionality to your programming environment with additional packages and building plots using the popular package ggplot2.
 
 You will need a laptop for this workshop. You will also need to install R and RStudio before coming to the first session. Instructions for getting these set up will be provided after registration.
 
@@ -30,10 +35,12 @@ Instead, the hope is that you will walk away with a base set of skills and langu
 
 ## Schedule
 
-| Date | Time | Location | Content |
+| Date | Time | Location |
 | :- | :- | :- |
-| November 14, 2022 | 1:00pm - 2:30pm | LIB 111 | R, RStudio, Getting Help, Importing, Cleaning, and Subsetting. |
-| November 21, 2022 | 1:00pm - 2:30pm | LIB 111 | Visualizing Data with ggplot |
+| January 25, 2023 | 2:00pm - 3:00pm | LIB 111 |
+| February 1, 2023 | 2:00pm - 3:00pm | LIB 111 |
+| February 8, 2023 | 2:00pm - 3:00pm | LIB 111 |
+| February 15, 2023 | 2:00pm - 3:00pm | LIB 111 |
 
 ### Files
 
