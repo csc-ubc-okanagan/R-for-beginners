@@ -11,7 +11,7 @@
 
 
 
-<title>Variables</title>
+<title>Getting Help</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -355,23 +355,77 @@ $(document).ready(function () {
         <li>
   <a href="index.html">Home</a>
 </li>
-<li>
-  <a href="part_1.html">Getting Started</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_01_getting-started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="part_02_r-rstudio.html">R &amp; RStudio</a>
+    </li>
+    <li>
+      <a href="part_03_functions.html">Functions</a>
+    </li>
+    <li>
+      <a href="part_04_variables.html">Variables</a>
+    </li>
+    <li>
+      <a href="part_05_getting-help.html">Getting Help</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_2.html">R &amp; RStudio</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_06_data-types.html">Data Types</a>
+    </li>
+    <li>
+      <a href="part_07_importing-data.html">Importing Data</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_3.html">Functions</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_08_dates-factors-dictionary.html">Importing Data Continued</a>
+    </li>
+    <li>
+      <a href="part_09_variables-continued.html">Variables Continued</a>
+    </li>
+    <li>
+      <a href="part_10_subsetting.html">Subsetting</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_4.html">Variables</a>
-</li>
-<li>
-  <a href="part_5.html">Getting Help</a>
-</li>
-<li>
-  <a href="part_6.html">Data Types</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_11_libraries.html">Libraries</a>
+    </li>
+    <li>
+      <a href="part_12_ggplot2.html">ggplot2</a>
+    </li>
+  </ul>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -390,66 +444,54 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Variables</h1>
+<h1 class="title toc-ignore">Getting Help</h1>
 
 </div>
 
 
-<p>When we have a function do something with our data, there are several
-ways in which we might direct the output of that function. So far, we’ve
-directed that output to our terminal – or screens. We have other options
-though. We can direct that output to a file if needed. We can also store
-the value within what R calls our global environment, which for all
-intents and purposes means writing the output to memory. We do this by
-directing that output to, or storing that output in, a variable.</p>
-<div class="note">
-<p>When we collect data, we assign these to a variable, like ‘ht’ to
-record height. When we need to store values in memory on our computer,
-we assign them a variable, or name, by which to update or recall them.
-In this way, we can store, for example, the output of a calculation,
-such as the output of <code>mean(rivers)</code> with reference to a
-name.</p>
-<p>Sometimes when we say ‘variable’ we’ll mean the category of data
-you’ve collected and sometimes we’ll mean a place holder for a stored
-value on your computer.</p>
+<p>There are several ways to get help with R.</p>
+<div id="built-in-help" class="section level2">
+<h2>Built in Help</h2>
+<p>In general, packages and their functions and data are pretty well
+documented.</p>
+<p>There are several ways to access this documentation from within R.
+The one we’ll use frequently here is to load the help page of a known
+function, which will provide a brief overview of the function, the list
+of arguments it accepts, what defaults for these arguments are set to,
+related functions, and examples. To access these help pages, pre-pend
+the function name with a ?</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>?mean</span></code></pre></div>
 </div>
-<p>In R, things are assigned to variables with the lesser than symbol
-<code>&lt;</code> and a hyphen <code>-</code>, like <code>&lt;-</code>,
-as in, put what’s on the right of this into the variable on the
-left.</p>
-<p>To store the mean of rivers in a variable called
-<code>rivers_mean</code>,</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rivers_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(rivers) <span class="co"># store the value of mean(rivers) in the variable rivers_mean</span></span></code></pre></div>
-<p>And to recall that value,</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rivers_mean <span class="co"># print the value stored in the variable rivers_mean</span></span></code></pre></div>
-<pre><code>[1] 591.1844</code></pre>
-<p>or run a computation with that value</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rivers_mean <span class="sc">^</span> <span class="dv">2</span> <span class="co"># square the mean</span></span></code></pre></div>
-<pre><code>[1] 349499</code></pre>
-<div class="note">
-<p>When naming variables in <code>R</code>, keep in mind that variable
-names:</p>
-<ul>
-<li>Should first and foremost be meaningful. This is not a rule, just
-best practice.</li>
-<li><strong>Cannot</strong> start with a number or a dot followed by a
-number.</li>
-<li><strong>Cannot</strong> contain spaces or hyphens.</li>
-<li><strong>Can</strong> contain letters, numbers, dots, and
-underscores.</li>
-</ul>
-<p>Additionally, some words are <em>reserved</em> and cannot be used,
-such as <em>if</em> and <em>for</em>. More details can be found with
-<code>?make.names</code></p>
+<div id="blogs-tutorials-forums" class="section level2">
+<h2>Blogs, Tutorials &amp; Forums</h2>
+<p>These can be hit and miss, but when they’re a hit, they’re
+invaluable.</p>
+<p>As a new user to R, they can also be a bit confusing, even if they’re
+a hit. This is partly because there are many ways to solve the same
+problem when programming, so you’ll likely see lots of different
+approaches, some of which are more familiar to you than others. The
+other is that R supports multiple syntaxes; that is, multiple ways of
+expressing or constructing the arguments that one puts together. This is
+kind of an unusual feature of R and something people struggle with. But
+as a result, you may see a solution that uses a different syntax than
+you’re used to.</p>
+<p>The key here is to spend time reading blogs and forum responses and
+working your way through problems; the proposed solutions will start to
+make more sense with time and familiarity, just like learning any other
+language.</p>
+<p>The easiest portal to these resources is Google or a similar search
+engine.</p>
 </div>
-<div class="exercise">
-<p>Save the output of a random sample of 10 digits between 1 and 100 to
-a variable called <code>random_sample</code>.</p>
-</div>
-<div class="solution">
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(random_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">10</span>))</span></code></pre></div>
-<pre><code> [1]  34  10   1  41  72  40  42 100  19  28</code></pre>
+<div id="books" class="section level2">
+<h2>Books</h2>
+<p>There are books that are general all purpose introductions to R,
+books that address specific aspects of R such as visualizing data or
+performing statistics, books that address specific packages, and books
+that teach R using a problem based approach; these latter are referred
+to as ‘cookbooks’. At UBC, one of your best portals to these books is
+the O’Rielly platform, accessible at <a
+href="https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&amp;id=2460"
+class="uri">https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&amp;id=2460</a>.</p>
 </div>
 
 

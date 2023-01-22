@@ -355,23 +355,77 @@ $(document).ready(function () {
         <li>
   <a href="index.html">Home</a>
 </li>
-<li>
-  <a href="part_1.html">Getting Started</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_01_getting-started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="part_02_r-rstudio.html">R &amp; RStudio</a>
+    </li>
+    <li>
+      <a href="part_03_functions.html">Functions</a>
+    </li>
+    <li>
+      <a href="part_04_variables.html">Variables</a>
+    </li>
+    <li>
+      <a href="part_05_getting-help.html">Getting Help</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_2.html">R &amp; RStudio</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_06_data-types.html">Data Types</a>
+    </li>
+    <li>
+      <a href="part_07_importing-data.html">Importing Data</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_3.html">Functions</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_08_dates-factors-dictionary.html">Importing Data Continued</a>
+    </li>
+    <li>
+      <a href="part_09_variables-continued.html">Variables Continued</a>
+    </li>
+    <li>
+      <a href="part_10_subsetting.html">Subsetting</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_4.html">Variables</a>
-</li>
-<li>
-  <a href="part_5.html">Getting Help</a>
-</li>
-<li>
-  <a href="part_6.html">Data Types</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_11_libraries.html">Libraries</a>
+    </li>
+    <li>
+      <a href="part_12_ggplot2.html">ggplot2</a>
+    </li>
+  </ul>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -616,8 +670,7 @@ earlier <code>random_sample</code> we created:</p>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>random_sample_doubled <span class="co"># print the result to verify</span></span></code></pre></div>
-<pre><code>##  [1]  70  78  82 190 114 150   4 182 200 114 108  92  50  44   4 118  88 104 174
-## [20]  98</code></pre>
+<pre><code>##  [1]  22  72 102  96  40  94 128 194 132 140</code></pre>
 <p>R is a high level language, meaning it’s interpreted at run time
 rather than pre-compiled. This generally makes for loops slow, since R
 takes time to process each individual step; do something to the first
@@ -657,117 +710,6 @@ class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb31-1"><a h
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Running&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Climbing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>)</span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                    )</span></code></pre></div>
-</div>
-</div>
-<div id="dates-factors" class="section level2">
-<h2>Dates &amp; Factors</h2>
-<p>In addition to logical variables, our data set also has categorical
-data and date data. Categorical data in R is called factor data. We’ll
-convert a single variable to factor to see how this behaves.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(sq_data<span class="sc">$</span>Age)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
-<pre><code>##  Factor w/ 3 levels &quot;?&quot;,&quot;Adult&quot;,&quot;Juvenile&quot;: NA NA NA 2 2 2 2 2 2 2 ...</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
-<pre><code>## [1] &quot;?&quot;        &quot;Adult&quot;    &quot;Juvenile&quot;</code></pre>
-<p>This process highlights that we have one additional string character
-that should be converted to <code>NA</code> on import, <code>?</code>.
-Calling <code>str</code> tells us that we have a factor with three
-levels or categories. Calling <code>levels</code> lists those
-categories.</p>
-<p>Sometime the levels are not in the order we want them for ordinal
-categorical data. We can re-assign these.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Age <span class="ot">&lt;-</span> <span class="fu">factor</span>(sq_data<span class="sc">$</span>Age, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Juvenile&quot;</span>, <span class="st">&quot;Adult&quot;</span>, <span class="st">&quot;?&quot;</span>))</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
-<pre><code>## [1] &quot;Juvenile&quot; &quot;Adult&quot;    &quot;?&quot;</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Age)</span></code></pre></div>
-<pre><code>##  Factor w/ 3 levels &quot;Juvenile&quot;,&quot;Adult&quot;,..: NA NA NA 2 2 2 2 2 2 2 ...</code></pre>
-<div class="exercise">
-<p>Using the help page for <code>as.Date</code>, convert the Date
-variable, currently structured as <code>int</code> to a date class
-variable.</p>
-</div>
-<div class="solution">
-<p><code>as.Date</code> requires a character input, so we must first
-convert our variable to a character format</p>
-<div class="sourceCode" id="cb40"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.character</span>(sq_data<span class="sc">$</span>Date)</span></code></pre></div>
-<p>Next, we need to specify to <code>as.Date</code> how our data is
-structured - where the year, month, and date are articulated, and
-whether the year is 4 digits or 2, and the months and days are
-abbreviated.</p>
-<div class="sourceCode" id="cb41"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(sq_data<span class="sc">$</span>Date, <span class="st">&quot;%m%d%Y&quot;</span>)</span></code></pre></div>
-</div>
-</div>
-</div>
-<div id="importing-with-a-data-dictionary" class="section level1">
-<h1>Importing with a Data Dictionary</h1>
-<p>The value of having a data dictionary in advance will go a long ways
-in facilitating this process.</p>
-<p>A data dictionary generally describes key attributes about your data
-- it will list your variables, provide a description of them, and
-indicate the base type of data it is.</p>
-<p>I have a very simple data dictionary for this project. Let’s load
-that in</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>dict_src <span class="ot">&lt;-</span> <span class="st">&quot;https://tinyurl.com/4kxt9n8e&quot;</span> <span class="co"># source of the file</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> dict_src, <span class="at">destfile =</span> <span class="st">&#39;_datadictionary.csv&#39;</span>) <span class="co"># download and name the file</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>data_dict <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;_datadictionary.csv&quot;</span>) <span class="co"># read in the file</span></span></code></pre></div>
-<p>We’ll now import our data in a slightly more efficient way</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>na_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span> , <span class="st">&quot; &quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;?&quot;</span>, <span class="st">&quot;+&quot;</span>) <span class="co"># a list of values to use for na.strings</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>data_types <span class="ot">&lt;-</span> data_dict<span class="sc">$</span>data.import.class <span class="co"># a list of data types to feed to colClass</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;2018-cp_squirrel_census.csv&quot;</span>,</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">na.strings =</span> na_values,</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">colClasses =</span> data_types</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    3023 obs. of  31 variables:
-##  $ X                                         : num  -74 -74 -74 -74 -74 ...
-##  $ Y                                         : num  40.8 40.8 40.8 40.8 40.8 ...
-##  $ Unique.Squirrel.ID                        : chr  &quot;37F-PM-1014-03&quot; &quot;21B-AM-1019-04&quot; &quot;11B-PM-1014-08&quot; &quot;32E-PM-1017-14&quot; ...
-##  $ Hectare                                   : chr  &quot;37F&quot; &quot;21B&quot; &quot;11B&quot; &quot;32E&quot; ...
-##  $ Shift                                     : chr  &quot;PM&quot; &quot;AM&quot; &quot;PM&quot; &quot;PM&quot; ...
-##  $ Date                                      : chr  &quot;10142018&quot; &quot;10192018&quot; &quot;10142018&quot; &quot;10172018&quot; ...
-##  $ Hectare.Squirrel.Number                   : num  3 4 8 14 5 3 2 2 1 3 ...
-##  $ Age                                       : Factor w/ 2 levels &quot;Adult&quot;,&quot;Juvenile&quot;: NA NA NA 1 1 1 1 1 1 1 ...
-##  $ Primary.Fur.Color                         : Factor w/ 3 levels &quot;Black&quot;,&quot;Cinnamon&quot;,..: NA NA 3 3 3 2 3 3 3 3 ...
-##  $ Highlight.Fur.Color                       : Factor w/ 10 levels &quot;Black&quot;,&quot;Black, Cinnamon&quot;,..: NA NA NA NA 5 10 NA NA NA 5 ...
-##  $ Combination.of.Primary.and.Highlight.Color: Factor w/ 21 levels &quot;Black+&quot;,&quot;Black+Cinnamon&quot;,..: NA NA 14 14 19 13 14 14 14 19 ...
-##  $ Color.notes                               : chr  NA NA NA &quot;Nothing selected as Primary. Gray selected as Highlights. Made executive adjustments.&quot; ...
-##  $ Location                                  : Factor w/ 2 levels &quot;Above Ground&quot;,..: NA NA 1 NA 1 NA 2 2 2 1 ...
-##  $ Above.Ground.Sighter.Measurement          : num  NA NA 10 NA NA NA 0 0 0 30 ...
-##  $ Specific.Location                         : chr  NA NA NA NA ...
-##  $ Running                                   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-##  $ Chasing                                   : logi  FALSE FALSE TRUE FALSE FALSE FALSE ...
-##  $ Climbing                                  : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-##  $ Eating                                    : logi  FALSE FALSE FALSE TRUE FALSE FALSE ...
-##  $ Foraging                                  : logi  FALSE FALSE FALSE TRUE TRUE TRUE ...
-##  $ Other.Activities                          : chr  NA NA NA NA ...
-##  $ Kuks                                      : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-##  $ Quaas                                     : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-##  $ Moans                                     : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-##  $ Tail.flags                                : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-##  $ Tail.twitches                             : logi  FALSE FALSE FALSE FALSE FALSE TRUE ...
-##  $ Approaches                                : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-##  $ Indifferent                               : logi  FALSE FALSE FALSE FALSE FALSE TRUE ...
-##  $ Runs.from                                 : logi  FALSE FALSE FALSE TRUE FALSE FALSE ...
-##  $ Other.Interactions                        : chr  NA NA NA NA ...
-##  $ Lat.Long                                  : chr  &quot;POINT (-73.9561344937861 40.7940823884086)&quot; &quot;POINT (-73.9688574691102 40.7837825208444)&quot; &quot;POINT (-73.97428114848522 40.775533619083)&quot; &quot;POINT (-73.9596413903948 40.7903128889029)&quot; ...</code></pre>
-<p>At this point, we’ve got a pretty clean imported data set. It’s
-likely we’ll still find some issues with, but for now let’s save it as a
-cleaned, version 0</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(sq_data, <span class="st">&quot;2018-cp_squirrel_census_cleaned_v0.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<div class="summary">
-<p>On import, we can control many aspects of our data set, including
-setting NA values and assigning datat types and classes. This work is
-facilitated by being organized in advance. Creating a data dictionary
-will help to facilitate this process.</p>
 </div>
 <div class="functions">
 <table>
@@ -829,6 +771,7 @@ format.</td>
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 

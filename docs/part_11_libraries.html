@@ -11,7 +11,7 @@
 
 
 
-<title>Getting Help</title>
+<title>Libraries</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -355,23 +355,77 @@ $(document).ready(function () {
         <li>
   <a href="index.html">Home</a>
 </li>
-<li>
-  <a href="part_1.html">Getting Started</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_01_getting-started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="part_02_r-rstudio.html">R &amp; RStudio</a>
+    </li>
+    <li>
+      <a href="part_03_functions.html">Functions</a>
+    </li>
+    <li>
+      <a href="part_04_variables.html">Variables</a>
+    </li>
+    <li>
+      <a href="part_05_getting-help.html">Getting Help</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_2.html">R &amp; RStudio</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_06_data-types.html">Data Types</a>
+    </li>
+    <li>
+      <a href="part_07_importing-data.html">Importing Data</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_3.html">Functions</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_08_dates-factors-dictionary.html">Importing Data Continued</a>
+    </li>
+    <li>
+      <a href="part_09_variables-continued.html">Variables Continued</a>
+    </li>
+    <li>
+      <a href="part_10_subsetting.html">Subsetting</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_4.html">Variables</a>
-</li>
-<li>
-  <a href="part_5.html">Getting Help</a>
-</li>
-<li>
-  <a href="part_6.html">Data Types</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_11_libraries.html">Libraries</a>
+    </li>
+    <li>
+      <a href="part_12_ggplot2.html">ggplot2</a>
+    </li>
+  </ul>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -390,54 +444,141 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Getting Help</h1>
+<h1 class="title toc-ignore">Libraries</h1>
 
 </div>
 
 
-<p>There are several ways to get help with R.</p>
-<div id="built-in-help" class="section level2">
-<h2>Built in Help</h2>
-<p>In general, packages and their functions and data are pretty well
-documented.</p>
-<p>There are several ways to access this documentation from within R.
-The one we’ll use frequently here is to load the help page of a known
-function, which will provide a brief overview of the function, the list
-of arguments it accepts, what defaults for these arguments are set to,
-related functions, and examples. To access these help pages, pre-pend
-the function name with a ?</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>?mean</span></code></pre></div>
+<p>So far, we’ve only been working with functions built in to a basic
+install of R. People write a lot of additional code and build or gather
+a lot of data sets that they package up ready for others to use in R.
+These bundles of code and data are called packages. Packages add
+additional functionality to what we can do with R. The central
+repository for R packages is CRAN – <a
+href="https://cran.r-project.org/">The Comprehensive R Archive
+Network</a>.</p>
+<p>Packages are installed in libraries on your system. Because of this,
+in R we install packages, but we load libraries to make them available
+for use. Libraries need to be loaded each time we launch R.</p>
+<p>You can see what packages are currently installed on you system
+with</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">installed.packages</span>()</span></code></pre></div>
+<pre><code>##           Package    
+## askpass   &quot;askpass&quot;  
+## base      &quot;base&quot;     
+## base64enc &quot;base64enc&quot;
+## boot      &quot;boot&quot;     
+## brew      &quot;brew&quot;     
+## brio      &quot;brio&quot;     
+##           LibPath                                                               
+## askpass   &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## base      &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## base64enc &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## boot      &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## brew      &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## brio      &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+##           Version  Priority      Depends                         Imports       
+## askpass   &quot;1.1&quot;    NA            NA                              &quot;sys (&gt;= 2.1)&quot;
+## base      &quot;4.2.2&quot;  &quot;base&quot;        NA                              NA            
+## base64enc &quot;0.1-3&quot;  NA            &quot;R (&gt;= 2.9.0)&quot;                  NA            
+## boot      &quot;1.3-28&quot; &quot;recommended&quot; &quot;R (&gt;= 3.0.0), graphics, stats&quot; NA            
+## brew      &quot;1.0-8&quot;  NA            NA                              NA            
+## brio      &quot;1.1.3&quot;  NA            NA                              NA            
+##           LinkingTo Suggests                    Enhances License             
+## askpass   NA        &quot;testthat&quot;                  NA       &quot;MIT + file LICENSE&quot;
+## base      NA        &quot;methods&quot;                   NA       &quot;Part of R 4.2.2&quot;   
+## base64enc NA        NA                          &quot;png&quot;    &quot;GPL-2 | GPL-3&quot;     
+## boot      NA        &quot;MASS, survival&quot;            NA       &quot;Unlimited&quot;         
+## brew      NA        &quot;testthat (&gt;= 3.0.0)&quot;       NA       &quot;GPL-2&quot;             
+## brio      NA        &quot;covr, testthat (&gt;= 2.1.0)&quot; NA       &quot;MIT + file LICENSE&quot;
+##           License_is_FOSS License_restricts_use OS_type MD5sum NeedsCompilation
+## askpass   NA              NA                    NA      NA     &quot;yes&quot;           
+## base      NA              NA                    NA      NA     NA              
+## base64enc NA              NA                    NA      NA     &quot;yes&quot;           
+## boot      NA              NA                    NA      NA     &quot;no&quot;            
+## brew      NA              NA                    NA      NA     &quot;no&quot;            
+## brio      NA              NA                    NA      NA     &quot;yes&quot;           
+##           Built  
+## askpass   &quot;4.2.0&quot;
+## base      &quot;4.2.2&quot;
+## base64enc &quot;4.2.0&quot;
+## boot      &quot;4.2.2&quot;
+## brew      &quot;4.2.0&quot;
+## brio      &quot;4.2.0&quot;</code></pre>
+<div class="exercise">
+<p>Calculate how many packages are installed on your system.</p>
 </div>
-<div id="blogs-tutorials-forums" class="section level2">
-<h2>Blogs, Tutorials &amp; Forums</h2>
-<p>These can be hit and miss, but when they’re a hit, they’re
-invaluable.</p>
-<p>As a new user to R, they can also be a bit confusing, even if they’re
-a hit. This is partly because there are many ways to solve the same
-problem when programming, so you’ll likely see lots of different
-approaches, some of which are more familiar to you than others. The
-other is that R supports multiple syntaxes; that is, multiple ways of
-expressing or constructing the arguments that one puts together. This is
-kind of an unusual feature of R and something people struggle with. But
-as a result, you may see a solution that uses a different syntax than
-you’re used to.</p>
-<p>The key here is to spend time reading blogs and forum responses and
-working your way through problems; the proposed solutions will start to
-make more sense with time and familiarity, just like learning any other
-language.</p>
-<p>The easiest portal to these resources is Google or a similar search
-engine.</p>
+<div class="solution">
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>installed_packages <span class="ot">&lt;-</span> <span class="fu">installed.packages</span>() <span class="co"># load the contents into a variable</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(installed_packages) <span class="co"># print the number of rows</span></span></code></pre></div>
 </div>
-<div id="books" class="section level2">
-<h2>Books</h2>
-<p>There are books that are general all purpose introductions to R,
-books that address specific aspects of R such as visualizing data or
-performing statistics, books that address specific packages, and books
-that teach R using a problem based approach; these latter are referred
-to as ‘cookbooks’. At UBC, one of your best portals to these books is
-the O’Rielly platform, accessible at <a
-href="https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&amp;id=2460"
-class="uri">https://resources.library.ubc.ca/page.php?details=oreilly-for-higher-education&amp;id=2460</a>.</p>
+<div id="installing-packages" class="section level2">
+<h2>Installing packages</h2>
+<p>New packages can be installed with</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;package-name&quot;</span>)</span></code></pre></div>
+<p>We need to install ggplot2</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
+</div>
+<div id="loading-packages" class="section level2">
+<h2>Loading packages</h2>
+<p>Packages can be loaded with</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(package<span class="sc">-</span>name)</span></code></pre></div>
+<p>So, to load ggplot</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div class="note">
+<p>You will sometimes see people use <code>require()</code> instead of
+<code>library()</code> to load a package. Generally, either may be
+used.</p>
+<p>You’ll also note that when you install a package, the name is wrapped
+in quotation marks, <code>" "</code>, but when you load a package, it is
+not.</p>
+</div>
+</div>
+<div id="updating-packages" class="section level2">
+<h2>Updating packages</h2>
+<p>You can get a list of any packages with updates available with</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">old.packages</span>()</span></code></pre></div>
+<p>And packages can be updated with</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">update.packages</span>()</span></code></pre></div>
+<div class="summary">
+<p>Packages provide additional functionality. You can install packages
+with <code>install.packages()</code> and load them with
+<code>library()</code>.</p>
+</div>
+<div class="functions">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>installed.packages</code></td>
+<td align="left">print a matrix of installed packages</td>
+</tr>
+<tr class="even">
+<td align="left"><code>install.packages</code></td>
+<td align="left">Install a new package.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>library</code></td>
+<td align="left">Load an installed package.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>old.packages</code></td>
+<td align="left">List packages with updates.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>update.packages</code></td>
+<td align="left">Update packages to the latest release.</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 

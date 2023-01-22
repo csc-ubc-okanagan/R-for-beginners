@@ -11,7 +11,7 @@
 
 
 
-<title>Subsetting</title>
+<title>R &amp; RStudio</title>
 
 <script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -355,23 +355,77 @@ $(document).ready(function () {
         <li>
   <a href="index.html">Home</a>
 </li>
-<li>
-  <a href="part_1.html">Getting Started</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 1
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_01_getting-started.html">Getting Started</a>
+    </li>
+    <li>
+      <a href="part_02_r-rstudio.html">R &amp; RStudio</a>
+    </li>
+    <li>
+      <a href="part_03_functions.html">Functions</a>
+    </li>
+    <li>
+      <a href="part_04_variables.html">Variables</a>
+    </li>
+    <li>
+      <a href="part_05_getting-help.html">Getting Help</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_2.html">R &amp; RStudio</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_06_data-types.html">Data Types</a>
+    </li>
+    <li>
+      <a href="part_07_importing-data.html">Importing Data</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_3.html">Functions</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_08_dates-factors-dictionary.html">Importing Data Continued</a>
+    </li>
+    <li>
+      <a href="part_09_variables-continued.html">Variables Continued</a>
+    </li>
+    <li>
+      <a href="part_10_subsetting.html">Subsetting</a>
+    </li>
+  </ul>
 </li>
-<li>
-  <a href="part_4.html">Variables</a>
-</li>
-<li>
-  <a href="part_5.html">Getting Help</a>
-</li>
-<li>
-  <a href="part_6.html">Data Types</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_11_libraries.html">Libraries</a>
+    </li>
+    <li>
+      <a href="part_12_ggplot2.html">ggplot2</a>
+    </li>
+  </ul>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -390,127 +444,72 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Subsetting</h1>
+<h1 class="title toc-ignore">R &amp; RStudio</h1>
 
 </div>
 
 
-<p>Another common activity is subsetting data – isolating a portion of
-the data, usually based on a condition. There are a few different ways
-we can subset in R, one of which we’ve already kind of seen with
-indexing, we just didn’t assign the output to a variable.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sq_data_age <span class="ot">&lt;-</span> sq_data<span class="sc">$</span>Age <span class="co"># select one column</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>sq_data_sounds <span class="ot">&lt;-</span> sq_data[,<span class="dv">22</span><span class="sc">:</span><span class="dv">24</span>] <span class="co"># select multiple columns</span></span></code></pre></div>
-<div class="exercise">
-<p>Using the above as a model, take a random sample of ten observations
-(rows) from <code>sq_data</code>.</p>
+<div id="what-is-r" class="section level2">
+<h2>What is R</h2>
+<p>R is a programming language designed to facilitate statistical
+analyses and to generate graphs. R is also the program that converts
+what we write or input into something your computer can execute.</p>
+<p><strong>Writing (R language) and Executing (R
+interpreter)</strong></p>
+<p>Thinking about the language, in typing <code>sqrt()</code> we are
+writing an R function that takes a piece of data - your input. Thinking
+about the R program – or interpreter, since it interprets your code – it
+takes this data and executes it according to the function, namely
+computing the square root of the input.</p>
+<p>Even just using the console to write simple math your coding in R. If
+you want to be more traditional, we can write our first ‘hello world’
+program.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&quot;Hello World!&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;Hello World!&quot;</code></pre>
 </div>
-<div class="solution">
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if we know the number of rows</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sq_data_random_sample <span class="ot">&lt;-</span> sq_data[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3023</span>, <span class="dv">10</span>),]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or, better yet, if the number of rows might be variable</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>sq_data_random_sample <span class="ot">&lt;-</span> sq_data[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sq_data), <span class="dv">10</span>),]</span></code></pre></div>
-</div>
-<p>Subsetting on conditions can be achieved with <code>subset()</code>.
-We’ll provide <code>subset()</code> with three arguments:</p>
+<div id="rstudio" class="section level2">
+<h2>RStudio</h2>
+<p>RStudio is an IDE – Integrated Development Environment. It’s a fancy
+name for a program designed to help you write and execute code. In one
+interface, it brings together several key elements related to writing
+code.</p>
 <ol style="list-style-type: decimal">
-<li>A data set to subset from</li>
-<li>The condition on which to subset</li>
-<li>The variables from the original data set to keep – leave this empty
-to default to all original variables</li>
+<li>a scripting pane, where we write stuff</li>
+<li>an R console, where R runs and processes what you write. You can
+also write directly here, but it’s ephemeral.</li>
+<li>an environment pane, where we can see the data objects, functions
+etc that we create</li>
+<li>a viewing pane that gives us access to our files, plots, and
+help</li>
 </ol>
 <div class="note">
-<p>R allows us to specify several conditions</p>
-<ul>
-<li>less than <code>&gt;</code></li>
-<li>greater than <code>&lt;</code></li>
-<li>less than or equal to <code>&lt;=</code></li>
-<li>greater than or equal <code>&gt;=</code></li>
-<li>equivalent to <code>==</code></li>
-<li>not equivalent to <code>!=</code></li>
-<li>or <code>|</code></li>
-</ul>
-<p>Note that <code>=</code> is equivalent to <code>&lt;-</code>, setting
-a value, while <code>==</code> tests whether or not two things are the
-same.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">x =</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(x <span class="sc">==</span> <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+<p>Most people who work with R do it using RStudio. But this is not
+necessary. All you really need is a plain text editor and the R
+interpreter to execute what you write.</p>
 </div>
-<p>Let’s say we only want to see the records for adult squirrels.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sq_data_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span>) <span class="co"># from sq_data, select only rows where Age equals Adult</span></span></code></pre></div>
-<p>Or all records with cinnamon coloured adult squirrels.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sq_data_c_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">&amp;</span> Primary.Fur.Color <span class="sc">==</span> <span class="st">&quot;Cinnamon&quot;</span>)</span></code></pre></div>
-<p>Or all records where an age has been recorded. This can be done in
-two ways</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="sc">!</span><span class="fu">is.na</span>(Age))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sq_data_age_2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">|</span> Age <span class="sc">==</span> <span class="st">&quot;Juvenile&quot;</span>)</span></code></pre></div>
-<div class="note">
-<p>Remember, <code>NA</code> values are a special value, indicating that
-a value is missing. This is different from writing the characters NA.
-<code>is.na()</code> tests for <code>NA</code>. It’s for this reason
-that running <code>subset(sq_data, sq_data$Age == 'NA')</code> will give
-you an empty data frame.</p>
 </div>
-<p>Or maybe we want to investigate patterns of only those squirrels for
-which we don’t have age recorded!</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_na <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="fu">is.na</span>(Age))</span></code></pre></div>
-<p>Lastly, before an exercise, we might want only observations that are
-complete, that is, records with no missing values</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sq_data_complete <span class="ot">&lt;-</span> sq_data[<span class="fu">complete.cases</span>(sq_data), ] <span class="co"># not terribly useful with this particular data set</span></span></code></pre></div>
-<div class="exercise">
-<p>All data was collected between October 6 and October 20, 2018. Create
-a subset of the data that includes only data collected on or before
-October 14, and only retains the variables <code>Date</code> and
-<code>Age</code>. Verify your date range output with
-<code>unique()</code> and if you get that far, order this output from
-<code>unique()</code> using <code>sort()</code> for easier reading.</p>
-<p>Remember that we have not yet converted our <code>Date</code>
-variable to a date class.</p>
+<div id="building-blocks" class="section level2">
+<h2>Building Blocks</h2>
+<p>The big difference with working in something like R, over say Excel
+or another point and click tool for working with data, is that it moves
+us into the realm of programming, which brings with it a need to
+understand some core concepts about how data are handled and stored by
+computers.</p>
+<p>While we’re not outright programming, we will be writing scripts to
+do things with our data –and basically, that’s what a program is – data,
+and a series of instructions–functions–to do things with these data.</p>
 </div>
-<div class="solution">
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(sq_data<span class="sc">$</span>Date, <span class="st">&quot;%m%d%Y&quot;</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sq_data_date <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Date <span class="sc">&lt;=</span> <span class="st">&quot;2018-10-14&quot;</span>, <span class="at">select =</span> <span class="fu">c</span>(Date, Age))</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">unique</span>(sq_data_date<span class="sc">$</span>Date))</span></code></pre></div>
-</div>
-<div class="summary">
-<p>Subsetting can be achieved in many ways. We can use indexing to get
-specific observations (rows) and / or variable (columns), we can use
-other functions like <code>is.na()</code> and
-<code>complete.cases()</code> to work around missing values, and we can
-use <code>subset()</code> to conditionally subset.</p>
-</div>
-<div class="functions">
-<table>
-<thead>
-<tr class="header">
-<th align="left">Function</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>subset</code></td>
-<td align="left">conditionally susbet a data frame</td>
-</tr>
-<tr class="even">
-<td align="left"><code>is.na</code></td>
-<td align="left">conditionally test if values in a vector are
-<code>NA</code>.</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>complete.cases</code></td>
-<td align="left">conditionally test if cases (rows) are complete.</td>
-</tr>
-</tbody>
-</table>
+<div id="how-it-works" class="section level2">
+<h2>How it Works</h2>
+<ol style="list-style-type: decimal">
+<li>You write instructions</li>
+<li>You give those instructions some data</li>
+<li>A compiler converts those instructions to something you computer can
+execute</li>
+<li>Your computer executes those instructions on your data</li>
+<li>You get the results presented to you, either on your screen, stored
+to a file, sent to a printer etc.</li>
+</ol>
 </div>
 
 
