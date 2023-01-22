@@ -25,6 +25,20 @@ navbar:
           href: part_06_data-types.html
         - text: "Importing Data"
           href: part_07_importing-data.html
+    - text: "Part 3"
+      menu:
+        - text: "Importing Data Continued"
+          href: part_08_dates-factors-dictionary.html
+        - text: "Variables Continued"
+          href: part_09_variables-continued.html
+        - text: "Subsetting"
+          href: part_10_subsetting.html
+    - text: "Part 4"
+      menu:
+        - text: "Libraries"
+          href: part_11_libraries.html
+        - text: "ggplot2"
+          href: part_12_ggplot2.html
 output:
   html_document:
     theme: flatly

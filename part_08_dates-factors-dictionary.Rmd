@@ -5,6 +5,12 @@ output:
     code_folding: show
 ---
 
+If it's not already loaded, read in the data set
+
+```{r, eval = FALSE}
+sq_data <- read.csv('2018-cp_squirrel_census.csv') # read the data into a variable called sq_data
+```
+
 ## Dates & Factors
 
 In addition to logical variables, our data set also has categorical data and date data. Categorical data in R is called factor data. We'll convert a single variable to factor to see how this behaves.

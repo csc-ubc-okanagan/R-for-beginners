@@ -120,3 +120,12 @@ In the following, a series of numeric data. Instead of having column names, we h
 Vectors are the building blocks of data frames, lists, and matrices. Matrices are vectors broken into columns of the same length and same data types. Data frames are joined vectors of the same length and different data types. Lists are joined vectors of different lengths and data types. Each is useful in certain situations.
 
 :::
+
+:::functions
+
+| Function | Description |
+| :--- | :--- |
+| `class` | reports the type of data or data structure. |
+| `is.` | a family of functions for identifying data types and structures. |
+
+:::

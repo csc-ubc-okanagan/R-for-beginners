@@ -44,7 +44,7 @@ Instead, the hope is that you will walk away with a base set of skills and langu
 
 ### Files
 
-Right click or (ctrl + click on a Mac) to save files.
+Right click or ctrl + left click on a Mac to save files.
 
 ```{r loadfiles, results='asis', echo=FALSE}
 ```

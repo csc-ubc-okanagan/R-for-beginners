@@ -5,6 +5,34 @@ output:
     code_folding: show
 ---
 
+# Indexing & Data Types
+
+To clean up our data set, we need to be able to target specifc varibales and or specific values. We do this with indexing.
+
+Data frames are comprised of rows and columns, and R accepts arguments in this order, so if we want to see the intersection of the first row and the first column, we would run
+
+```{r}
+sq_data[1,1] # show the first row and first column of the data frame
+```
+
+If we wanted to see the first 6 rows
+
+```{r}
+sq_data[1:6, 1] # show the first six rows and first column of the data frame
+```
+
+And if we wanted to see all the values of a specific variable, or column
+
+```{r, eval = FALSE}
+sq_data[ ,1]
+```
+
+When working with a data frame, we can also use variable names
+
+```{r, eval = FALSE}
+sq_data[1:6, "Running"]
+```
+
 Another common activity is subsetting data -- isolating a portion of the data, usually based on a condition. There are a few different ways we can subset in R, one of which we've already kind of seen with indexing, we just didn't assign the output to a variable.
 
 ```{r}

@@ -13,7 +13,7 @@
 
 <title>Libraries</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -136,13 +136,20 @@ code span.wa { color: #bf0303; } /* Warning */
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -238,11 +245,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -271,8 +282,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,16 +291,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -390,39 +394,6 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Part 3
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="part_08_dates-factors-dictionary.html">Importing Data Continued</a>
-    </li>
-    <li>
-      <a href="part_09_variables-continued.html">Variables Continued</a>
-    </li>
-    <li>
-      <a href="part_10_subsetting.html">Subsetting</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Part 4
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="part_11_libraries.html">Libraries</a>
-    </li>
-    <li>
-      <a href="part_12_ggplot2.html">ggplot2</a>
-    </li>
-  </ul>
-</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -459,41 +430,48 @@ for use. Libraries need to be loaded each time we launch R.</p>
 <p>You can see what packages are currently installed on you system
 with</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">installed.packages</span>()</span></code></pre></div>
-<pre><code>##             Package      
-## abind       &quot;abind&quot;      
-## antiword    &quot;antiword&quot;   
-## AsioHeaders &quot;AsioHeaders&quot;
-## askpass     &quot;askpass&quot;    
-## assertthat  &quot;assertthat&quot; 
-## backports   &quot;backports&quot;  
-##             LibPath                                                               
-## abind       &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
-## antiword    &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
-## AsioHeaders &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
-## askpass     &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
-## assertthat  &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
-## backports   &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
-##             Version    Priority Depends        Imports          LinkingTo
-## abind       &quot;1.4-5&quot;    NA       &quot;R (&gt;= 1.5.0)&quot; &quot;methods, utils&quot; NA       
-## antiword    &quot;1.3.1&quot;    NA       NA             &quot;sys (&gt;= 2.0)&quot;   NA       
-## AsioHeaders &quot;1.22.1-1&quot; NA       NA             NA               NA       
-## askpass     &quot;1.1&quot;      NA       NA             &quot;sys (&gt;= 2.1)&quot;   NA       
-## assertthat  &quot;0.2.1&quot;    NA       NA             &quot;tools&quot;          NA       
-## backports   &quot;1.4.1&quot;    NA       &quot;R (&gt;= 3.0.0)&quot; NA               NA       
-##             Suggests         Enhances License              License_is_FOSS
-## abind       NA               NA       &quot;LGPL (&gt;= 2)&quot;        NA             
-## antiword    NA               NA       &quot;GPL-2&quot;              NA             
-## AsioHeaders NA               NA       &quot;BSL-1.0&quot;            NA             
-## askpass     &quot;testthat&quot;       NA       &quot;MIT + file LICENSE&quot; NA             
-## assertthat  &quot;testthat, covr&quot; NA       &quot;GPL-3&quot;              NA             
-## backports   NA               NA       &quot;GPL-2 | GPL-3&quot;      NA             
-##             License_restricts_use OS_type MD5sum NeedsCompilation Built  
-## abind       NA                    NA      NA     &quot;no&quot;             &quot;4.2.0&quot;
-## antiword    NA                    NA      NA     &quot;yes&quot;            &quot;4.2.0&quot;
-## AsioHeaders NA                    NA      NA     &quot;no&quot;             &quot;4.2.0&quot;
-## askpass     NA                    NA      NA     &quot;yes&quot;            &quot;4.2.0&quot;
-## assertthat  NA                    NA      NA     &quot;no&quot;             &quot;4.2.0&quot;
-## backports   NA                    NA      NA     &quot;yes&quot;            &quot;4.2.0&quot;</code></pre>
+<pre><code>##           Package    
+## askpass   &quot;askpass&quot;  
+## base      &quot;base&quot;     
+## base64enc &quot;base64enc&quot;
+## boot      &quot;boot&quot;     
+## brew      &quot;brew&quot;     
+## brio      &quot;brio&quot;     
+##           LibPath                                                               
+## askpass   &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## base      &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## base64enc &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## boot      &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## brew      &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+## brio      &quot;/Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library&quot;
+##           Version  Priority      Depends                         Imports       
+## askpass   &quot;1.1&quot;    NA            NA                              &quot;sys (&gt;= 2.1)&quot;
+## base      &quot;4.2.2&quot;  &quot;base&quot;        NA                              NA            
+## base64enc &quot;0.1-3&quot;  NA            &quot;R (&gt;= 2.9.0)&quot;                  NA            
+## boot      &quot;1.3-28&quot; &quot;recommended&quot; &quot;R (&gt;= 3.0.0), graphics, stats&quot; NA            
+## brew      &quot;1.0-8&quot;  NA            NA                              NA            
+## brio      &quot;1.1.3&quot;  NA            NA                              NA            
+##           LinkingTo Suggests                    Enhances License             
+## askpass   NA        &quot;testthat&quot;                  NA       &quot;MIT + file LICENSE&quot;
+## base      NA        &quot;methods&quot;                   NA       &quot;Part of R 4.2.2&quot;   
+## base64enc NA        NA                          &quot;png&quot;    &quot;GPL-2 | GPL-3&quot;     
+## boot      NA        &quot;MASS, survival&quot;            NA       &quot;Unlimited&quot;         
+## brew      NA        &quot;testthat (&gt;= 3.0.0)&quot;       NA       &quot;GPL-2&quot;             
+## brio      NA        &quot;covr, testthat (&gt;= 2.1.0)&quot; NA       &quot;MIT + file LICENSE&quot;
+##           License_is_FOSS License_restricts_use OS_type MD5sum NeedsCompilation
+## askpass   NA              NA                    NA      NA     &quot;yes&quot;           
+## base      NA              NA                    NA      NA     NA              
+## base64enc NA              NA                    NA      NA     &quot;yes&quot;           
+## boot      NA              NA                    NA      NA     &quot;no&quot;            
+## brew      NA              NA                    NA      NA     &quot;no&quot;            
+## brio      NA              NA                    NA      NA     &quot;yes&quot;           
+##           Built  
+## askpass   &quot;4.2.0&quot;
+## base      &quot;4.2.2&quot;
+## base64enc &quot;4.2.0&quot;
+## boot      &quot;4.2.2&quot;
+## brew      &quot;4.2.0&quot;
+## brio      &quot;4.2.0&quot;</code></pre>
 <div class="exercise">
 <p>Calculate how many packages are installed on your system.</p>
 </div>

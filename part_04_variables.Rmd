@@ -66,3 +66,9 @@ Save the output of a random sample of 10 digits between 1 and 100 to a variable 
 ```
 
 :::
+
+:::summary
+
+Variables can represent either a group of values from the data we've collected or be a named place holder used by R to store our data, sometimes called objects.
+
+:::

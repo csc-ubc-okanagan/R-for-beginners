@@ -13,7 +13,7 @@
 
 <title>Loading Data</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -136,13 +136,20 @@ code span.wa { color: #bf0303; } /* Warning */
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -238,11 +245,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -271,8 +282,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,16 +291,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -387,39 +391,6 @@ $(document).ready(function () {
     </li>
     <li>
       <a href="part_07_importing-data.html">Importing Data</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Part 3
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="part_08_dates-factors-dictionary.html">Importing Data Continued</a>
-    </li>
-    <li>
-      <a href="part_09_variables-continued.html">Variables Continued</a>
-    </li>
-    <li>
-      <a href="part_10_subsetting.html">Subsetting</a>
-    </li>
-  </ul>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Part 4
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="part_11_libraries.html">Libraries</a>
-    </li>
-    <li>
-      <a href="part_12_ggplot2.html">ggplot2</a>
     </li>
   </ul>
 </li>
@@ -582,114 +553,28 @@ class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb9-1"><a hr
 <p>We’ll see a number of other things that we need to sort out before we
 can do much with our data. For example, many of our variable of have not
 been assigned to the appropriate data type. We have logical variables,
-date variables etc not yet sorted. Let’s fix this.</p>
+date variables etc not yet sorted.</p>
 </div>
-<div id="indexing-data-types" class="section level1">
-<h1>Indexing &amp; Data Types</h1>
-<p>To clean up our data set, we need to be able to target specifc
-varibales and or specific values. We do this with indexing.</p>
-<p>Data frames are comprised of rows and columns, and R accepts
-arguments in this order, so if we want to see the intersection of the
-first row and the first column, we would run</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span>,<span class="dv">1</span>] <span class="co"># show the first row and first column of the data frame</span></span></code></pre></div>
-<pre><code>## [1] -73.95613</code></pre>
-<p>If we wanted to see the first 6 rows</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span>] <span class="co"># show the first six rows and first column of the data frame</span></span></code></pre></div>
-<pre><code>## [1] -73.95613 -73.96886 -73.97428 -73.95964 -73.97027 -73.96836</code></pre>
-<p>And if we wanted to see all the values of a specific variable, or
-column</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sq_data[ ,<span class="dv">1</span>]</span></code></pre></div>
-<p>When working with a data frame, we can also use variable names</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="st">&quot;Running&quot;</span>]</span></code></pre></div>
-<p>And when we want every observation associated with a given
-variable</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Running</span></code></pre></div>
 <div id="changing-data-types" class="section level2">
 <h2>Changing Data Types</h2>
+<p>We can isolate or target a single variable in our data set using the
+dollar sign <code>$</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Running</span></code></pre></div>
 <p>Now that we can target a variable, we can assign new properties to
 that variable. R has a series of <code>as.</code> functions to allow us
 to manipulate data types and classes. To view all <code>as.</code>
 functions available to you</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apropos</span>(<span class="st">&quot;^as</span><span class="sc">\\</span><span class="st">.&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apropos</span>(<span class="st">&quot;^as</span><span class="sc">\\</span><span class="st">.&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;as.array&quot;               &quot;as.array.default&quot;       &quot;as.call&quot;               
 ## [4] &quot;as.character&quot;           &quot;as.character.condition&quot; &quot;as.character.Date&quot;</code></pre>
 <pre><code>## ...</code></pre>
 <p>We can see in the list, that we have several useful <code>as.</code>
 functions for our current data set, including <code>as.Date</code> and
 <code>as.logical</code>. We’ll start with the latter.</p>
-</div>
-<div id="convert-a-single-variable" class="section level2">
-<h2>Convert a single variable</h2>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Running <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(sq_data<span class="sc">$</span>Running) <span class="co"># re-assign the variable Running from character to logical</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Running) <span class="co"># view the results</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Running <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(sq_data<span class="sc">$</span>Running) <span class="co"># re-assign the variable Running from character to logical</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Running) <span class="co"># view the results</span></span></code></pre></div>
 <pre><code>##  logi [1:3023] FALSE FALSE FALSE FALSE FALSE FALSE ...</code></pre>
-</div>
-<div id="convert-multiple-variables" class="section level2">
-<h2>Convert multiple variables</h2>
-<p>We might be inclined to simply do the following:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>variables_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Running&quot;</span>, <span class="st">&quot;Chasing&quot;</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sq_data[,variables_to_convert] <span class="ot">&lt;-</span> <span class="fu">as.logical</span>(sq_data[,variables_to_convert])</span></code></pre></div>
-<pre><code>## Error in eval(expr, envir, enclos): &#39;list&#39; object cannot be coerced to type &#39;logical&#39;</code></pre>
-<p>Which will give us an error. Errors in R are not always super helpful
-and working through them is a learning curve unto itself. This one is
-somewhat helpful. It tells us that as.logical doesn’t know how to handle
-a list as an input. A plain language interpretation of this is that
-<code>as.logical()</code> will only take in a single vector of values,
-not more than one vector.</p>
-<p>The solution is to use the <code>apply()</code> family of
-functions.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>variables_to_convert <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Running&quot;</span>, <span class="st">&quot;Chasing&quot;</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>sq_data[,variables_to_convert] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sq_data[,variables_to_convert], as.logical)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data<span class="sc">$</span>Chasing)</span></code></pre></div>
-<pre><code>##  logi [1:3023] FALSE FALSE TRUE FALSE FALSE FALSE ...</code></pre>
-<p>The <code>apply</code> family of functions is very useful for
-iterating over data structures, such as data frames. In
-<code>lapply()</code>, the l stands for list, suggesting it takes in
-lists to iterate or loop over. In this case, the function takes a list,
-<code>variables_to_convert</code>, and passes that list off, one vector
-at a time to <code>as.logical()</code>.</p>
-<div class="advanced">
-<p>We’re about to take a somewhat steep introduction to two key concepts
-in R related to iterating operations over your data in R.</p>
-<p>There are several ways that one might iterate operations. One of the
-most common is a for loop, in which we state, for each element in a
-list, do this to it. This would look something like this, using our
-earlier <code>random_sample</code> we created:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>random_sample_doubled <span class="ot">&lt;-</span> <span class="fu">vector</span>() <span class="co"># create an empty vector called random_sample_multi</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(random_sample)) { <span class="co"># iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  random_sample_doubled[i] <span class="ot">&lt;-</span> random_sample[i] <span class="sc">*</span><span class="dv">2</span> <span class="co"># for each value at index point 1 through to length(random_sample), multiply that value by 2</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>random_sample_doubled <span class="co"># print the result to verify</span></span></code></pre></div>
-<pre><code>##  [1]  90  12  24  44 120  18  38  96 132 192</code></pre>
-<p>R is a high level language, meaning it’s interpreted at run time
-rather than pre-compiled. This generally makes for loops slow, since R
-takes time to process each individual step; do something to the first
-element, then to the second element etc. There are ways to make for
-loops faster in R; one way is simply to let the apply family of
-functions take care of the details for us. We don’t need to write code
-that explicitly loops. Instead, we call an apply function that is
-designed to efficiently handle the task for us.</p>
-<p>The second key concept here is to leverage when possible the fact
-that R is vectorized. We see this with examples like this where we don’t
-need to loop over every value, its the default behaviour.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>random_sample_2 <span class="ot">&lt;-</span> random_sample <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div>
-<p>What this means ‘under the hood’ though, is that instead of R locally
-processing your data, slowly iterating over it, R looks at the first
-element of your vector, determines its data type, and then passes the
-operation off to a function written in a pre-compiled language.
-Pre-compiled languages are much faster. If you dive into R more deeply,
-you’ll hear people say that you should vectorize your code. What this
-really suggests is, if you find yourself writing a lot of iterative
-loops, like for loops, consider that there might be a more efficient
-path that involves passing vectors to already pre-compiled
-functions.</p>
-</div>
 <div class="exercise">
 <p><code>read.csv</code> allows us to assign variable types on import.
 Revisit the help documentation for <code>read.csv</code> and see if you
@@ -699,13 +584,13 @@ can update your import line –
 logical on import.</p>
 </div>
 <div class="solution">
-<div class="sourceCode" id="cb31"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>,</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>),</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">&quot;Chasing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Running&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Climbing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                    )</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">&quot;Chasing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Running&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Climbing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                    )</span></code></pre></div>
 </div>
 <div class="functions">
 <table>
@@ -730,7 +615,7 @@ class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb31-1"><a h
 to get current working directory.</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>read.cs</code></td>
+<td align="left"><code>read.csv</code></td>
 <td align="left">read a csv file into R.</td>
 </tr>
 <tr class="even">
@@ -751,23 +636,8 @@ types, and a few values.</td>
 <td align="left">a family of functions for converting data types and
 structures.</td>
 </tr>
-<tr class="even">
-<td align="left"><code>lapply</code></td>
-<td align="left">apply a function to every item in a list.</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>levels</code></td>
-<td align="left">print the categories and codes for categorical
-data.</td>
-</tr>
-<tr class="even">
-<td align="left"><code>write.csv</code></td>
-<td align="left">export data from R to your file system in csv
-format.</td>
-</tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 

@@ -71,3 +71,21 @@ This is a useful tool for generating data to test code or building random subset
 Other functions to create random samples include `runif()` for uniformly distributed data and `rnorm()` for normally distributed data.
 
 :::
+
+:::summary
+
+Functions are mini programs that do things with our data. They generally have parameters, or arguments, that can be specified to customize how the function operates. 
+
+:::
+
+:::functions
+
+| Function | Description |
+| :--- | :--- |
+| `mean` | calculate the mean of a range of values. |
+| `median` | calculate the median of a range of values. |
+| `var` | calculate the variance of a range of values. |
+| `sd` | calculate the standard deviation of a range of values. |
+| `sample` | take a randmon sample from a range of values. |
+
+:::

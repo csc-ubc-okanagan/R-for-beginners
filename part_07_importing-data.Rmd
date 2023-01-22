@@ -13,9 +13,11 @@ First things first, we'll use R to set up a place for us to work. We'll begin by
 dir.create("~/Desktop/r-for-beginners") # create a project directory
 ```
 
-<div class = "note">
+:::note
+
 Most systems - MacOS, Windows, Linux - will set your home directory to your user directory. The tilde `~` is shorthand for your user directory. If your home directory is not your user directory, the above will not work.
-</div>
+
+:::
 
 We'll then make sure that our current session is working with the files in this folder.
 
@@ -67,9 +69,11 @@ When exported, especially using a format like `csv`, all of these notations for 
 
 In R, `NA` values are a specific way of indicating that a value is missing. And `read.csv()` has a specific argument for converting strings into `NA` encoded values on import.
 
-<div class = 'exercise'>
+:::exercise
+
 Using the help documentation -- `?read.csv` -- see if you can figure out how to update your data import -- `sq_data <- read.csv('2018-cp_squirrel_census.csv')` -- to convert a list of strings to `NA` values.
-</div>
+
+:::
 
 <div class = 'solution'>
 ```{r, class.source = 'fold-hide', results = FALSE}
@@ -87,43 +91,15 @@ Review the data structure again...
 str(sq_data)
 ```
 
-We'll see a number of other things that we need to sort out before we can do much with our data. For example, many of our variable of have not been assigned to the appropriate data type. We have logical variables, date variables etc not yet sorted. Let's fix this.
+We'll see a number of other things that we need to sort out before we can do much with our data. For example, many of our variable of have not been assigned to the appropriate data type. We have logical variables, date variables etc not yet sorted.
 
-# Indexing & Data Types
+## Changing Data Types
 
-To clean up our data set, we need to be able to target specifc varibales and or specific values. We do this with indexing.
-
-Data frames are comprised of rows and columns, and R accepts arguments in this order, so if we want to see the intersection of the first row and the first column, we would run
-
-```{r}
-sq_data[1,1] # show the first row and first column of the data frame
-```
-
-If we wanted to see the first 6 rows
-
-```{r}
-sq_data[1:6, 1] # show the first six rows and first column of the data frame
-```
-
-And if we wanted to see all the values of a specific variable, or column
-
-```{r, eval = FALSE}
-sq_data[ ,1]
-```
-
-When working with a data frame, we can also use variable names
-
-```{r, eval = FALSE}
-sq_data[1:6, "Running"]
-```
-
-And when we want every observation associated with a given variable
+We can isolate or target a single variable in our data set using the dollar sign `$`.
 
 ```{r, eval = FALSE}
 sq_data$Running
 ```
-
-## Changing Data Types
 
 Now that we can target a variable, we can assign new properties to that variable. R has a series of `as.` functions to allow us to manipulate data types and classes. To view all `as.` functions available to you
 
@@ -138,69 +114,20 @@ cat("...")
 
 We can see in the list, that we have several useful `as.` functions for our current data set, including `as.Date` and `as.logical`. We'll start with the latter.
 
-## Convert a single variable
-
 ```{r}
 sq_data$Running <- as.logical(sq_data$Running) # re-assign the variable Running from character to logical
 
 str(sq_data$Running) # view the results
 ```
 
-## Convert multiple variables
+:::exercise
 
-We might be inclined to simply do the following:
-
-```{r, error = TRUE}
-variables_to_convert <- c("Running", "Chasing")
-
-sq_data[,variables_to_convert] <- as.logical(sq_data[,variables_to_convert])
-```
-
-Which will give us an error. Errors in R are not always super helpful and working through them is a learning curve unto itself. This one is somewhat helpful. It tells us that as.logical doesn't know how to handle a list as an input. A plain language interpretation of this is that `as.logical()` will only take in a single vector of values, not more than one vector.
-
-The solution is to use the `apply()` family of functions.
-
-```{r}
-variables_to_convert <- c("Running", "Chasing")
-
-sq_data[,variables_to_convert] <- lapply(sq_data[,variables_to_convert], as.logical)
-
-str(sq_data$Chasing)
-```
-
-The `apply` family of functions is very useful for iterating over data structures, such as data frames. In `lapply()`, the l stands for list, suggesting it takes in lists to iterate or loop over. In this case, the function takes a list, `variables_to_convert`, and passes that list off, one vector at a time to `as.logical()`.
-
-<div class = "advanced">
-We're about to take a somewhat steep introduction to two key concepts in R related to iterating operations over your data in R.
-
-There are several ways that one might iterate operations. One of the most common is a for loop, in which we state, for each element in a list, do this to it. This would look something like this, using our earlier `random_sample` we created:
-
-```{r}
-random_sample_doubled <- vector() # create an empty vector called random_sample_multi
-
-for (i in 1:length(random_sample)) { # iterate with a for loop starting with the number 1 and ending with the last index point in random sample, calculated here using length()
-  random_sample_doubled[i] <- random_sample[i] *2 # for each value at index point 1 through to length(random_sample), multiply that value by 2
-}
-
-random_sample_doubled # print the result to verify
-```
-
-R is a high level language, meaning it's interpreted at run time rather than pre-compiled. This generally makes for loops slow, since R takes time to process each individual step; do something to the first element, then to the second element etc. There are ways to make for loops faster in R; one way is simply to let the apply family of functions take care of the details for us. We don't need to write code that explicitly loops. Instead, we call an apply function that is designed to efficiently handle the task for us.
-
-The second key concept here is to leverage when possible the fact that R is vectorized. We see this with examples like this where we don't need to loop over every value, its the default behaviour.
-
-```{r}
-random_sample_2 <- random_sample * 2
-```
-
-What this means 'under the hood' though, is that instead of R locally processing your data, slowly iterating over it, R looks at the first element of your vector, determines its data type, and then passes the operation off to a function written in a pre-compiled language. Pre-compiled languages are much faster. If you dive into R more deeply, you'll hear people say that you should vectorize your code. What this really suggests is, if you find yourself writing a lot of iterative loops, like for loops, consider that there might be a more efficient path that involves passing vectors to already pre-compiled functions.
-</div>
-
-<div class = 'exercise'>
 `read.csv` allows us to assign variable types on import. Revisit the help documentation for `read.csv` and see if you can update your import line -- `sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` -- to also convert the columns 'Running', 'Chasing', and 'Climbing' to logical on import.
-</div>
 
-<div class = 'solution'>
+:::
+
+:::solution
+
 ```{r, class.source = 'fold-hide', results = FALSE}
 sq_data <- read.csv('2018-cp_squirrel_census.csv',
                     na.strings = c("", " ", "NA", "NULL", ".", "+"),
@@ -209,19 +136,19 @@ sq_data <- read.csv('2018-cp_squirrel_census.csv',
                                    "Climbing" = "logical")
                     )
 ```
-</div>
 
-<div class = 'functions'>
+:::
+
+:::functions
+
 | Function | Description |
 | :--- | :--- |
 | `dir.create` | create a directory on your file system. |
 | `setwd` | set the working directory. See also `getwd` to get current working directory. |
-| `read.cs` | read a csv file into R. |
+| `read.csv` | read a csv file into R. |
 | `str` | display information about the data including structure, types, and a few values. |
 | `View` | open the data set in a spreadsheet like viewer. |
 | `apropos` | search for functions and variables. |
 | `as.` | a family of functions for converting data types and structures. |
-| `lapply` | apply a function to every item in a list. |
-| `levels` | print the categories and codes for categorical data. |
-| `write.csv` | export data from R to your file system in csv format. |
-</div>
+
+:::
