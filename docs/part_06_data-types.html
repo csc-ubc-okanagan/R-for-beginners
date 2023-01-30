@@ -13,7 +13,7 @@
 
 <title>Data Types</title>
 
-<script src="site_libs/header-attrs-2.19/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -30,6 +30,7 @@
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -118,6 +119,15 @@ code span.va { color: #0057ae; } /* Variable */
 code span.vs { color: #bf0303; } /* VerbatimString */
 code span.wa { color: #bf0303; } /* Warning */
 
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -310,6 +320,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -379,6 +392,9 @@ $(document).ready(function () {
     <li>
       <a href="part_07_importing-data.html">Importing Data</a>
     </li>
+    <li>
+      <a href="part_07_rproject.html">RProjects</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -387,6 +403,14 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -455,12 +479,12 @@ with this data, like calculating a person’s age.</p>
 <pre><code>[1] &quot;Date&quot;</code></pre>
 <p>And see the utility of adding the date class</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.Date</span>() <span class="co"># retrieve today&#39;s data</span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-22&quot;</code></pre>
+<pre><code>[1] &quot;2023-01-30&quot;</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the number of days that have passed since numbers</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>(days_since_March_31 <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> numbers) <span class="co"># doesn&#39;t make sense</span></span></code></pre></div>
-<pre><code>[1] &quot;-53339-10-03&quot;</code></pre>
+<pre><code>[1] &quot;-53339-10-11&quot;</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(days_since_March_31 <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> numbers_as_date) <span class="co"># works</span></span></code></pre></div>
-<pre><code>Time difference of 327 days</code></pre>
+<pre><code>Time difference of 335 days</code></pre>
 </div>
 <div id="structures" class="section level2">
 <h2>Structures</h2>
@@ -503,6 +527,10 @@ special kind of list.</p>
 <p>In a data frame, all vectors need to be of the same length. And while
 each vector must hold the same data type, not all vectors need to be of
 the same data type. Data frames also allow us to apply column names.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">data.frame</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">9</span>, <span class="dv">11</span>),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">words =</span> <span class="fu">c</span>(<span class="st">&#39;I&#39;</span>, <span class="st">&#39;want&#39;</span>, <span class="st">&#39;to&#39;</span>, <span class="st">&#39;learn&#39;</span>, <span class="st">&#39;R&#39;</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>  numbers words
 1       1     I
 2       5  want
@@ -516,6 +544,11 @@ the same data type. Data frames also allow us to apply column names.</p>
 but breaks us free of each column needing to be the same length as in a
 data frame. You can also nest a list within a list. This can start to
 get complicated.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">list</span>(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">breakfast =</span> <span class="fu">c</span>(<span class="st">&#39;Eggs&#39;</span>, <span class="st">&#39;Muffins&#39;</span>, <span class="st">&#39;Coffee&#39;</span>),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">lunch =</span> <span class="fu">c</span>(<span class="st">&#39;Grilled Cheese Sandwich with Orange Juice&#39;</span>),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">numbers =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">7</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <pre><code>$breakfast
 [1] &quot;Eggs&quot;    &quot;Muffins&quot; &quot;Coffee&quot; 
 
@@ -533,10 +566,11 @@ divide the vector into. As a result, a matrix can only hold a single
 data type or class.</p>
 <p>In the following, a series of numeric data. Instead of having column
 names, we have column and row numbers.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">matrix</span>(<span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">3</span>))</span></code></pre></div>
 <pre><code>      [,1]  [,2]  [,3]  [,4]
-[1,] 10.52 10.34  8.99 11.39
-[2,] 10.58 10.06 10.90  9.49
-[3,] 10.48 11.11  9.24 10.84</code></pre>
+[1,] 10.12  8.80 10.34 10.76
+[2,] 11.16 12.04  9.96  8.62
+[3,] 10.72  9.06  9.44 10.83</code></pre>
 <div class="summary">
 <p>Vectors are the building blocks of data frames, lists, and matrices.
 Matrices are vectors broken into columns of the same length and same
@@ -605,6 +639,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

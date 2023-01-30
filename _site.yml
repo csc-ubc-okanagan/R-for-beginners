@@ -25,6 +25,8 @@ navbar:
           href: part_06_data-types.html
         - text: "Importing Data"
           href: part_07_importing-data.html
+        - text: "RProjects"
+          href: part_07_rproject.html
 output:
   html_document:
     theme: flatly

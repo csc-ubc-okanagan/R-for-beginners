@@ -19,10 +19,13 @@ Most systems - MacOS, Windows, Linux - will set your home directory to your user
 
 :::
 
-We'll then make sure that our current session is working with the files in this folder.
+We'll then make sure that our current session is working with the files in this folder, we'll verify where we are, and finally create a directory to hold our data.
 
-```{r working-directory, eval = FALSE}
-setwd("~/Desktop/r-for-beginners") # set the working directory to the direcotry we just created
+```{r working-directory}
+setwd("~/Desktop/r-for-beginners") # set the working directory to the directory we just created
+getwd() # print current working directory
+dir.create("data") # create a directory in our working directory called data
+list.dirs() # list the directories to verify things.
 ```
 
 And then we'll download our data

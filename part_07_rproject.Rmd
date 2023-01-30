@@ -1,0 +1,17 @@
+---
+title: "RProject"
+output:
+  html_document:
+    code_folding: show
+---
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(warning = FALSE,
+                      comment = NA)
+```
+
+Using `setwd()` every time you open a file or set of files in R can be cumbersome and problematic; it can also hinder the reproducibility of your code. One solution to this is to create an RPoject file, and to use that to launch your project instead of opening an individual script from your desktop.
+
+First, we'll save our script to our folder.
+
+Then we'll create an RProject by going to file > new project... and selecting 'existing directory' and then navigating to the directory we created for this project. Next time you load this project using the RProj file, your working directory will be set for you.

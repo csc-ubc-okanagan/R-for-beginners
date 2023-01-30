@@ -1,5 +1,8 @@
 ---
 title: "Data Types"
+output:
+  html_document:
+    code_folding: show
 ---
 
 ```{r echo=FALSE}
@@ -86,7 +89,7 @@ A data frame essentially functions as a series of connected vectors, where each 
 
 In a data frame, all vectors need to be of the same length. And while each vector must hold the same data type, not all vectors need to be of the same data type. Data frames also allow us to apply column names.
 
-```{r create-into_df, echo = FALSE}
+```{r create-into_df}
 (data.frame(
   numbers = c(1,5,8,9, 11),
   words = c('I', 'want', 'to', 'learn', 'R')
@@ -97,7 +100,7 @@ In a data frame, all vectors need to be of the same length. And while each vecto
 
 A list also essentially functions as a series of connected vectors, but breaks us free of each column needing to be the same length as in a data frame. You can also nest a list within a list. This can start to get complicated.
 
-```{r create-intro_list, echo = FALSE}
+```{r create-intro_list}
 (list(
   breakfast = c('Eggs', 'Muffins', 'Coffee'),
   lunch = c('Grilled Cheese Sandwich with Orange Juice'),
@@ -111,7 +114,7 @@ A matrix resembles a data frame when displayed on screen, but is more accurately
 
 In the following, a series of numeric data. Instead of having column names, we have column and row numbers.
 
-```{r create-intro_matrix, echo = FALSE}
+```{r create-intro_matrix}
 (matrix(round(rnorm(12, 10, 1), 2), nrow = 3))
 ```
 
