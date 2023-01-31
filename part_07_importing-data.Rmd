@@ -7,6 +7,13 @@ output:
 
 We're going to work with a (hopefully) fun data set today, which we'll download and then import.
 
+:::note
+
+* See the data here: https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-10-29
+* Read about the project here: https://www.thesquirrelcensus.com/
+
+:::
+
 First things first, we'll use R to set up a place for us to work. We'll begin by creating a directory on our desktop
 
 ```{r create-project-folder, eval = FALSE}
@@ -33,7 +40,7 @@ And then we'll download our data
 ```{r download-sdata, eval = FALSE}
 data_src <- "https://tinyurl.com/mu8y9n29" # define the source of our data, in this case, a url
 
-download.file(url = data_src, destfile = '2018-cp_squirrel_census.csv') # download the file, and save it with a specified name
+download.file(url = data_src, destfile = 'data/2018-cp_squirrel_census.csv') # download the file, and save it with a specified name
 ```
 
 Now that our data is downloaded and we have a local copy, we'll pull it into R
@@ -41,13 +48,13 @@ Now that our data is downloaded and we have a local copy, we'll pull it into R
 We can simply import the data and display it to our console
 
 ```{r import-squirrel-console, eval = FALSE}
-read.csv('2018-cp_squirrel_census.csv') # read the data
+read.csv('data/2018-cp_squirrel_census.csv', header = TRUE) # read the data
 ```
 
 But this isn't terribly useful. We want to store this data in memory, so we'll load it into a variable
 
 ```{r import-squirrel-var}
-sq_data <- read.csv('2018-cp_squirrel_census.csv') # read the data into a variable called sq_data
+sq_data <- read.csv('data/2018-cp_squirrel_census.csv', header = TRUE) # read the data into a variable called sq_data
 ```
 
 We can now explore the data, looking at the data types and data structures R is defaulting to when importing this csv file
@@ -74,18 +81,20 @@ In R, `NA` values are a specific way of indicating that a value is missing. And 
 
 :::exercise
 
-Using the help documentation -- `?read.csv` -- see if you can figure out how to update your data import -- `sq_data <- read.csv('2018-cp_squirrel_census.csv')` -- to convert a list of strings to `NA` values.
+Using the help documentation -- `?read.csv` -- see if you can figure out how to update your data import -- `sq_data <- read.csv('data/2018-cp_squirrel_census.csv', header = TRUE)` -- to convert a list of strings to `NA` values.
 
 :::
 
-<div class = 'solution'>
+:::solution
+
 ```{r, class.source = 'fold-hide', results = FALSE}
-sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))
+sq_data <- read.csv('2018-cp_squirrel_census.csv', header = TRUE, na.strings = c("", " ", "NA", "NULL", ".", "+"))
 ```
-</div>
+
+:::
 
 ```{r, echo = FALSE}
-sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))
+sq_data <- read.csv('2018-cp_squirrel_census.csv', header = TRUE, na.strings = c("", " ", "NA", "NULL", ".", "+"))
 ```
 
 Review the data structure again...
@@ -125,7 +134,7 @@ str(sq_data$Running) # view the results
 
 :::exercise
 
-`read.csv` allows us to assign variable types on import. Revisit the help documentation for `read.csv` and see if you can update your import line -- `sq_data <- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` -- to also convert the columns 'Running', 'Chasing', and 'Climbing' to logical on import.
+`read.csv` allows us to assign variable types on import. Revisit the help documentation for `read.csv` and see if you can update your import line -- `sq_data <- read.csv('data/2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))` -- to also convert the columns 'Running', 'Chasing', and 'Climbing' to logical on import.
 
 :::
 
@@ -133,6 +142,7 @@ str(sq_data$Running) # view the results
 
 ```{r, class.source = 'fold-hide', results = FALSE}
 sq_data <- read.csv('2018-cp_squirrel_census.csv',
+                    header = TRUE,
                     na.strings = c("", " ", "NA", "NULL", ".", "+"),
                     colClasses = c("Chasing" = "logical",
                                    "Running" = "logical",

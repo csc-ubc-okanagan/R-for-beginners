@@ -1,5 +1,5 @@
 ---
-title: Adding & Naming Variables
+title: "Adding & Naming Variables"
 output:
   html_document:
     code_folding: show
@@ -23,7 +23,7 @@ First, we'll create a list of existing variable names for our data set
 (sq_colnames <- colnames(sq_data))
 ```
 
-<div class = 'exercise'>
+:::exercise
 This is a two parter.
 
 First, in `sq_colnames`, re-name 'Above.Ground.Sighter.Measurement' to be more concise and indicate its scale; in fact, re-name it to `agsm.f`. `sq_colnames` is a vector, so we'll want to use indexing by number.
@@ -35,9 +35,11 @@ A plain language approach to this might be:
 1. Identify the index position of 'Above.Ground.Sighter.Measurement' in `sq_colnames`.
 2. Re-assign the value associated with this index point to `agsm.f`
 3. Re-assign the column names of `sq_data` to `sq_colnames`
-</div>
 
-<div class = "solution">
+:::
+
+:::solution
+
 ```{r, class.source = 'fold-hide', results = FALSE}
 sq_colnames # list the columns and their index numbers
 
@@ -45,7 +47,8 @@ sq_colnames[14] <- "agsm.f" # change the value at index point 14 to 'agsm.f'
 
 colnames(sq_data) <- sq_colnames # re-assign the values in colnames(sq_data) to match those in sq_colnames
 ```
-</div>
+
+:::
 
 We now have any easy variable name to type and adapt!
 
@@ -60,12 +63,16 @@ colnames(sq_data) <- sq_colnames # re-assign the values in colnames(sq_data) to 
 sq_data$agsm.m <- sq_data$agsm.f * .3048 # create the variable agsm.m and populate it with the values in agsm.f times .3048
 ```
 
-<div class = 'summary'>
-Occasionally we need to rename variables, but when doing so we should be wary about cascading impacts on our documentation. We can easily add variables to an existing data frame.
-</div>
+:::summary
 
-<div class = 'functions'>
+Occasionally we need to rename variables, but when doing so we should be wary about cascading impacts on our documentation. We can easily add variables to an existing data frame.
+
+:::
+
+:::functions
+
 | Function | Description |
 | :--- | :--- |
 | `colnames` | access the column names of a data frame. |
-</div>
+
+:::

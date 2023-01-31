@@ -26,7 +26,15 @@ navbar:
         - text: "Importing Data"
           href: part_07_importing-data.html
         - text: "RProjects"
-          href: part_07_rproject.html
+          href: part_08_rproject.html
+    - text: "Part 3"
+      menu:
+        - text: "Dates & Factors"
+          href: part_09_dates-factors-dictionary.html
+        - text: "Adding & Renaming Variables"
+          href: part_10_variables-continued.html
+        - text: "Subsetting"
+          href: 
 output:
   html_document:
     theme: flatly

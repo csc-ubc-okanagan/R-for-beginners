@@ -393,8 +393,24 @@ $(document).ready(function () {
       <a href="part_07_importing-data.html">Importing Data</a>
     </li>
     <li>
-      <a href="part_07_rproject.html">RProjects</a>
+      <a href="part_08_rproject.html">RProjects</a>
     </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_09_dates-factors-dictionary.html">Dates &amp; Factors</a>
+    </li>
+    <li>
+      <a href="part_10_variables-continued.html">Adding &amp; Renaming Variables</a>
+    </li>
+    <li class="dropdown-header">Subsetting</li>
   </ul>
 </li>
       </ul>
@@ -420,7 +436,10 @@ $(document).ready(function () {
 
 
 <p>If it’s not already loaded, read in the data set</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>) <span class="co"># read the data into a variable called sq_data</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&#39;data/2018-cp_squirrel_census.csv&#39;</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                    na.strings <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                    <span class="er">)</span></span></code></pre></div>
 <div id="dates-factors" class="section level2">
 <h2>Dates &amp; Factors</h2>
 <p>In addition to logical variables, our data set also has categorical
@@ -474,15 +493,15 @@ indicate the base type of data it is.</p>
 that in</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dict_src <span class="ot">&lt;-</span> <span class="st">&quot;https://tinyurl.com/4kxt9n8e&quot;</span> <span class="co"># source of the file</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> dict_src, <span class="at">destfile =</span> <span class="st">&#39;_datadictionary.csv&#39;</span>) <span class="co"># download and name the file</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> dict_src, <span class="at">destfile =</span> <span class="st">&#39;data/_datadictionary.csv&#39;</span>) <span class="co"># download and name the file</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>data_dict <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;_datadictionary.csv&quot;</span>) <span class="co"># read in the file</span></span></code></pre></div>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>data_dict <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;data/_datadictionary.csv&quot;</span>) <span class="co"># read in the file</span></span></code></pre></div>
 <p>We’ll now import our data in a slightly more efficient way</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>na_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span> , <span class="st">&quot; &quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;?&quot;</span>, <span class="st">&quot;+&quot;</span>) <span class="co"># a list of values to use for na.strings</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>data_types <span class="ot">&lt;-</span> data_dict<span class="sc">$</span>data.import.class <span class="co"># a list of data types to feed to colClass</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;2018-cp_squirrel_census.csv&quot;</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&quot;data/2018-cp_squirrel_census.csv&quot;</span>,</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">na.strings =</span> na_values,</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">colClasses =</span> data_types</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>           )</span>
@@ -523,7 +542,7 @@ that in</p>
 <p>At this point, we’ve got a pretty clean imported data set. It’s
 likely we’ll still find some issues with, but for now let’s save it as a
 cleaned, version 0</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(sq_data, <span class="st">&quot;2018-cp_squirrel_census_cleaned_v0.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(sq_data, <span class="st">&quot;data/2018-cp_squirrel_census_cleaned_v0.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="summary">
 <p>On import, we can control many aspects of our data set, including
 setting NA values and assigning datat types and classes. This work is

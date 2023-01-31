@@ -393,8 +393,24 @@ $(document).ready(function () {
       <a href="part_07_importing-data.html">Importing Data</a>
     </li>
     <li>
-      <a href="part_07_rproject.html">RProjects</a>
+      <a href="part_08_rproject.html">RProjects</a>
     </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 3
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_09_dates-factors-dictionary.html">Dates &amp; Factors</a>
+    </li>
+    <li>
+      <a href="part_10_variables-continued.html">Adding &amp; Renaming Variables</a>
+    </li>
+    <li class="dropdown-header">Subsetting</li>
   </ul>
 </li>
       </ul>
@@ -421,6 +437,16 @@ $(document).ready(function () {
 
 <p>We’re going to work with a (hopefully) fun data set today, which
 we’ll download and then import.</p>
+<div class="note">
+<ul>
+<li>See the data here: <a
+href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-10-29"
+class="uri">https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-10-29</a></li>
+<li>Read about the project here: <a
+href="https://www.thesquirrelcensus.com/"
+class="uri">https://www.thesquirrelcensus.com/</a></li>
+</ul>
+</div>
 <p>First things first, we’ll use R to set up a place for us to work.
 We’ll begin by creating a directory on our desktop</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;~/Desktop/r-for-beginners&quot;</span>) <span class="co"># create a project directory</span></span></code></pre></div>
@@ -443,14 +469,14 @@ directory to hold our data.</p>
 <p>And then we’ll download our data</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_src <span class="ot">&lt;-</span> <span class="st">&quot;https://tinyurl.com/mu8y9n29&quot;</span> <span class="co"># define the source of our data, in this case, a url</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> data_src, <span class="at">destfile =</span> <span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>) <span class="co"># download the file, and save it with a specified name</span></span></code></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> data_src, <span class="at">destfile =</span> <span class="st">&#39;data/2018-cp_squirrel_census.csv&#39;</span>) <span class="co"># download the file, and save it with a specified name</span></span></code></pre></div>
 <p>Now that our data is downloaded and we have a local copy, we’ll pull
 it into R</p>
 <p>We can simply import the data and display it to our console</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>) <span class="co"># read the data</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">&#39;data/2018-cp_squirrel_census.csv&#39;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>) <span class="co"># read the data</span></span></code></pre></div>
 <p>But this isn’t terribly useful. We want to store this data in memory,
 so we’ll load it into a variable</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>) <span class="co"># read the data into a variable called sq_data</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;data/2018-cp_squirrel_census.csv&#39;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>) <span class="co"># read the data into a variable called sq_data</span></span></code></pre></div>
 <p>We can now explore the data, looking at the data types and data
 structures R is defaulting to when importing this csv file</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data) <span class="co"># explore the structure of the data set.</span></span></code></pre></div>
@@ -519,12 +545,12 @@ import.</p>
 <div class="exercise">
 <p>Using the help documentation – <code>?read.csv</code> – see if you
 can figure out how to update your data import –
-<code>sq_data &lt;- read.csv('2018-cp_squirrel_census.csv')</code> – to
-convert a list of strings to <code>NA</code> values.</p>
+<code>sq_data &lt;- read.csv('data/2018-cp_squirrel_census.csv', header = TRUE)</code>
+– to convert a list of strings to <code>NA</code> values.</p>
 </div>
 <div class="solution">
 <div class="sourceCode" id="cb14"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>, <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>))</span></code></pre></div>
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>))</span></code></pre></div>
 </div>
 <p>Review the data structure again…</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sq_data)</span></code></pre></div>
@@ -589,18 +615,19 @@ functions for our current data set, including <code>as.Date</code> and
 <p><code>read.csv</code> allows us to assign variable types on import.
 Revisit the help documentation for <code>read.csv</code> and see if you
 can update your import line –
-<code>sq_data &lt;- read.csv('2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))</code>
+<code>sq_data &lt;- read.csv('data/2018-cp_squirrel_census.csv', na.strings = c("", " ", "NA", "NULL", ".", "+"))</code>
 – to also convert the columns ‘Running’, ‘Chasing’, and ‘Climbing’ to
 logical on import.</p>
 </div>
 <div class="solution">
 <div class="sourceCode" id="cb23"><pre
 class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;2018-cp_squirrel_census.csv&#39;</span>,</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>),</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">&quot;Chasing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Running&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Climbing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>)</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                    )</span></code></pre></div>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="st">&quot;Chasing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Running&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">&quot;Climbing&quot;</span> <span class="ot">=</span> <span class="st">&quot;logical&quot;</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                    )</span></code></pre></div>
 </div>
 <div class="functions">
 <table>
