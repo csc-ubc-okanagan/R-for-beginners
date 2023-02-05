@@ -410,7 +410,9 @@ $(document).ready(function () {
     <li>
       <a href="part_10_variables-continued.html">Adding &amp; Renaming Variables</a>
     </li>
-    <li class="dropdown-header">Subsetting</li>
+    <li>
+      <a href="part_11_subsetting.html">Subsetting</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -437,9 +439,9 @@ $(document).ready(function () {
 
 <p>If it’s not already loaded, read in the data set</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sq_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">&#39;data/2018-cp_squirrel_census.csv&#39;</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                    na.strings <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                    <span class="er">)</span></span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot; &quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;NULL&quot;</span>, <span class="st">&quot;.&quot;</span>, <span class="st">&quot;+&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                    )</span></code></pre></div>
 <div id="dates-factors" class="section level2">
 <h2>Dates &amp; Factors</h2>
 <p>In addition to logical variables, our data set also has categorical

@@ -410,7 +410,9 @@ $(document).ready(function () {
     <li>
       <a href="part_10_variables-continued.html">Adding &amp; Renaming Variables</a>
     </li>
-    <li class="dropdown-header">Subsetting</li>
+    <li>
+      <a href="part_11_subsetting.html">Subsetting</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -435,52 +437,103 @@ $(document).ready(function () {
 </div>
 
 
-<div id="indexing-data-types" class="section level1">
-<h1>Indexing &amp; Data Types</h1>
-<p>To clean up our data set, we need to be able to target specifc
-varibales and or specific values. We do this with indexing.</p>
-<p>Data frames are comprised of rows and columns, and R accepts
-arguments in this order, so if we want to see the intersection of the
-first row and the first column, we would run</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span>,<span class="dv">1</span>] <span class="co"># show the first row and first column of the data frame</span></span></code></pre></div>
+<p>There are three subsetting operators in R – [[, [, $ – each of which
+will work with a data frame.</p>
+<p>We’ve already seen how we can select a named column in a data frame
+with the dollar sign selector.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Age</span></code></pre></div>
+<pre><code>## [1] &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;  Adult Adult Adult
+## Levels: Adult Juvenile</code></pre>
+<p>We can also use indexed positions with square brackets</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">8</span>]</span></code></pre></div>
+<pre><code>##     Age
+## 1  &lt;NA&gt;
+## 2  &lt;NA&gt;
+## 3  &lt;NA&gt;
+## 4 Adult
+## 5 Adult
+## 6 Adult</code></pre>
+<p>If we only include a single digit, R defaults to selecting a
+column.</p>
+<p>We can select both rows and columns, however, using a comma, where
+the first number, or set of numbers, selects the rows, and the second,
+the columns.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span>,<span class="dv">1</span>] <span class="co"># show the first row and first column of the data frame</span></span></code></pre></div>
 <pre><code>## [1] -73.95613</code></pre>
 <p>If we wanted to see the first 6 rows</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span>] <span class="co"># show the first six rows and first column of the data frame</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">1</span>] <span class="co"># show the first six rows and first column of the data frame</span></span></code></pre></div>
 <pre><code>## [1] -73.95613 -73.96886 -73.97428 -73.95964 -73.97027 -73.96836</code></pre>
-<p>And if we wanted to see all the values of a specific variable, or
-column</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sq_data[ ,<span class="dv">1</span>]</span></code></pre></div>
-<p>When working with a data frame, we can also use variable names</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="st">&quot;Running&quot;</span>]</span></code></pre></div>
-<p>Another common activity is subsetting data – isolating a portion of
-the data, usually based on a condition. There are a few different ways
-we can subset in R, one of which we’ve already kind of seen with
-indexing, we just didn’t assign the output to a variable.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sq_data_age <span class="ot">&lt;-</span> sq_data<span class="sc">$</span>Age <span class="co"># select one column</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sq_data_sounds <span class="ot">&lt;-</span> sq_data[,<span class="dv">22</span><span class="sc">:</span><span class="dv">24</span>] <span class="co"># select multiple columns</span></span></code></pre></div>
+<p>Leaving a selection blank is the equivalent of selecting everything;
+either all rows, or all columns,</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sq_data[ ,<span class="dv">1</span>] <span class="co"># all rows, first column, ie one variable</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span>, ] <span class="co"># all columns, first row, ie one observation</span></span></code></pre></div>
+<p>We can also mix and match names and indexes,</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="st">&quot;Running&quot;</span>]</span></code></pre></div>
 <div class="exercise">
-<p>Using the above as a model, take a random sample of ten observations
-(rows) from <code>sq_data</code>.</p>
+<p>There are two ways to select a single column in a data frame; using
+[] or [ , ]. Extract a single variable, and all observations, from
+<code>sq_data</code> using each of these two methods, saving each to
+their own variable. Then using <code>str()</code> investigate the
+difference in the outputs.</p>
 </div>
 <div class="solution">
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if we know the number of rows</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sq_data_random_sample <span class="ot">&lt;-</span> sq_data[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3023</span>, <span class="dv">10</span>),]</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or, better yet, if the number of rows might be variable</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>sq_data_random_sample <span class="ot">&lt;-</span> sq_data[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(sq_data), <span class="dv">10</span>),]</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>matrix_ss <span class="ot">&lt;-</span> sq_data[<span class="dv">6</span>]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(matrix_ss)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    3023 obs. of  1 variable:
+##  $ Date: chr  &quot;10142018&quot; &quot;10192018&quot; &quot;10142018&quot; &quot;10172018&quot; ...</code></pre>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>list_ss <span class="ot">&lt;-</span> sq_data[ ,<span class="dv">6</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(list_ss)</span></code></pre></div>
+<pre><code>##  chr [1:3023] &quot;10142018&quot; &quot;10192018&quot; &quot;10142018&quot; &quot;10172018&quot; &quot;10172018&quot; ...</code></pre>
 </div>
-<p>Subsetting on conditions can be achieved with <code>subset()</code>.
-We’ll provide <code>subset()</code> with three arguments:</p>
-<ol style="list-style-type: decimal">
-<li>A data set to subset from</li>
-<li>The condition on which to subset</li>
-<li>The variables from the original data set to keep – leave this empty
-to default to all original variables</li>
-</ol>
-<div class="note">
+<div class="exercise">
+<p>We’ve encountered <code>sample()</code>. We can use sample and index
+subsetting take a random sample from our data set. To do this, we’ll
+need to use the <code>nrow()</code> function, that when fed a data set,
+reports on the number of rows,</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(sq_data)</span></code></pre></div>
+<pre><code>## [1] 3023</code></pre>
+<p>Using this information, Take a random sample of 10 observations for
+<code>sq_data</code> for the first 6 columns.</p>
+</div>
+<div class="solution">
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="fu">sample</span>(<span class="fu">nrow</span>(sq_data), <span class="dv">10</span>), <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div>
+<pre><code>##              X        Y Unique.Squirrel.ID Hectare Shift     Date
+## 1673 -73.96410 40.78993     29B-PM-1010-03     29B    PM 10102018
+## 1799 -73.97884 40.76960      4B-AM-1010-05     04B    AM 10102018
+## 1722 -73.95873 40.79077     32F-AM-1012-02     32F    AM 10122018
+## 428  -73.96363 40.78080     21G-AM-1014-02     21G    AM 10142018
+## 579  -73.95562 40.79805     41D-PM-1014-01     41D    PM 10142018
+## 1379 -73.97965 40.76784      1C-PM-1013-08     01C    PM 10132018
+## 878  -73.96728 40.78748     26A-PM-1006-02     26A    PM 10062018
+## 1157 -73.97639 40.77055      5C-PM-1010-12     05C    PM 10102018
+## 789  -73.96750 40.78726     25A-PM-1007-01     25A    PM 10072018
+## 203  -73.97708 40.77100      5C-AM-1006-03     05C    AM 10062018</code></pre>
+</div>
+<p>Lastly, we might want only observations that are complete, that is,
+records with no missing values</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(sq_data_complete <span class="ot">&lt;-</span> sq_data[<span class="fu">complete.cases</span>(sq_data), ]) <span class="co"># not terribly useful with this particular data set</span></span></code></pre></div>
+<pre><code>##            X        Y Unique.Squirrel.ID Hectare Shift     Date
+## 2254 -73.971 40.77258     10F-PM-1019-03     10F    PM 10192018
+##      Hectare.Squirrel.Number      Age Primary.Fur.Color Highlight.Fur.Color
+## 2254                       3 Juvenile              Gray            Cinnamon
+##      Combination.of.Primary.and.Highlight.Color   Color.notes     Location
+## 2254                              Gray+Cinnamon Cinnamon head Ground Plane
+##      agsm.f   Specific.Location Running Chasing Climbing Eating Foraging
+## 2254      0 Behind fence, grass   FALSE   FALSE    FALSE   TRUE    FALSE
+##      Other.Activities  Kuks Quaas Moans Tail.flags Tail.twitches Approaches
+## 2254    eating (nuts) FALSE FALSE FALSE      FALSE         FALSE       TRUE
+##      Indifferent Runs.from                Other.Interactions
+## 2254       FALSE     FALSE approaches (bad tourists w/ nuts)
+##                                          Lat.Long agsm.m
+## 2254 POINT (-73.9709991016317 40.772575670774806)      0</code></pre>
+<div id="logical-subsetting" class="section level3">
+<h3>Logical subsetting</h3>
+<p>So far, we haven’t applied any conditions to our subsets, but we can.
+In logical subsetting, the subset defaults to returning the results
+where the condition is TRUE.</p>
 <p>R allows us to specify several conditions</p>
 <ul>
 <li>less than <code>&gt;</code></li>
@@ -489,25 +542,45 @@ to default to all original variables</li>
 <li>greater than or equal <code>&gt;=</code></li>
 <li>equivalent to <code>==</code></li>
 <li>not equivalent to <code>!=</code></li>
-<li>or <code>|</code></li>
 </ul>
+<p>As well as boolean operators</p>
+<ul>
+<li>or <code>|</code></li>
+<li>and <code>&amp;</code></li>
+</ul>
+<div class="note">
 <p>Note that <code>=</code> is equivalent to <code>&lt;-</code>, setting
 a value, while <code>==</code> tests whether or not two things are the
 same.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">x =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">x =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(x <span class="sc">==</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(x <span class="sc">==</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sq_data[sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span>, ] <span class="co"># all variables for all Adult observations</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>sq_data[sq_data<span class="sc">$</span>Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">&amp;</span> sq_data<span class="sc">$</span>Shift <span class="sc">==</span> <span class="st">&quot;PM&quot;</span>, ] <span class="co"># all variables for all Adult, PM observat</span></span></code></pre></div>
+</div>
+<div id="subset" class="section level3">
+<h3>Subset()</h3>
+<p>A lot this functionality has been built into a subset function,
+<code>subset()</code>.</p>
+<p>We’ll provide <code>subset()</code> with three arguments:</p>
+<ol style="list-style-type: decimal">
+<li>A data set to subset from</li>
+<li>The condition on which to subset</li>
+<li>The variables from the original data set to keep – leave this empty
+to default to all original variables</li>
+</ol>
 <p>Let’s say we only want to see the records for adult squirrels.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sq_data_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span>) <span class="co"># from sq_data, select only rows where Age equals Adult</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sq_data_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span>) <span class="co"># from sq_data, select only rows where Age equals Adult</span></span></code></pre></div>
 <p>Or all records with cinnamon coloured adult squirrels.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sq_data_c_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">&amp;</span> Primary.Fur.Color <span class="sc">==</span> <span class="st">&quot;Cinnamon&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sq_data_c_adult <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">&amp;</span> Primary.Fur.Color <span class="sc">==</span> <span class="st">&quot;Cinnamon&quot;</span>)</span></code></pre></div>
 <p>Or all records where an age has been recorded. This can be done in
 two ways</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="sc">!</span><span class="fu">is.na</span>(Age))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>sq_data_age_2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">|</span> Age <span class="sc">==</span> <span class="st">&quot;Juvenile&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="sc">!</span><span class="fu">is.na</span>(Age))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>sq_data_age_2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Age <span class="sc">==</span> <span class="st">&quot;Adult&quot;</span> <span class="sc">|</span> Age <span class="sc">==</span> <span class="st">&quot;Juvenile&quot;</span>)</span></code></pre></div>
 <div class="note">
 <p>Remember, <code>NA</code> values are a special value, indicating that
 a value is missing. This is different from writing the characters NA.
@@ -517,10 +590,7 @@ you an empty data frame.</p>
 </div>
 <p>Or maybe we want to investigate patterns of only those squirrels for
 which we don’t have age recorded!</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_na <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="fu">is.na</span>(Age))</span></code></pre></div>
-<p>Lastly, before an exercise, we might want only observations that are
-complete, that is, records with no missing values</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sq_data_complete <span class="ot">&lt;-</span> sq_data[<span class="fu">complete.cases</span>(sq_data), ] <span class="co"># not terribly useful with this particular data set</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sq_data_age_na <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, <span class="fu">is.na</span>(Age))</span></code></pre></div>
 <div class="exercise">
 <p>All data was collected between October 6 and October 20, 2018. Create
 a subset of the data that includes only data collected on or before
@@ -532,17 +602,18 @@ October 14, and only retains the variables <code>Date</code> and
 variable to a date class.</p>
 </div>
 <div class="solution">
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(sq_data<span class="sc">$</span>Date, <span class="st">&quot;%m%d%Y&quot;</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>sq_data_date <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Date <span class="sc">&lt;=</span> <span class="st">&quot;2018-10-14&quot;</span>, <span class="at">select =</span> <span class="fu">c</span>(Date, Age))</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">unique</span>(sq_data_date<span class="sc">$</span>Date))</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>sq_data<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(sq_data<span class="sc">$</span>Date, <span class="st">&quot;%m%d%Y&quot;</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>sq_data_date <span class="ot">&lt;-</span> <span class="fu">subset</span>(sq_data, Date <span class="sc">&lt;=</span> <span class="st">&quot;2018-10-14&quot;</span>, <span class="at">select =</span> <span class="fu">c</span>(Date, Age))</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">unique</span>(sq_data_date<span class="sc">$</span>Date))</span></code></pre></div>
 </div>
 <div class="summary">
 <p>Subsetting can be achieved in many ways. We can use indexing to get
 specific observations (rows) and / or variable (columns), we can use
-other functions like <code>is.na()</code> and
-<code>complete.cases()</code> to work around missing values, and we can
-use <code>subset()</code> to conditionally subset.</p>
+conditions on which to subset, we can use other functions like
+<code>is.na()</code> and <code>complete.cases()</code> to work around
+missing values, and we can use <code>subset()</code>, among other
+functions, subset.</p>
 </div>
 <div class="functions">
 <table>

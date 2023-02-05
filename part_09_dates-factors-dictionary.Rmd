@@ -9,7 +9,7 @@ If it's not already loaded, read in the data set
 
 ```{r, eval = FALSE}
 sq_data <- read.csv(file = 'data/2018-cp_squirrel_census.csv',
-                    header = TRUE),
+                    header = TRUE,
                     na.strings = c("", " ", "NA", "NULL", ".", "+")
                     )
 ```

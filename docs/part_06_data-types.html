@@ -410,7 +410,9 @@ $(document).ready(function () {
     <li>
       <a href="part_10_variables-continued.html">Adding &amp; Renaming Variables</a>
     </li>
-    <li class="dropdown-header">Subsetting</li>
+    <li>
+      <a href="part_11_subsetting.html">Subsetting</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -495,12 +497,12 @@ with this data, like calculating a person’s age.</p>
 <pre><code>[1] &quot;Date&quot;</code></pre>
 <p>And see the utility of adding the date class</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.Date</span>() <span class="co"># retrieve today&#39;s data</span></span></code></pre></div>
-<pre><code>[1] &quot;2023-01-31&quot;</code></pre>
+<pre><code>[1] &quot;2023-02-05&quot;</code></pre>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the number of days that have passed since numbers</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>(days_since_March_31 <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> numbers) <span class="co"># doesn&#39;t make sense</span></span></code></pre></div>
-<pre><code>[1] &quot;-53339-10-12&quot;</code></pre>
+<pre><code>[1] &quot;-53339-10-17&quot;</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(days_since_March_31 <span class="ot">&lt;-</span> <span class="fu">Sys.Date</span>() <span class="sc">-</span> numbers_as_date) <span class="co"># works</span></span></code></pre></div>
-<pre><code>Time difference of 336 days</code></pre>
+<pre><code>Time difference of 341 days</code></pre>
 </div>
 <div id="structures" class="section level2">
 <h2>Structures</h2>
@@ -583,10 +585,10 @@ data type or class.</p>
 <p>In the following, a series of numeric data. Instead of having column
 names, we have column and row numbers.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(<span class="fu">matrix</span>(<span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="dv">12</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">3</span>))</span></code></pre></div>
-<pre><code>      [,1]  [,2]  [,3]  [,4]
-[1,] 10.65  9.11 11.59  9.30
-[2,] 11.64 10.70  9.23  9.89
-[3,] 10.71  8.08 10.12 10.71</code></pre>
+<pre><code>      [,1]  [,2]  [,3] [,4]
+[1,]  9.46 10.32 10.48 9.38
+[2,]  9.07  8.84 11.07 8.60
+[3,] 10.26  9.13 10.73 9.46</code></pre>
 <div class="summary">
 <p>Vectors are the building blocks of data frames, lists, and matrices.
 Matrices are vectors broken into columns of the same length and same

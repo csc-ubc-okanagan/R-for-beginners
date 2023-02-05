@@ -34,7 +34,7 @@ navbar:
         - text: "Adding & Renaming Variables"
           href: part_10_variables-continued.html
         - text: "Subsetting"
-          href: 
+          href: part_11_subsetting.html
 output:
   html_document:
     theme: flatly
