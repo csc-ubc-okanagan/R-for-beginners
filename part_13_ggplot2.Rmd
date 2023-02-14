@@ -14,9 +14,11 @@ library(ggplot2)
 library(palmerpenguins)
 ```
 
-<div class = "note">
+:::note
+
 This is a brief introduction. For more in depth examples and solutions, check out [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/index.html) by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen.
-</div>
+
+:::
 
 `ggplot()` is based on a grammar graphics -- a way of approaching describing the construction of a graphic from common building blocks. Building a graphic with ggplot then follows some common patterns of construction.
 
@@ -71,9 +73,11 @@ And of course, check out the data
 str(penguins)
 ```
 
-<div class = "note">
+::: note
+
 The penguins data structure is a `tibble`. A tibble is very much like a data frame. It is not part of base R, but is introduced through Tidyverse, of which ggplot2 is one piece.
-</div>
+
+:::
 
 And optionally, view the data
 
@@ -116,20 +120,26 @@ There are several `geoms_` that we can choose from. These include:
 
 There are more...
 
-<div class = "note">
+:::note
+
 There are many aesthetics that we can map to `aes()` and each `geom_` will accept different aesthetics. You can review available aesthetics using the help pages. Those aesthetics in **bold** are required.
-</div>
 
-<div class = "exercise">
+:::
+
+:::exercise
+
 Using the above as a model, use `geom_jitter()` to plot `flipper_length_mm` against `species`.
-</div>
 
-<div class = "solution">
+:::
+
+:::solution
+
 ```{r solution_1, class.source = 'fold-hide'}
 ggplot(data = penguins, aes(x = species, y = flipper_length_mm)) +
   geom_jitter()
 ```
-</div>
+
+:::
 
 ## A Basic Bar Graph
 
@@ -150,16 +160,19 @@ If we already had the count data, we would use `geom_col()`, but then we need to
 
 We can't plot a table. To be able to plot this, we need to convert the table into a data frame.
 
-<div class = "exercise">
+:::exercise
+
 Use `geom_col()` to plot `sex_freqtable`. A plain language articulation of the process would read something like:
 
 1. convert `sex_freqtable` to a dataframe
 2. figure out the variable names in the dataframe that is created
 3. call ggplot, feed it the data frame and the variables to be plotted
 4. add `geom_col()`
-</div>
 
-<div class = "solution">
+:::
+
+:::solution
+
 ```{r solution_2, class.source = 'fold-hide', results = FALSE}
 sex_freqtable_df <- as.data.frame(sex_freqtable) # convert to data frame
 
@@ -168,7 +181,8 @@ str(sex_freqtable_df) # pull up the struture
 ggplot(data = sex_freqtable_df, aes(x = Var1, y = Freq)) +
   geom_col()
 ```
-</div>
+
+:::
 
 ## Additional Aesthetics
 
@@ -195,7 +209,8 @@ ggplot(data = penguins, aes(x = species, y = flipper_length_mm, colour = island)
   geom_jitter()
 ```
 
-<div class = "exercise">
+:::exercise
+
 Using the penguins data set, use `geom_point()` to plot `flipper_length_mm` against `bill_length_mm` only for those instances where the variable `sex` is not `NA`, and map the aesthetic `size` to the variable `sex`.
 
 A plain language summary might read:
@@ -204,18 +219,23 @@ A plain language summary might read:
 2. feed it the penguins data set subsetted to remove `NA` values from the variable `sex`
 3. map the variable `bill_length_mm` to the x axis, `flipper_length_mm` to the y axis, and `sex` to size
 4. call `geom_point()`
-</div>
 
-<div class = "solution">
+:::
+
+:::solution
+
 ```{r size_point, class.source = 'fold-hide'}
 ggplot(data = subset(penguins, !is.na(sex)), aes(x = bill_length_mm, y = flipper_length_mm, size = sex)) +
   geom_point()
 ```
-</div>
 
-<div class = "note">
+:::
+
+:::note
+
 You should get a warning that reads `Using size for a discrete variable is not advised.` This is valid. Size comparisons are one of magnitude while the `sex` variable represents two discrete, non-ordinal categories. The graph can be produced, but that doesn't mean it's a good graph for the data.
-</div>
+
+:::
 
 It would be more appropriate to use colour to distinguish between a non-ordinal, categorical variable and to use size for something like body mass.
 
@@ -230,17 +250,21 @@ ggplot(data = subset(penguins,!is.na(sex)),
 
 Things get a little hard to see here though!
 
-<div class = "note">
+:::note
+
 To keep things legible in our code, you may wish to use a line break at the end of each argument.
-</div>
+
+:::
 
 ## Scales
 
 Our scales can be adjusted in many different ways, for example, changing the colour, fill, alpha, x, or y scales.
 
-<div class = "note">
+:::note
+
 `alpha` controls opacity and is on a scale of 0 to 1, with 0 being transparent and 1 being solid. Like jitter, this helps us to see overlapping data points.
-</div>
+
+:::
 
 We'll start by mapping the variable `sex` to the `alpha` aesthetic and then adjust the alpha scale, which allows us to set each category at a different opacity. 
 
@@ -407,9 +431,11 @@ penguins_boxplot + penguins_jitter
 penguins_boxplot / penguins_jitter
 ```
 
-<div class = "note">
+:::note
+
 There are many ways in which patchwork can arrange plots. See the chapter [Arranging Plots](https://ggplot2-book.org/arranging-plots.html) in *ggplot2: Elegant Graphics for Data Analysis* for more complex examples.
-</div>
+
+:::
 
 ## Faceting a Plot
 
@@ -455,6 +481,8 @@ ggplot(penguins, aes(x = flipper_length_mm, fill = species, colour = species)) +
   )
 ```
 
-<div class = "note">
+:::note
+
 A full list of theme options are available on the [ggplot theme reference page](https://ggplot2.tidyverse.org/reference/theme.html).
-</div>
+
+:::

@@ -415,6 +415,21 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_12_libraries.html">Libraries</a>
+    </li>
+    <li>
+      <a href="part_13_ggplot2.html">ggplot2</a>
+    </li>
+  </ul>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -562,11 +577,11 @@ through Tidyverse, of which ggplot2 is one piece.</p>
 <p>Following on the above, first we call ggplot and define our data
 set:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins)</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/ggplot_data-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/ggplot_data-1.png" width="672" /></p>
 <p>An blank slate is prepared for us! Next, we add in the variables we
 want mapped.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm))</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/ggplot_aes-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/ggplot_aes-1.png" width="672" /></p>
 <p>This sets us up with a blank grid with x and y axis ticks
 corresponding to your variable values and x and y axis labels
 corresponding to your variables.</p>
@@ -574,7 +589,7 @@ corresponding to your variables.</p>
 scatter plot</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/ggplot_point-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/ggplot_point-1.png" width="672" /></p>
 <p>There are several <code>geoms_</code> that we can choose from. These
 include:</p>
 <ul>
@@ -602,7 +617,7 @@ available aesthetics using the help pages. Those aesthetics in
 <div class="sourceCode" id="cb9"><pre
 class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm)) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/solution_1-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/solution_1-1.png" width="672" /></p>
 </div>
 </div>
 <div id="a-basic-bar-graph" class="section level2">
@@ -612,7 +627,7 @@ variable is simply a count of observations, which is computed as part of
 the process of generating the graph.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> sex)) <span class="sc">+</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/basic_bar-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/basic_bar-1.png" width="672" /></p>
 <p>If we already had the count data, we would use
 <code>geom_col()</code>, but then we need to provide the y aesthetic. R
 provides an easy way to get a frequency table with the function
@@ -644,7 +659,7 @@ class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb13-1"><a h
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sex_freqtable_df, <span class="fu">aes</span>(<span class="at">x =</span> Var1, <span class="at">y =</span> Freq)) <span class="sc">+</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/solution_2-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/solution_2-1.png" width="672" /></p>
 </div>
 </div>
 <div id="additional-aesthetics" class="section level2">
@@ -655,16 +670,16 @@ colour and size.</p>
 <p>Using a bar plot</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/bar_fill-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/bar_fill-1.png" width="672" /></p>
 <p>Let’s get rid of those <code>NA</code> values. ggplot allows us to
 subset.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">subset</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex)), <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/bar_fill_na-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/bar_fill_na-1.png" width="672" /></p>
 <p>Using our jitter plot</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> flipper_length_mm, <span class="at">colour =</span> island)) <span class="sc">+</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/jitter-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/jitter-1.png" width="672" /></p>
 <div class="exercise">
 <p>Using the penguins data set, use <code>geom_point()</code> to plot
 <code>flipper_length_mm</code> against <code>bill_length_mm</code> only
@@ -686,7 +701,7 @@ size</li>
 <div class="sourceCode" id="cb17"><pre
 class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">subset</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex)), <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> flipper_length_mm, <span class="at">size =</span> sex)) <span class="sc">+</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/size_point-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/size_point-1.png" width="672" /></p>
 </div>
 <div class="note">
 <p>You should get a warning that reads
@@ -704,7 +719,7 @@ body mass.</p>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> sex,</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> body_mass_g)) <span class="sc">+</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/colour_point-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/colour_point-1.png" width="672" /></p>
 <p>Things get a little hard to see here though!</p>
 <div class="note">
 <p>To keep things legible in our code, you may wish to use a line break
@@ -731,7 +746,7 @@ allows us to set each category at a different opacity.</p>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> sex)) <span class="sc">+</span></span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_alpha_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fl">0.3</span>, <span class="fl">0.5</span>)) <span class="co"># we have to levels to our factor, so we need to supply two values </span></span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/alpha_point-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/alpha_point-1.png" width="672" /></p>
 <p>Since alpha only refers to colour, we can also provide the argument
 with a single value within the aesthetic mapping, which maps that alpha
 value to all variables</p>
@@ -742,7 +757,7 @@ value to all variables</p>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">size =</span> body_mass_g,</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/alpha_point_2-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/alpha_point_2-1.png" width="672" /></p>
 <p>The result is a little odd, since 0.5 is now being treated as a
 variable that requires a legend. We’ll sort that one out later!</p>
 <p>In these cases, we’ve manually adjusted the alpha scale. Similarly,
@@ -755,7 +770,7 @@ we could manually adjust the colour scale</p>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>))</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/colour_point_alpha-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/colour_point_alpha-1.png" width="672" /></p>
 <p>We don’t need to complete all scales manually. One situation in which
 this might be handy is for colours. There is a great tool called
 ColourBrewer that has set scales for working with non-ordinal, ordinal,
@@ -765,7 +780,7 @@ and ratio data.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span></code></pre></div>
 <p>Check out what’s available:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">display.brewer.all</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/list_cb-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/list_cb-1.png" width="672" /></p>
 <p>Pick a colour set and add the scale</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">subset</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex)),</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm,</span>
@@ -775,7 +790,7 @@ and ratio data.</p>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">alpha =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>)</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/custom_cb-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/custom_cb-1.png" width="672" /></p>
 </div>
 <div id="labeling-and-captions" class="section level2">
 <h2>Labeling and captions</h2>
@@ -788,7 +803,7 @@ investigate this with a box plot.</p>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Sex&quot;</span>,</span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Body Mass (grams)&quot;</span></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/labs_1-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/labs_1-1.png" width="672" /></p>
 <p>We can also add titles and captions.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">subset</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex)), <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
@@ -798,7 +813,7 @@ investigate this with a box plot.</p>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Palmer Penguins&quot;</span>,</span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Palmer Penguins. Body mass grouped by sex. n = 333.&quot;</span></span>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/labs_2-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/labs_2-1.png" width="672" /></p>
 <p>And our text can leverage variables, using for example
 <code>paste0()</code>, which combines strings together.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>observations <span class="ot">&lt;-</span> <span class="fu">nrow</span>(<span class="fu">subset</span>(penguins, <span class="sc">!</span><span class="fu">is.na</span>(sex))) <span class="co"># count the number of observations</span></span>
@@ -811,7 +826,7 @@ investigate this with a box plot.</p>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Palmer Penguins&quot;</span>,</span>
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">paste0</span>(<span class="st">&quot;Palmer Penguins. Body mass grouped by sex. n = &quot;</span>, observations, <span class="st">&quot;.&quot;</span>) <span class="co"># print the number of observations</span></span>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
 <div id="more-than-one-geom" class="section level2">
 <h2>More than one geom</h2>
@@ -826,7 +841,7 @@ and then call multiple geoms to represent those variables.</p>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;Body Mass (grams)&quot;</span>,</span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Palmer Penguins&quot;</span>,</span>
 <span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">paste0</span>(<span class="st">&quot;Palmer Penguins. Body mass grouped by sex. n = &quot;</span>, observations, <span class="st">&quot;.&quot;</span>))</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="more-than-one-plot" class="section level2">
 <h2>More than one plot</h2>
@@ -847,9 +862,9 @@ is necessary with patchwork.</p>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.10</span>)</span></code></pre></div>
 <p>We can then use patchwork to arrange our plots</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>penguins_boxplot <span class="sc">+</span> penguins_jitter</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>penguins_boxplot <span class="sc">/</span> penguins_jitter</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <div class="note">
 <p>There are many ways in which patchwork can arrange plots. See the
 chapter <a
@@ -865,18 +880,18 @@ and <code>facet_wrap()</code>, allowing use to break a plot on discrete
 variables.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>penguins_jitter <span class="sc">+</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(island))</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/facet_grid_1-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/facet_grid_1-1.png" width="672" /></p>
 <p><code>facet_grid()</code> produces produces a grid for each
 combination of variables, whether there are values for that combination
 or not.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>penguins_jitter <span class="sc">+</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(species), <span class="at">rows =</span> <span class="fu">vars</span>(island))</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/facet_grid_2-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/facet_grid_2-1.png" width="672" /></p>
 <p><code>facet_wrap()</code> on the other hand, only produces a grid for
 those variables with combinations.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>penguins_jitter <span class="sc">+</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(species, island))</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/facet_grid_3-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/facet_grid_3-1.png" width="672" /></p>
 </div>
 <div id="themes" class="section level2 unnumbered">
 <h2 class="unnumbered">Themes</h2>
@@ -885,7 +900,7 @@ themes.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">fill =</span> species, <span class="at">colour =</span> species)) <span class="sc">+</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/density_1-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/density_1-1.png" width="672" /></p>
 <p>Within a theme, we can start to customize other elements. Things that
 we can customize included axes elements, legend elements, panel
 elements, and plot elements. For example, we can build on the theme
@@ -897,7 +912,7 @@ additional call to theme():</p>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>()</span>
 <span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="part_12_ggplot2_files/figure-html/density_2-1.png" width="672" /></p>
+<p><img src="part_13_ggplot2_files/figure-html/density_2-1.png" width="672" /></p>
 <div class="note">
 <p>A full list of theme options are available on the <a
 href="https://ggplot2.tidyverse.org/reference/theme.html">ggplot theme

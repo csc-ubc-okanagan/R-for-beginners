@@ -19,17 +19,20 @@ installed.packages()
 head(installed.packages())
 ```
 
-<div class = "exercise">
-Calculate how many packages are installed on your system.
-</div>
+:::exercise
 
-<div class = "solution">
+Calculate how many packages are installed on your system.
+
+:::
+
+:::solution
 ```{r, class.source = 'fold-hide', results = FALSE}
 installed_packages <- installed.packages() # load the contents into a variable
 
 nrow(installed_packages) # print the number of rows
 ```
-</div>
+
+:::
 
 ## Installing packages
 
@@ -59,11 +62,13 @@ So, to load ggplot
 library(ggplot2)
 ```
 
-<div class = "note">
+:::note
+
 You will sometimes see people use `require()` instead of `library()` to load a package. Generally, either may be used.
 
 You'll also note that when you install a package, the name is wrapped in quotation marks, `" "`, but when you load a package, it is not.
-</div>
+
+:::
 
 ## Updating packages
 
@@ -79,11 +84,14 @@ And packages can be updated with
 update.packages()
 ```
 
-<div class = "summary">
-Packages provide additional functionality. You can install packages with `install.packages()` and load them with `library()`.
-</div>
+:::summary
 
-<div class = "functions">
+Packages provide additional functionality. You can install packages with `install.packages()` and load them with `library()`.
+
+:::
+
+:::functions
+
 | Function | Description |
 | :--- | :--- |
 | `installed.packages` | print a matrix of installed packages |
@@ -91,4 +99,5 @@ Packages provide additional functionality. You can install packages with `instal
 | `library` | Load an installed package. |
 | `old.packages` | List packages with updates. |
 | `update.packages` | Update packages to the latest release. |
-</div>
+
+:::

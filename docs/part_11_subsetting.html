@@ -415,6 +415,21 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Part 4
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="part_12_libraries.html">Libraries</a>
+    </li>
+    <li>
+      <a href="part_13_ggplot2.html">ggplot2</a>
+    </li>
+  </ul>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -501,16 +516,16 @@ reports on the number of rows,</p>
 <div class="sourceCode" id="cb17"><pre
 class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sq_data[<span class="fu">sample</span>(<span class="fu">nrow</span>(sq_data), <span class="dv">10</span>), <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div>
 <pre><code>##              X        Y Unique.Squirrel.ID Hectare Shift     Date
-## 1673 -73.96410 40.78993     29B-PM-1010-03     29B    PM 10102018
-## 1799 -73.97884 40.76960      4B-AM-1010-05     04B    AM 10102018
-## 1722 -73.95873 40.79077     32F-AM-1012-02     32F    AM 10122018
-## 428  -73.96363 40.78080     21G-AM-1014-02     21G    AM 10142018
-## 579  -73.95562 40.79805     41D-PM-1014-01     41D    PM 10142018
-## 1379 -73.97965 40.76784      1C-PM-1013-08     01C    PM 10132018
-## 878  -73.96728 40.78748     26A-PM-1006-02     26A    PM 10062018
-## 1157 -73.97639 40.77055      5C-PM-1010-12     05C    PM 10102018
-## 789  -73.96750 40.78726     25A-PM-1007-01     25A    PM 10072018
-## 203  -73.97708 40.77100      5C-AM-1006-03     05C    AM 10062018</code></pre>
+## 1387 -73.96972 40.77114      9H-AM-1006-02     09H    AM 10062018
+## 481  -73.97900 40.76978      4B-AM-1010-03     04B    AM 10102018
+## 1747 -73.96035 40.79060     32E-PM-1017-15     32E    PM 10172018
+## 2812 -73.96321 40.79261     32A-PM-1013-07     32A    PM 10132018
+## 2785 -73.97291 40.76728      4H-PM-1006-02     04H    PM 10062018
+## 2807 -73.96182 40.79276     33B-AM-1010-02     33B    AM 10102018
+## 1797 -73.96972 40.76970      7I-PM-1013-07     07I    PM 10132018
+## 2044 -73.95642 40.79916     42C-PM-1013-02     42C    PM 10132018
+## 995  -73.96988 40.78038     18C-PM-1018-02     18C    PM 10182018
+## 2908 -73.96543 40.78160     21E-AM-1017-02     21E    AM 10172018</code></pre>
 </div>
 <p>Lastly, we might want only observations that are complete, that is,
 records with no missing values</p>

@@ -35,6 +35,12 @@ navbar:
           href: part_10_variables-continued.html
         - text: "Subsetting"
           href: part_11_subsetting.html
+    - text: "Part 4"
+      menu:
+        - text: "Libraries"
+          href: part_12_libraries.html
+        - text: "ggplot2"
+          href: part_13_ggplot2.html
 output:
   html_document:
     theme: flatly
